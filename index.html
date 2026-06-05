@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Copilot Studio Budgeting and Monitoring Guide - Light Theme</title>
+<meta name="description" content="Interactive guide to budgeting and monitoring Microsoft Copilot Studio agents: Copilot Credit packs, pay-as-you-go, and the P3 pre-purchase plan, with per-feature rates, the estimator workflow, and governance."/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563eb'/%3E%3Cstop offset='.55' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%230d9488'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Ctext x='16' y='23' font-family='Segoe UI,Arial,sans-serif' font-size='19' font-weight='700' fill='white' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E"/>
+<title>Copilot Studio Budgeting and Monitoring Guide</title>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <style>
 :root{
@@ -11,23 +14,13 @@
   --text:#10182b; --muted:#5b6680; --line:#dde3f1; --line2:#eef1f9;
   --blue:#2563eb; --emerald:#059669; --violet:#7c3aed; --amber:#d97706;
   --teal:#0d9488; --rose:#e11d48; --shadow:0 10px 30px rgba(20,30,60,.10);
-  --orb1:rgba(37,99,235,.18); --orb2:rgba(124,58,237,.16); --orb3:rgba(13,148,136,.15);
-  --particle:rgba(37,99,235,.55); --grid:rgba(40,60,110,.05); --tipbg:#0d1426; --tiptext:#eef2ff;
+  --tipbg:#0d1426; --tiptext:#eef2ff;
   --navactive:#eef3ff;
 
   --radius:16px; --font:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;line-height:1.5}
-canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
-.orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.9}
-.orb.a{width:520px;height:520px;background:var(--orb1);top:-120px;left:-80px;animation:drift1 22s ease-in-out infinite}
-.orb.b{width:460px;height:460px;background:var(--orb2);bottom:-140px;right:-60px;animation:drift2 26s ease-in-out infinite}
-.orb.c{width:380px;height:380px;background:var(--orb3);top:40%;left:55%;animation:drift3 19s ease-in-out infinite}
-@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,40px) scale(1.08)}}
-@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,-30px) scale(1.1)}}
-@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,50px) scale(1.05)}}
 .shell{position:relative;z-index:2;display:grid;grid-template-columns:262px 1fr;min-height:100vh}
 /* ---- left nav ---- */
 .nav{position:sticky;top:0;height:100vh;padding:22px 16px;background:linear-gradient(180deg,var(--surface),var(--surface2));
@@ -212,9 +205,40 @@ a.ref .url .ext{flex:none}
 .fnote .u{text-decoration:underline}
 .fnote b{color:var(--text)}
 .u{text-decoration:underline}
+/* ---- theme toggle button ---- */
+.themebtn{display:flex;align-items:center;gap:9px;width:100%;margin:8px 0 4px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:9px 12px;border-radius:11px;
+  font-size:12.5px;font-family:var(--font);transition:background .15s,border-color .15s}
+.themebtn:hover{background:var(--navactive);border-color:color-mix(in srgb,var(--blue) 35%,var(--line))}
+.themebtn .ti{font-size:15px;line-height:1}
+/* ---- mobile nav toggle ---- */
+.navtoggle{display:none;position:fixed;top:14px;left:14px;z-index:46;width:44px;height:44px;border-radius:11px;
+  border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:20px;cursor:pointer;box-shadow:var(--shadow)}
+.navback{display:none}
+/* ---- dark mode ---- */
+:root{color-scheme:light}
+:root.dark{
+  --bg:#0b1020; --bg2:#0e1426; --surface:#141c30; --surface2:#1a2236;
+  --text:#e9edf7; --muted:#9aa6c0; --line:#2a3450; --line2:#1e2740;
+  --blue:#3b82f6; --emerald:#10b981; --violet:#a855f7; --amber:#f59e0b;
+  --teal:#2dd4bf; --rose:#fb7185;
+  --shadow:0 10px 30px rgba(0,0,0,.5);
+  --navactive:#1c2742; --tipbg:#1f2a44; --tiptext:#eef2ff;
+  color-scheme:dark;}
+@media(max-width:760px){
+  .shell{grid-template-columns:1fr}
+  .navtoggle{display:flex;align-items:center;justify-content:center}
+  .nav{position:fixed;top:0;left:0;z-index:48;width:280px;max-width:84vw;transform:translateX(-100%);
+    transition:transform .28s ease;box-shadow:0 0 44px rgba(0,0,0,.34)}
+  .nav.open{transform:none}
+  .navback{display:block;position:fixed;inset:0;z-index:47;background:rgba(5,10,25,.5);opacity:0;
+    pointer-events:none;transition:opacity .28s}
+  .navback.show{opacity:1;pointer-events:auto}
+  .main{padding:66px 18px 60px}
+}
 @media (prefers-reduced-motion: reduce){
-  .orb,.brand .logo,.kpi .val.breathe,.live,.cta .shine{animation:none!important}
-  canvas#particles{display:none}
+  .brand .logo,.kpi .val.breathe,.live,.cta .shine{animation:none!important}
+  .nav{transition:none}
   .tab.show{animation:none}
 }
 </style>
@@ -223,25 +247,30 @@ a.ref .url .ext{flex:none}
 <div id="tip" role="status"></div>
 
 <div class="shell">
+  <button class="navtoggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">&#9776;</span></button>
+  <div class="navback" id="navBack"></div>
   <!-- ================= LEFT NAV ================= -->
-  <aside class="nav">
+  <aside class="nav" id="primaryNav" aria-label="Guide navigation">
     <div class="brand">
-      <div class="logo"></div>
+      <div class="logo" aria-hidden="true"></div>
       <div><h1>Copilot Studio<br/>Budgeting &amp; Monitoring</h1><div class="sub">Credit packs &middot; PayGo &middot; P3 Plan</div></div>
     </div>
-    <div class="navlbl">Understand</div>
-    <button class="navbtn active" data-tab="overview"><span class="ic">&#9737;</span>Overview</button>
-    <button class="navbtn" data-tab="options"><span class="ic">&#9636;</span>Licensing Options</button>
-    <button class="navbtn" data-tab="rates"><span class="ic">&#9889;</span>Credit Rates</button>
-    <button class="navbtn" data-tab="p3"><span class="ic">&#9650;</span>P3 Plan &amp; Tiers</button>
-    <div class="navlbl">Apply</div>
-    <button class="navbtn" data-tab="budget"><span class="ic">&#9881;</span>Budget a New Agent</button>
-    <button class="navbtn" data-tab="monitor"><span class="ic">&#9678;</span>Monitor &amp; Control</button>
-    <button class="navbtn" data-tab="value"><span class="ic">&#9733;</span>Seller Value Prop</button>
-    <button class="navbtn" data-tab="purchasep3"><span class="ic">&#9379;</span>How to Purchase P3 Plan</button>
-    <button class="navbtn" data-tab="configp3"><span class="ic">&#9874;</span>Configuring the P3 Plan</button>
-    <div class="navlbl">Reference</div>
-    <button class="navbtn" data-tab="appendix"><span class="ic">&#9783;</span>Appendix: Sources</button>
+    <button class="themebtn" id="themeToggle" type="button" aria-pressed="false"><span class="ti" aria-hidden="true">&#9790;</span><span class="tl">Dark mode</span></button>
+    <div class="navlist" role="tablist" aria-orientation="vertical" aria-label="Guide sections">
+      <div class="navlbl" role="presentation">Understand</div>
+      <button class="navbtn active" role="tab" id="tab-overview" aria-controls="overview" aria-selected="true" tabindex="0" data-tab="overview"><span class="ic" aria-hidden="true">&#9737;</span>Overview</button>
+      <button class="navbtn" role="tab" id="tab-options" aria-controls="options" aria-selected="false" tabindex="-1" data-tab="options"><span class="ic" aria-hidden="true">&#9636;</span>Licensing Options</button>
+      <button class="navbtn" role="tab" id="tab-rates" aria-controls="rates" aria-selected="false" tabindex="-1" data-tab="rates"><span class="ic" aria-hidden="true">&#9889;</span>Credit Rates</button>
+      <button class="navbtn" role="tab" id="tab-p3" aria-controls="p3" aria-selected="false" tabindex="-1" data-tab="p3"><span class="ic" aria-hidden="true">&#9650;</span>P3 Plan &amp; Tiers</button>
+      <div class="navlbl" role="presentation">Apply</div>
+      <button class="navbtn" role="tab" id="tab-budget" aria-controls="budget" aria-selected="false" tabindex="-1" data-tab="budget"><span class="ic" aria-hidden="true">&#9881;</span>Budget a New Agent</button>
+      <button class="navbtn" role="tab" id="tab-monitor" aria-controls="monitor" aria-selected="false" tabindex="-1" data-tab="monitor"><span class="ic" aria-hidden="true">&#9678;</span>Monitor &amp; Control</button>
+      <button class="navbtn" role="tab" id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1" data-tab="value"><span class="ic" aria-hidden="true">&#9733;</span>Seller Value Prop</button>
+      <button class="navbtn" role="tab" id="tab-purchasep3" aria-controls="purchasep3" aria-selected="false" tabindex="-1" data-tab="purchasep3"><span class="ic" aria-hidden="true">&#9379;</span>How to Purchase P3 Plan</button>
+      <button class="navbtn" role="tab" id="tab-configp3" aria-controls="configp3" aria-selected="false" tabindex="-1" data-tab="configp3"><span class="ic" aria-hidden="true">&#9874;</span>Configuring the P3 Plan</button>
+      <div class="navlbl" role="presentation">Reference</div>
+      <button class="navbtn" role="tab" id="tab-appendix" aria-controls="appendix" aria-selected="false" tabindex="-1" data-tab="appendix"><span class="ic" aria-hidden="true">&#9783;</span>Appendix: Sources</button>
+    </div>
     <div class="navfoot">
       Data sourced only from the Copilot Studio Licensing Guide (June 2026), the P3 Overview deck, the Copilot Credit Estimator, and Microsoft Learn billing and capacity pages. All USD ERP, subject to change.
     </div>
@@ -251,7 +280,7 @@ a.ref .url .ext{flex:none}
   <main class="main">
 
   <!-- ============ OVERVIEW ============ -->
-  <section class="tab show" id="overview">
+  <section class="tab show" id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Executive overview</span>
       <h2>Three ways to buy Copilot Credits, one universal currency</h2>
@@ -315,7 +344,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ OPTIONS ============ -->
-  <section class="tab" id="options">
+  <section class="tab" id="options" role="tabpanel" aria-labelledby="tab-options" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Licensing options</span>
       <h2>Compare every way to fund Copilot Studio</h2>
@@ -367,7 +396,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ RATES ============ -->
-  <section class="tab" id="rates">
+  <section class="tab" id="rates" role="tabpanel" aria-labelledby="tab-rates" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Credit rates</span>
       <h2>Per-feature billing rates that drive consumption</h2>
@@ -430,7 +459,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ P3 ============ -->
-  <section class="tab" id="p3">
+  <section class="tab" id="p3" role="tabpanel" aria-labelledby="tab-p3" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Pre-Purchase Plan</span>
       <h2>P3: commit more, save more, up to 20% off PayGo</h2>
@@ -493,7 +522,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ BUDGET ============ -->
-  <section class="tab" id="budget">
+  <section class="tab" id="budget" role="tabpanel" aria-labelledby="tab-budget" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>New agent playbook</span>
       <h2>Budget a new agent in five steps</h2>
@@ -555,7 +584,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ MONITOR ============ -->
-  <section class="tab" id="monitor">
+  <section class="tab" id="monitor" role="tabpanel" aria-labelledby="tab-monitor" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Govern &amp; monitor</span>
       <h2>Monitor consumption, set limits, control overage</h2>
@@ -617,7 +646,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ VALUE ============ -->
-  <section class="tab" id="value">
+  <section class="tab" id="value" role="tabpanel" aria-labelledby="tab-value" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Seller value proposition</span>
       <h2>The numbers that make the P3 case</h2>
@@ -651,9 +680,8 @@ a.ref .url .ext{flex:none}
     <p class="bigquote">"Like a gift card for agentic services" - commit upfront, draw down across the year, and unlock more savings the more you commit to. Source: P3 Overview deck.</p>
   </section>
 
-  <!-- ============ CONFIGURE P3 ============ -->
   <!-- ============ HOW TO PURCHASE P3 ============ -->
-  <section class="tab" id="purchasep3">
+  <section class="tab" id="purchasep3" role="tabpanel" aria-labelledby="tab-purchasep3" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Buy the plan</span>
       <h2>How to Purchase the P3 Plan</h2>
@@ -727,7 +755,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ CONFIGURE P3 ============ -->
-  <section class="tab" id="configp3">
+  <section class="tab" id="configp3" role="tabpanel" aria-labelledby="tab-configp3" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Set up &amp; configure</span>
       <h2>Configuring the P3 Plan</h2>
@@ -803,7 +831,7 @@ a.ref .url .ext{flex:none}
   </section>
 
   <!-- ============ APPENDIX ============ -->
-  <section class="tab" id="appendix">
+  <section class="tab" id="appendix" role="tabpanel" aria-labelledby="tab-appendix" tabindex="0">
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Appendix</span>
       <h2>Sources and public reference links</h2>
@@ -907,16 +935,38 @@ function bindTips(){
 }
 
 // ---------- nav / tabs ----------
-document.querySelectorAll('.navbtn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('show'));
-    b.classList.add('active');
-    document.getElementById(b.dataset.tab).classList.add('show');
-    window.scrollTo({top:0,behavior:'smooth'});
-    drawAll();
+const navBtns=[...document.querySelectorAll('.navbtn')];
+const navEl=document.getElementById('primaryNav');
+const navToggle=document.getElementById('navToggle');
+const navBack=document.getElementById('navBack');
+function closeNav(){if(!navEl)return;navEl.classList.remove('open');if(navBack)navBack.classList.remove('show');if(navToggle)navToggle.setAttribute('aria-expanded','false');}
+function openNav(){if(!navEl)return;navEl.classList.add('open');if(navBack)navBack.classList.add('show');if(navToggle)navToggle.setAttribute('aria-expanded','true');const act=navEl.querySelector('.navbtn.active');if(act)act.focus();}
+function setTab(b,focus){
+  navBtns.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');x.tabIndex=-1;});
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('show'));
+  b.classList.add('active');b.setAttribute('aria-selected','true');b.tabIndex=0;
+  const panel=document.getElementById(b.dataset.tab);
+  if(panel)panel.classList.add('show');
+  if(focus)b.focus();
+  window.scrollTo({top:0,behavior:'smooth'});
+  closeNav();
+  drawAll();
+}
+navBtns.forEach((b,i)=>{
+  b.addEventListener('click',()=>setTab(b,false));
+  b.addEventListener('keydown',e=>{
+    let j=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight')j=(i+1)%navBtns.length;
+    else if(e.key==='ArrowUp'||e.key==='ArrowLeft')j=(i-1+navBtns.length)%navBtns.length;
+    else if(e.key==='Home')j=0;
+    else if(e.key==='End')j=navBtns.length-1;
+    else if(e.key==='Enter'||e.key===' '){e.preventDefault();setTab(b,false);return;}
+    if(j!==null){e.preventDefault();setTab(navBtns[j],true);}
   });
 });
+if(navToggle)navToggle.addEventListener('click',()=>{navEl.classList.contains('open')?closeNav():openNav();});
+if(navBack)navBack.addEventListener('click',closeNav);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
 
 // ---------- fill tables ----------
 const p3rows=document.getElementById('p3rows');
@@ -1069,6 +1119,30 @@ function drawAll(){const vis=id=>{const el=document.getElementById(id);return el
   if(vis('enfbar'))enfBar();
   if(vis('savingsbars'))savingsBars();
   bindTips();}
+// ---------- theme (dark mode) ----------
+const themeToggle=document.getElementById('themeToggle');
+function applyTheme(dark){
+  document.documentElement.classList.toggle('dark',dark);
+  if(themeToggle){
+    themeToggle.setAttribute('aria-pressed',dark?'true':'false');
+    const tl=themeToggle.querySelector('.tl');if(tl)tl.textContent=dark?'Light mode':'Dark mode';
+    const ti=themeToggle.querySelector('.ti');if(ti)ti.innerHTML=dark?'&#9728;':'&#9790;';
+  }
+  drawAll();
+}
+if(themeToggle)themeToggle.addEventListener('click',()=>{
+  const dark=!document.documentElement.classList.contains('dark');
+  applyTheme(dark);
+  try{localStorage.setItem('cps-theme',dark?'dark':'light');}catch(e){}
+});
+(function(){let dark=false;
+  try{const s=localStorage.getItem('cps-theme');
+    if(s==='dark')dark=true;else if(s==='light')dark=false;
+    else dark=matchMedia('(prefers-color-scheme: dark)').matches;
+  }catch(e){dark=!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);}
+  applyTheme(dark);
+})();
+
 bindTips();drawAll();
 window.addEventListener('resize',()=>{clearTimeout(window.__rt);window.__rt=setTimeout(drawAll,180);});
 
