@@ -267,14 +267,14 @@ a.ref .url .ext{flex:none}
       <button class="navbtn" role="tab" id="tab-budget" aria-controls="budget" aria-selected="false" tabindex="-1" data-tab="budget"><span class="ic" aria-hidden="true">&#9881;</span>Budget a New Agent</button>
       <button class="navbtn" role="tab" id="tab-paflows" aria-controls="paflows" aria-selected="false" tabindex="-1" data-tab="paflows"><span class="ic" aria-hidden="true">&#9107;</span>Power Automate &amp; Flows</button>
       <button class="navbtn" role="tab" id="tab-monitor" aria-controls="monitor" aria-selected="false" tabindex="-1" data-tab="monitor"><span class="ic" aria-hidden="true">&#9678;</span>Monitor &amp; Control</button>
-      <button class="navbtn" role="tab" id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1" data-tab="value"><span class="ic" aria-hidden="true">&#9733;</span>Seller Value Prop</button>
+      <button class="navbtn" role="tab" id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1" data-tab="value"><span class="ic" aria-hidden="true">&#9733;</span>P3 Savings Analysis</button>
       <button class="navbtn" role="tab" id="tab-purchasep3" aria-controls="purchasep3" aria-selected="false" tabindex="-1" data-tab="purchasep3"><span class="ic" aria-hidden="true">&#9379;</span>How to Purchase P3 Plan</button>
       <button class="navbtn" role="tab" id="tab-configp3" aria-controls="configp3" aria-selected="false" tabindex="-1" data-tab="configp3"><span class="ic" aria-hidden="true">&#9874;</span>Configuring the P3 Plan</button>
       <div class="navlbl" role="presentation">Reference</div>
       <button class="navbtn" role="tab" id="tab-appendix" aria-controls="appendix" aria-selected="false" tabindex="-1" data-tab="appendix"><span class="ic" aria-hidden="true">&#9783;</span>Appendix: Sources</button>
     </div>
     <div class="navfoot">
-      Data sourced only from the Copilot Studio Licensing Guide (June 2026), the P3 Overview deck, the Copilot Credit Estimator, and Microsoft Learn billing and capacity pages. All USD ERP, subject to change.
+      Data sourced from the public Copilot Studio Licensing Guide, the Copilot Credit Estimator, and Microsoft Learn billing and capacity pages. All USD, subject to change.
     </div>
   </aside>
 
@@ -370,7 +370,7 @@ a.ref .url .ext{flex:none}
             <td><b>Microsoft 365 Copilot inclusion</b></td><td>Per user/month</td><td class="num">$30 / user / mo</td><td>B2E scenarios on M365 surfaces</td><td>M365 Copilot license</td></tr>
         </tbody>
       </table>
-      <p class="src">All pricing USD ERP, subject to change. Source: Microsoft Copilot Studio Licensing Guide (June 2026).</p>
+      <p class="src">All pricing USD, subject to change. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Microsoft Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>What Microsoft 365 Copilot zero-rates</h3>
@@ -483,7 +483,7 @@ a.ref .url .ext{flex:none}
       <div class="card">
         <p class="ctitle">Discount climbs with commitment <i class="ic-i" data-tip="p3-curve|The committed-volume discount curve. Each point is a published tier; the line shows how savings accelerate at the top tiers.">i</i></p>
         <svg id="disccurve" height="290" style="width:100%"></svg>
-        <p class="src">Source: Licensing Guide tier table.</p>
+        <p class="src">Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a> tier table.</p>
       </div>
       <div class="card">
         <p class="ctitle">P3 benefits</p>
@@ -519,7 +519,7 @@ a.ref .url .ext{flex:none}
           <tr data-tip="acu3|Top Agent P3 tier, 15% off."><td>3</td><td class="num">500,000</td><td class="num">50,000,000</td><td class="num">$425,000</td><td class="num">15%</td></tr>
         </tbody>
       </table>
-      <p class="src">Credit equivalent = ACUs &times; 100 (derived from 1 ACU = 100 credits). Pricing subject to change. Source: Licensing Guide.</p>
+      <p class="src">Credit equivalent = ACUs &times; 100 (derived from 1 ACU = 100 credits). Pricing subject to change. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
   </section>
 
@@ -852,7 +852,7 @@ a.ref .url .ext{flex:none}
   <!-- ============ VALUE ============ -->
   <section class="tab" id="value" role="tabpanel" aria-labelledby="tab-value" tabindex="0">
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Seller value proposition</span>
+      <span class="eyebrow"><span class="live"></span>P3 savings analysis</span>
       <h2>The numbers that make the P3 case</h2>
       <p>For each P3 tier, the table compares the committed price to the equivalent pay-as-you-go spend for the same credits. Every savings figure is derived transparently and reconciles exactly to the published discount percentages.</p>
     </div>
@@ -873,12 +873,12 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="card" style="overflow-x:auto">
-      <p class="ctitle">The full value table sellers can walk through</p>
+      <p class="ctitle">The full savings comparison by P3 tier</p>
       <table>
         <thead><tr><th>Tier</th><th class="num">Credits</th><th class="num">PayGo-equivalent</th><th class="num">P3 price</th><th class="num">You save</th><th class="num">Discount</th></tr></thead>
         <tbody id="valrows"></tbody>
       </table>
-      <p class="src">PayGo-equivalent = credits &times; $0.01. Savings and effective rates derived; discount column is published. Source: Licensing Guide.</p>
+      <p class="src">PayGo-equivalent = credits &times; $0.01. Savings and effective rates derived; discount column is published. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
 
     <p class="bigquote">"Like a gift card for agentic services" — commit upfront, draw down across the year, and unlock more savings the more you commit to.</p>
@@ -954,7 +954,7 @@ a.ref .url .ext{flex:none}
             <td><b>Best for</b></td><td>Steady, predictable usage</td><td>No prior usage history</td><td class="colhi">Larger or variable demand</td></tr>
         </tbody>
       </table>
-      <p class="src">The licensing guide states the rate as $0.01 per Copilot Credit (currency renamed from messages in September 2025).</p>
+      <p class="src">The licensing guide states the rate as $0.01 per Copilot Credit. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
   </section>
 
@@ -1039,7 +1039,7 @@ a.ref .url .ext{flex:none}
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Appendix</span>
       <h2>Sources and public reference links</h2>
-      <p>Every figure in this guide traces to one of the public Microsoft pages below or to the two source documents listed at the bottom. All links open in a new tab. Pricing is USD ERP and subject to change; always confirm against the latest Microsoft pages before a purchase decision.</p>
+      <p>Every figure in this guide traces to one of the public Microsoft pages below. All links open in a new tab. Pricing is USD and subject to change; always confirm against the latest Microsoft pages before a purchase decision.</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>Estimation tools</h3>
@@ -1070,7 +1070,7 @@ a.ref .url .ext{flex:none}
       <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../power-platform/admin/manage-copilot-studio-messages-capacity</span>
     </a>
 
-    <p class="note" style="margin-top:18px"><b>Currency and disclaimer:</b> All pricing is USD ERP and subject to change. The Copilot Credit Estimator and this guide provide informational estimates only, not a quote or contractual commitment. Confirm current pricing on the Microsoft Copilot Studio pricing page and with your Microsoft account team before any purchase.</p>
+    <p class="note" style="margin-top:18px"><b>Currency and disclaimer:</b> All pricing is USD and subject to change. The Copilot Credit Estimator and this guide provide informational estimates only, not a quote or contractual commitment. Confirm current pricing on the <a class="ilink" href="https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio#pricing" target="_blank" rel="noopener">Microsoft Copilot Studio pricing page</a> before any purchase.</p>
   </section>
 
   </main>
