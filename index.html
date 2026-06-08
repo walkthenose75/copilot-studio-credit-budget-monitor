@@ -206,11 +206,10 @@ a.ref .url .ext{flex:none}
 .fnote b{color:var(--text)}
 .u{text-decoration:underline}
 /* ---- theme toggle button ---- */
-.themebtn{display:flex;align-items:center;gap:9px;width:100%;margin:8px 0 4px;cursor:pointer;
-  border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:9px 12px;border-radius:11px;
-  font-size:12.5px;font-family:var(--font);transition:background .15s,border-color .15s}
+.themebtn{position:fixed;top:14px;right:14px;z-index:50;width:38px;height:38px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:0;border-radius:50%;
+  font-size:18px;font-family:var(--font);transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
 .themebtn:hover{background:var(--navactive);border-color:color-mix(in srgb,var(--blue) 35%,var(--line))}
-.themebtn .ti{font-size:15px;line-height:1}
 /* ---- mobile nav toggle ---- */
 .navtoggle{display:none;position:fixed;top:14px;left:14px;z-index:46;width:44px;height:44px;border-radius:11px;
   border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:20px;cursor:pointer;box-shadow:var(--shadow)}
@@ -255,7 +254,6 @@ a.ref .url .ext{flex:none}
       <div class="logo" aria-hidden="true"></div>
       <div><h1>Copilot Credits<br/>Budgeting &amp; Monitoring</h1><div class="sub">Copilot Studio &middot; Power Automate &middot; AI Builder &middot; P3 Plan</div></div>
     </div>
-    <button class="themebtn" id="themeToggle" type="button" aria-pressed="false"><span class="ti" aria-hidden="true">&#9790;</span><span class="tl">Dark mode</span></button>
     <div class="navlist" role="tablist" aria-orientation="vertical" aria-label="Guide sections">
       <div class="navlbl" role="presentation">Understand</div>
       <button class="navbtn active" role="tab" id="tab-overview" aria-controls="overview" aria-selected="true" tabindex="0" data-tab="overview"><span class="ic" aria-hidden="true">&#9737;</span>Overview</button>
@@ -279,6 +277,7 @@ a.ref .url .ext{flex:none}
   </aside>
 
   <!-- ================= MAIN ================= -->
+  <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">&#9790;</button>
   <main class="main">
 
   <!-- ============ OVERVIEW ============ -->
@@ -1329,8 +1328,7 @@ function applyTheme(dark){
   document.documentElement.classList.toggle('dark',dark);
   if(themeToggle){
     themeToggle.setAttribute('aria-pressed',dark?'true':'false');
-    const tl=themeToggle.querySelector('.tl');if(tl)tl.textContent=dark?'Light mode':'Dark mode';
-    const ti=themeToggle.querySelector('.ti');if(ti)ti.innerHTML=dark?'&#9728;':'&#9790;';
+    themeToggle.innerHTML=dark?'&#9728;':'&#9790;';
   }
   drawAll();
 }
