@@ -253,7 +253,7 @@ a.ref .url .ext{flex:none}
   <aside class="nav" id="primaryNav" aria-label="Guide navigation">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
-      <div><h1>Copilot Studio<br/>Budgeting &amp; Monitoring</h1><div class="sub">Credit packs &middot; PayGo &middot; P3 Plan</div></div>
+      <div><h1>Copilot Credits<br/>Budgeting &amp; Monitoring</h1><div class="sub">Copilot Studio &middot; Power Automate &middot; AI Builder &middot; P3 Plan</div></div>
     </div>
     <button class="themebtn" id="themeToggle" type="button" aria-pressed="false"><span class="ti" aria-hidden="true">&#9790;</span><span class="tl">Dark mode</span></button>
     <div class="navlist" role="tablist" aria-orientation="vertical" aria-label="Guide sections">
@@ -262,8 +262,10 @@ a.ref .url .ext{flex:none}
       <button class="navbtn" role="tab" id="tab-options" aria-controls="options" aria-selected="false" tabindex="-1" data-tab="options"><span class="ic" aria-hidden="true">&#9636;</span>Licensing Options</button>
       <button class="navbtn" role="tab" id="tab-rates" aria-controls="rates" aria-selected="false" tabindex="-1" data-tab="rates"><span class="ic" aria-hidden="true">&#9889;</span>Credit Rates</button>
       <button class="navbtn" role="tab" id="tab-p3" aria-controls="p3" aria-selected="false" tabindex="-1" data-tab="p3"><span class="ic" aria-hidden="true">&#9650;</span>P3 Plan &amp; Tiers</button>
+      <button class="navbtn" role="tab" id="tab-transition" aria-controls="transition" aria-selected="false" tabindex="-1" data-tab="transition"><span class="ic" aria-hidden="true">&#8634;</span>AI Builder Transition</button>
       <div class="navlbl" role="presentation">Apply</div>
       <button class="navbtn" role="tab" id="tab-budget" aria-controls="budget" aria-selected="false" tabindex="-1" data-tab="budget"><span class="ic" aria-hidden="true">&#9881;</span>Budget a New Agent</button>
+      <button class="navbtn" role="tab" id="tab-paflows" aria-controls="paflows" aria-selected="false" tabindex="-1" data-tab="paflows"><span class="ic" aria-hidden="true">&#9107;</span>Power Automate &amp; Flows</button>
       <button class="navbtn" role="tab" id="tab-monitor" aria-controls="monitor" aria-selected="false" tabindex="-1" data-tab="monitor"><span class="ic" aria-hidden="true">&#9678;</span>Monitor &amp; Control</button>
       <button class="navbtn" role="tab" id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1" data-tab="value"><span class="ic" aria-hidden="true">&#9733;</span>Seller Value Prop</button>
       <button class="navbtn" role="tab" id="tab-purchasep3" aria-controls="purchasep3" aria-selected="false" tabindex="-1" data-tab="purchasep3"><span class="ic" aria-hidden="true">&#9379;</span>How to Purchase P3 Plan</button>
@@ -284,26 +286,26 @@ a.ref .url .ext{flex:none}
     <div class="head">
       <span class="eyebrow"><span class="live"></span>Executive overview</span>
       <h2>Three ways to buy Copilot Credits, one universal currency</h2>
-      <p>Copilot Credits are the universal currency for agent usage across Microsoft Copilot Studio, Dynamics 365 first-party agents, and Copilot Chat. This guide gives a full picture of the buying options, the per-feature rates that drive consumption, how to budget a new agent, and how to monitor and cap spend.</p>
+      <p>Copilot Credits are the universal currency for agent usage across Microsoft Copilot Studio, Power Automate (cloud flows and agent flows), AI Builder capabilities, Dynamics 365 first-party agents, and Copilot Chat. With AI Builder credits being retired by November 2026, Copilot Credits become the single billing unit for all AI-powered automation. This guide covers buying options, per-feature rates, budgeting, and monitoring across the entire platform.</p>
     </div>
 
     <div class="grid g4">
-      <div class="card kpi" data-tip="universal|Copilot Credits are the single metering unit. The number decremented per response or action depends on task complexity.|Source: Licensing Guide, Copilot Credits section">
+      <div class="card kpi" data-tip="universal|Copilot Credits are the single metering unit. The number decremented per response or action depends on task complexity.">
         <div class="lab">Universal currency <i class="ic-i">i</i></div>
         <div class="val breathe">Copilot<br/>Credits</div>
         <div class="delta">Used across MCS, D365 first-party agents &amp; Copilot Chat</div>
       </div>
-      <div class="card kpi" data-tip="payg|Postpay at a flat rate for exactly what agents consume each month. No upfront commitment.|Source: Licensing Guide, PAYG meter = $0.01 per Copilot Credit">
+      <div class="card kpi" data-tip="payg|Postpay at a flat rate for exactly what agents consume each month. No upfront commitment.">
         <div class="lab">Pay-as-you-go rate <i class="ic-i">i</i></div>
         <div class="val" style="color:var(--blue)">$0.01</div>
         <div class="delta">per Copilot Credit, billed in arrears</div>
       </div>
-      <div class="card kpi" data-tip="pack|A Copilot Credit pack is the subscription option for steady, predictable monthly usage. Unused credits do not roll over.|Source: Licensing Guide, $200 per pack/month billed annually; 1 pack = 25,000 credits">
+      <div class="card kpi" data-tip="pack|A Copilot Credit pack is the subscription option for steady, predictable monthly usage. Unused credits do not roll over.">
         <div class="lab">1 Credit pack <i class="ic-i">i</i></div>
         <div class="val" style="color:var(--emerald)">25,000</div>
         <div class="delta">credits for $200/mo (billed annually)</div>
       </div>
-      <div class="card kpi" data-tip="cccu|P3 sells Copilot Credit Commit Units. Each CCCU = $1 of usage = 100 Copilot Credits, usable across a one-year term.|Source: Licensing Guide and P3 deck">
+      <div class="card kpi" data-tip="cccu|P3 sells Copilot Credit Commit Units. Each CCCU = $1 of usage = 100 Copilot Credits, usable across a one-year term.">
         <div class="lab">1 CCCU (P3) <i class="ic-i">i</i></div>
         <div class="val" style="color:var(--violet)">100</div>
         <div class="delta">Copilot Credits = $1 of usage</div>
@@ -312,17 +314,17 @@ a.ref .url .ext{flex:none}
 
     <h3 class="sect"><span class="bar"></span>Pick the model that matches the usage pattern</h3>
     <div class="grid g3">
-      <div class="card" data-tip="model-pack|Best when monthly volume is known and stable. Capacity is enforced monthly and expires monthly.|Source: P3 deck slide 2; Licensing Guide">
+      <div class="card" data-tip="model-pack|Best when monthly volume is known and stable. Capacity is enforced monthly and expires monthly.">
         <span class="tag em">Credit capacity packs</span>
         <p class="ctitle" style="margin-top:11px">Steady, predictable usage</p>
         <p style="font-size:12.5px;color:var(--muted);margin:0">MCS license subscription. Buy the number of packs you expect to consume each month. Requires a tenant license in the M365 Admin Center. Monthly expiry.</p>
       </div>
-      <div class="card" data-tip="model-payg|Best for getting started or covering overage with no commitment. Bills in arrears via an Azure subscription.|Source: P3 deck slide 2; Licensing Guide PAYG section">
+      <div class="card" data-tip="model-payg|Best for getting started or covering overage with no commitment. Bills in arrears via an Azure subscription.">
         <span class="tag blue">Pay-as-you-go</span>
         <p class="ctitle" style="margin-top:11px">No prior usage history</p>
         <p style="font-size:12.5px;color:var(--muted);margin:0">Postpay for actual consumption through an Azure subscription billing policy. No upfront commitment. Ideal safety net so critical agents never stop.</p>
       </div>
-      <div class="card" data-tip="model-p3|Best for larger or variable demand. Annual pre-pay pool with tiered discounts up to 20% and MACC eligibility.|Source: P3 deck slides 2-4">
+      <div class="card" data-tip="model-p3|Best for larger or variable demand. Annual pre-pay pool with tiered discounts up to 20% and MACC eligibility.">
         <span class="tag vi">Pre-Purchase Plan (P3)</span>
         <p class="ctitle" style="margin-top:11px">Larger or variable demand</p>
         <p style="font-size:12.5px;color:var(--muted);margin:0">One-year pre-paid CCCU pool. Built-in tiered discounts up to 20% off PayGo, annual (not monthly) expiry, MACC eligible, tracked in the Azure Portal. No M365 Admin Center license needed.</p>
@@ -331,7 +333,7 @@ a.ref .url .ext{flex:none}
 
     <h3 class="sect"><span class="bar"></span>How credits flow from features to your bill</h3>
     <div class="card">
-      <p class="ctitle">Credit consumption engine <i class="ic-i" data-tip="engine|Each user interaction can trigger several billable features at once. This canvas traces feature events into pooled credit consumption.|Source: Billing rates and management, combined-feature example">i</i></p>
+      <p class="ctitle">Credit consumption engine <i class="ic-i" data-tip="engine|Each user interaction can trigger several billable features at once. This canvas traces feature events into pooled credit consumption.">i</i></p>
       <svg id="engine" height="240" style="width:100%"></svg>
       <div class="legend">
         <span><span class="dot" style="background:var(--blue)"></span>Classic answer 1</span>
@@ -356,24 +358,24 @@ a.ref .url .ext{flex:none}
       <table>
         <thead><tr><th>Option</th><th>Term &amp; expiry</th><th class="num">Unit / rate</th><th>Best for</th><th>Admin path</th></tr></thead>
         <tbody>
-          <tr data-tip="o-payg|Postpaid, billed in arrears each month via Azure. No upfront cost, no expiry risk.|Source: Licensing Guide PAYG section">
+          <tr data-tip="o-payg|Postpaid, billed in arrears each month via Azure. No upfront cost, no expiry risk.">
             <td><b>Pay-as-you-go meter</b></td><td>Monthly, postpaid</td><td class="num">$0.01 / credit</td><td>No usage history; overage safety net</td><td>Azure subscription + billing policy</td></tr>
-          <tr data-tip="o-pack|Subscription billed annually. Unused credits expire monthly. Requires tenant + user license.|Source: Licensing Guide credit pack section">
+          <tr data-tip="o-pack|Subscription billed annually. Unused credits expire monthly. Requires tenant + user license.">
             <td><b>Credit pack (MCS license)</b></td><td>Annual bill, monthly expiry</td><td class="num">$200 / 25,000 credits</td><td>Steady, predictable monthly usage</td><td>M365 Admin Center license</td></tr>
-          <tr data-tip="o-cccu|One-year pre-paid CCCU pool with tiered discounts up to 20%. MACC eligible. Unused CCCU expire annually.|Source: P3 deck; Licensing Guide P3 section">
+          <tr data-tip="o-cccu|One-year pre-paid CCCU pool with tiered discounts up to 20%. MACC eligible. Unused CCCU expire annually.">
             <td><b>Copilot Credit P3</b></td><td>1 year, annual expiry</td><td class="num">1 CCCU = 100 credits = $1</td><td>Large or variable demand</td><td>Azure Portal + billing policy</td></tr>
-          <tr data-tip="o-acu|Unified one-year pool spanning Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits. Annual expiry.|Source: Licensing Guide Microsoft Agent P3 section">
+          <tr data-tip="o-acu|Unified one-year pool spanning Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits. Annual expiry.">
             <td><b>Microsoft Agent P3</b></td><td>1 year, annual expiry</td><td class="num">1 ACU = 100 credits = $1</td><td>Agentic spend across MCS + Foundry</td><td>Azure Portal + billing policy</td></tr>
-          <tr data-tip="o-m365|Employee-facing (B2E) agent usage is included in the M365 Copilot USL when the agent runs as the licensed user. Classic, generative, and tenant graph grounding are zero-rated. Fair usage limits apply.|Source: Billing rates table; Licensing Guide M365 Copilot section">
+          <tr data-tip="o-m365|Employee-facing (B2E) agent usage is included in the M365 Copilot USL when the agent runs as the licensed user. Classic, generative, and tenant graph grounding are zero-rated. Fair usage limits apply.">
             <td><b>Microsoft 365 Copilot inclusion</b></td><td>Per user/month</td><td class="num">$30 / user / mo</td><td>B2E scenarios on M365 surfaces</td><td>M365 Copilot license</td></tr>
         </tbody>
       </table>
-      <p class="src">All pricing USD ERP, subject to change. Sources: Microsoft Copilot Studio Licensing Guide (June 2026); Copilot Credit P3 Overview deck.</p>
+      <p class="src">All pricing USD ERP, subject to change. Source: Microsoft Copilot Studio Licensing Guide (June 2026).</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>What Microsoft 365 Copilot zero-rates</h3>
     <div class="grid g2">
-      <div class="card" data-tip="m365-zero|When an M365 Copilot licensed user runs an agent on M365 surfaces, these core features do not draw from your credit pack or meter.|Source: Billing rates table, M365 Copilot column = No charge">
+      <div class="card" data-tip="m365-zero|When an M365 Copilot licensed user runs an agent on M365 surfaces, these core features do not draw from your credit pack or meter.">
         <p class="ctitle">No charge for M365 Copilot users</p>
         <table><tbody>
           <tr><td>Classic answer</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
@@ -382,7 +384,7 @@ a.ref .url .ext{flex:none}
           <tr><td>Tenant graph grounding</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
         </tbody></table>
       </div>
-      <div class="card" data-tip="m365-inc|The M365 Copilot license bundles these agent-building and analytics rights at no extra Copilot Studio charge.|Source: Licensing Guide, M365 Copilot includes section">
+      <div class="card" data-tip="m365-inc|The M365 Copilot license bundles these agent-building and analytics rights at no extra Copilot Studio charge.">
         <p class="ctitle">Included with M365 Copilot</p>
         <ul style="margin:0;padding-left:18px;font-size:12.7px;color:var(--muted);line-height:1.9">
           <li>Build and publish agents and plugins to extend M365 Copilot</li>
@@ -405,7 +407,7 @@ a.ref .url .ext{flex:none}
 
     <div class="grid g2">
       <div class="card">
-        <p class="ctitle">Core feature rates <i class="ic-i" data-tip="rates-core|The credit cost of each billable event. Multiply by how often each event fires per conversation to size an agent.|Source: Billing rates and management table">i</i></p>
+        <p class="ctitle">Core feature rates <i class="ic-i" data-tip="rates-core|The credit cost of each billable event. Multiply by how often each event fires per conversation to size an agent.">i</i></p>
         <svg id="ratebars" height="300" style="width:100%"></svg>
         <p class="src">Source: Microsoft Learn, Copilot Credits billing rates.</p>
       </div>
@@ -414,15 +416,15 @@ a.ref .url .ext{flex:none}
         <table>
           <thead><tr><th>Feature</th><th class="num">Rate (credits)</th><th class="num">M365 Copilot user</th></tr></thead>
           <tbody>
-            <tr data-tip="r1|Static, manually authored responses. Cheapest event at 1 credit.|Source: Billing rates table"><td>Classic answer</td><td class="num">1</td><td class="num">No charge</td></tr>
-            <tr data-tip="r2|AI-generated responses from connected knowledge. 2 credits each unless built in Agent Builder without tenant graph grounding.|Source: Billing rates table"><td>Generative answer</td><td class="num">2</td><td class="num">No charge</td></tr>
-            <tr data-tip="r3|Triggers, deep reasoning, topic transitions on the activity map. Computer-Using Agents also bill here.|Source: Billing rates table"><td>Agent action</td><td class="num">5</td><td class="num">No charge</td></tr>
-            <tr data-tip="r4|RAG over your tenant-wide Microsoft Graph for higher-quality grounding. Optional per agent. Most expensive per-message event.|Source: Billing rates table"><td>Tenant graph grounding (per msg)</td><td class="num">10</td><td class="num">No charge</td></tr>
-            <tr data-tip="r5|Predefined flow action sequences. Billed per 100 actions; enforcement blocks new runs when capacity is exhausted.|Source: Billing rates table"><td>Agent flow actions (per 100)</td><td class="num">13</td><td class="num">No charge</td></tr>
-            <tr data-tip="r6|Prompt tools on a basic model. 0.1 credit per 1K tokens, per 10 responses.|Source: Billing rates table"><td>AI tools, basic (per 10 resp)</td><td class="num">0.1 / 1K tok</td><td class="num">1</td></tr>
-            <tr data-tip="r7|Prompt tools on a standard model. 1.5 credit per 1K tokens, per 10 responses.|Source: Billing rates table"><td>AI tools, standard (per 10 resp)</td><td class="num">1.5 / 1K tok</td><td class="num">15</td></tr>
-            <tr data-tip="r8|Prompt tools on a premium model, also used for reasoning models. 10 credits per 1K tokens.|Source: Billing rates table"><td>AI tools, premium (per 10 resp)</td><td class="num">10 / 1K tok</td><td class="num">100</td></tr>
-            <tr data-tip="r9|Intelligent document and image processing, billed per page.|Source: Billing rates table"><td>Content processing (per page)</td><td class="num">8</td><td class="num">No charge</td></tr>
+            <tr data-tip="r1|Static, manually authored responses. Cheapest event at 1 credit."><td>Classic answer</td><td class="num">1</td><td class="num">No charge</td></tr>
+            <tr data-tip="r2|AI-generated responses from connected knowledge. 2 credits each unless built in Agent Builder without tenant graph grounding."><td>Generative answer</td><td class="num">2</td><td class="num">No charge</td></tr>
+            <tr data-tip="r3|Triggers, deep reasoning, topic transitions on the activity map. Computer-Using Agents also bill here."><td>Agent action</td><td class="num">5</td><td class="num">No charge</td></tr>
+            <tr data-tip="r4|RAG over your tenant-wide Microsoft Graph for higher-quality grounding. Optional per agent. Most expensive per-message event."><td>Tenant graph grounding (per msg)</td><td class="num">10</td><td class="num">No charge</td></tr>
+            <tr data-tip="r5|Predefined flow action sequences. Billed per 100 actions; enforcement blocks new runs when capacity is exhausted."><td>Agent flow actions (per 100)</td><td class="num">13</td><td class="num">No charge</td></tr>
+            <tr data-tip="r6|Prompt tools on a basic model. 0.1 credit per 1K tokens, per 10 responses."><td>AI tools, basic (per 10 resp)</td><td class="num">0.1 / 1K tok</td><td class="num">1</td></tr>
+            <tr data-tip="r7|Prompt tools on a standard model. 1.5 credit per 1K tokens, per 10 responses."><td>AI tools, standard (per 10 resp)</td><td class="num">1.5 / 1K tok</td><td class="num">15</td></tr>
+            <tr data-tip="r8|Prompt tools on a premium model, also used for reasoning models. 10 credits per 1K tokens."><td>AI tools, premium (per 10 resp)</td><td class="num">10 / 1K tok</td><td class="num">100</td></tr>
+            <tr data-tip="r9|Intelligent document and image processing, billed per page."><td>Content processing (per page)</td><td class="num">8</td><td class="num">No charge</td></tr>
           </tbody>
         </table>
       </div>
@@ -430,27 +432,27 @@ a.ref .url .ext{flex:none}
 
     <div class="grid g2">
       <div class="card">
-        <p class="ctitle">Voice agent rates per minute <i class="ic-i" data-tip="voice|Voice agents bill by total call length to the nearest second, by orchestration tier. Core agent activity is included in the per-minute rate.|Source: Billing rates, Voice tiers; Licensing Guide voice note">i</i></p>
+        <p class="ctitle">Voice agent rates per minute <i class="ic-i" data-tip="voice|Voice agents bill by total call length to the nearest second, by orchestration tier. Core agent activity is included in the per-minute rate.">i</i></p>
         <table>
           <thead><tr><th>Voice tier</th><th class="num">Credits / min</th></tr></thead>
           <tbody>
-            <tr data-tip="v1|Classic orchestration voice. Lowest per-minute rate.|Source: Voice tiers table"><td>Basic, classic orchestration</td><td class="num">10</td></tr>
-            <tr data-tip="v2|Generative orchestration voice.|Source: Voice tiers table"><td>Standard, generative orchestration</td><td class="num">35</td></tr>
-            <tr data-tip="v3|Real-time voice. Highest per-minute rate.|Source: Voice tiers table"><td>Premium, real-time</td><td class="num">75</td></tr>
+            <tr data-tip="v1|Classic orchestration voice. Lowest per-minute rate."><td>Basic, classic orchestration</td><td class="num">10</td></tr>
+            <tr data-tip="v2|Generative orchestration voice."><td>Standard, generative orchestration</td><td class="num">35</td></tr>
+            <tr data-tip="v3|Real-time voice. Highest per-minute rate."><td>Premium, real-time</td><td class="num">75</td></tr>
           </tbody>
         </table>
         <p class="note"><b>Reasoning models bill twice:</b> total cost = feature rate + premium AI tools (100 credits per 10 tokens) for the reasoning token usage.</p>
       </div>
       <div class="card">
-        <p class="ctitle">Worked billing examples <i class="ic-i" data-tip="examples|Microsoft-published examples. Each shows how event counts times volume produce a daily credit figure.|Source: Billing examples, Microsoft Learn">i</i></p>
+        <p class="ctitle">Worked billing examples <i class="ic-i" data-tip="examples|Microsoft-published examples. Each shows how event counts times volume produce a daily credit figure.">i</i></p>
         <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="ex1|Website support agent: 4 classic + 2 generative answers per run, 900 customers/day.|Source: Billing examples, Customer support agent">
+          <div class="step" data-tip="ex1|Website support agent: 4 classic + 2 generative answers per run, 900 customers/day.">
             <div class="n">1</div><h4>Customer support agent &middot; 7,200 / day</h4>
             <p>[(4&times;1) + (2&times;2)] &times; 900 customers = 7,200 credits</p></div>
-          <div class="step" data-tip="ex2|Tenant-graph-grounded sales agent in M365 Copilot Chat. 4 generative + 4 grounded events, 100 unlicensed users counted.|Source: Billing examples, Sales performance agent">
+          <div class="step" data-tip="ex2|Tenant-graph-grounded sales agent in M365 Copilot Chat. 4 generative + 4 grounded events, 100 unlicensed users counted.">
             <div class="n">2</div><h4>Sales performance agent &middot; 4,800 / day</h4>
             <p>[(4&times;2) + (4&times;10)] &times; 100 users = 4,800 credits</p></div>
-          <div class="step" data-tip="ex3|Autonomous order agent firing 4 agent actions per trigger in generative orchestration.|Source: Billing examples, Order processing agent">
+          <div class="step" data-tip="ex3|Autonomous order agent firing 4 agent actions per trigger in generative orchestration.">
             <div class="n">3</div><h4>Order processing agent &middot; 20 / day</h4>
             <p>[(4&times;5)] = 20 credits per trigger</p></div>
         </div>
@@ -467,21 +469,21 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="grid g4">
-      <div class="card kpi" data-tip="p3-1|Discounts scale with commitment, from 5% at Tier 1 to 20% at Tier 9.|Source: P3 deck slide 4; Licensing Guide tier table">
+      <div class="card kpi" data-tip="p3-1|Discounts scale with commitment, from 5% at Tier 1 to 20% at Tier 9.">
         <div class="lab">Max discount vs PayGo <i class="ic-i">i</i></div><div class="val breathe" style="color:var(--violet)">20%</div><div class="delta">at Tier 9 (3,000,000 CCCU)</div></div>
-      <div class="card kpi" data-tip="p3-2|Each CCCU equals $1 of usage and converts to 100 Copilot Credits.|Source: Licensing Guide P3 section">
+      <div class="card kpi" data-tip="p3-2|Each CCCU equals $1 of usage and converts to 100 Copilot Credits.">
         <div class="lab">Credits per CCCU <i class="ic-i">i</i></div><div class="val" style="color:var(--blue)">100</div><div class="delta">1 CCCU = $1 of usage</div></div>
-      <div class="card kpi" data-tip="p3-3|CCCUs are usable any time across a one-year term, versus monthly expiry on credit packs.|Source: P3 deck slide 3">
+      <div class="card kpi" data-tip="p3-3|CCCUs are usable any time across a one-year term, versus monthly expiry on credit packs.">
         <div class="lab">Term length <i class="ic-i">i</i></div><div class="val" style="color:var(--emerald)">1 yr</div><div class="delta">annual expiry, not monthly</div></div>
-      <div class="card kpi" data-tip="p3-4|P3 is Microsoft Azure Consumption Commitment eligible, so spend draws down MACC.|Source: P3 deck slide 3 benefits">
+      <div class="card kpi" data-tip="p3-4|P3 is Microsoft Azure Consumption Commitment eligible, so spend draws down MACC.">
         <div class="lab">MACC eligible <i class="ic-i">i</i></div><div class="val" style="color:var(--amber)">Yes</div><div class="delta">retire MACC commitments faster</div></div>
     </div>
 
     <div class="grid g2">
       <div class="card">
-        <p class="ctitle">Discount climbs with commitment <i class="ic-i" data-tip="p3-curve|The committed-volume discount curve. Each point is a published tier; the line shows how savings accelerate at the top tiers.|Source: P3 tier table">i</i></p>
+        <p class="ctitle">Discount climbs with commitment <i class="ic-i" data-tip="p3-curve|The committed-volume discount curve. Each point is a published tier; the line shows how savings accelerate at the top tiers.">i</i></p>
         <svg id="disccurve" height="290" style="width:100%"></svg>
-        <p class="src">Source: P3 Overview deck, slide 4; Licensing Guide tier table.</p>
+        <p class="src">Source: Licensing Guide tier table.</p>
       </div>
       <div class="card">
         <p class="ctitle">P3 benefits</p>
@@ -498,26 +500,228 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="card" style="overflow-x:auto;margin-top:18px">
-      <p class="ctitle">All nine P3 tiers, with pack-equivalent conversion <i class="ic-i" data-tip="p3-table|Full published tier ladder. Pack-equivalent column shows how each tier maps to monthly MCS credit-pack purchases over 12 months.|Source: Licensing Guide tables; effective per-credit derived, see Calculation Log">i</i></p>
+      <p class="ctitle">All nine P3 tiers, with pack-equivalent conversion <i class="ic-i" data-tip="p3-table|Full published tier ladder. Pack-equivalent column shows how each tier maps to monthly MCS credit-pack purchases over 12 months.">i</i></p>
       <table>
         <thead><tr><th>Tier</th><th class="num">CCCU</th><th class="num">Copilot Credits</th><th class="num">Price</th><th class="num">Discount</th><th class="num">Eff. $/credit</th><th>Pack equivalent</th></tr></thead>
         <tbody id="p3rows"></tbody>
       </table>
-      <p class="src">Effective $/credit = price &divide; credits (derived). Discount and pack-equivalent columns are published in the source. PPTX slide 4 lists Tier 2 credits as "1,500,00" and the guide lists Tier 7 packs as "150,00,000"; both are typographic and reconciled here to 1,500,000 and 150,000,000 per the consistent CCCU x100 rule.</p>
+      <p class="src">Effective $/credit = price &divide; credits (derived). Discount and pack-equivalent columns are published. Tier 2 credits reconciled to 1,500,000 and Tier 7 packs to 150,000,000 per the consistent CCCU x100 rule.</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>Microsoft Agent Pre-Purchase Plan (ACUs)</h3>
     <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Unified agentic spend across Copilot Studio and Microsoft Foundry <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units that cover eligible usage in both Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits.|Source: Licensing Guide Microsoft Agent P3 section and tier table">i</i></p>
+      <p class="ctitle">Unified agentic spend across Copilot Studio and Microsoft Foundry <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units that cover eligible usage in both Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits.">i</i></p>
       <table>
         <thead><tr><th>Tier</th><th class="num">ACUs</th><th class="num">Credit equivalent</th><th class="num">Price</th><th class="num">Discount</th></tr></thead>
         <tbody>
-          <tr data-tip="acu1|Entry Agent P3 tier.|Source: Microsoft Agent P3 tier table"><td>1</td><td class="num">20,000</td><td class="num">2,000,000</td><td class="num">$19,000</td><td class="num">5%</td></tr>
-          <tr data-tip="acu2|Mid Agent P3 tier.|Source: Microsoft Agent P3 tier table"><td>2</td><td class="num">100,000</td><td class="num">10,000,000</td><td class="num">$90,000</td><td class="num">10%</td></tr>
-          <tr data-tip="acu3|Top Agent P3 tier, 15% off.|Source: Microsoft Agent P3 tier table"><td>3</td><td class="num">500,000</td><td class="num">50,000,000</td><td class="num">$425,000</td><td class="num">15%</td></tr>
+          <tr data-tip="acu1|Entry Agent P3 tier."><td>1</td><td class="num">20,000</td><td class="num">2,000,000</td><td class="num">$19,000</td><td class="num">5%</td></tr>
+          <tr data-tip="acu2|Mid Agent P3 tier."><td>2</td><td class="num">100,000</td><td class="num">10,000,000</td><td class="num">$90,000</td><td class="num">10%</td></tr>
+          <tr data-tip="acu3|Top Agent P3 tier, 15% off."><td>3</td><td class="num">500,000</td><td class="num">50,000,000</td><td class="num">$425,000</td><td class="num">15%</td></tr>
         </tbody>
       </table>
       <p class="src">Credit equivalent = ACUs &times; 100 (derived from 1 ACU = 100 credits). Pricing subject to change. Source: Licensing Guide.</p>
+    </div>
+  </section>
+
+  <!-- ============ AI BUILDER TRANSITION ============ -->
+  <section class="tab" id="transition" role="tabpanel" aria-labelledby="tab-transition" tabindex="0">
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>AI Builder transition</span>
+      <h2>AI Builder credits are being replaced by Copilot Credits</h2>
+      <p>Microsoft is progressively retiring AI Builder credits. By November 2026, Copilot Credits will be the only currency for all AI-powered features across Power Platform. Plan your transition now to avoid service disruption.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card kpi" data-tip="tr-dual|From Nov 2025 to Nov 2026, environments consume AI Builder credits first, then fall back to Copilot Credits if exhausted.">
+        <div class="lab">Dual-mode period <i class="ic-i">i</i></div>
+        <div class="val breathe" style="color:var(--amber)">12 mo</div>
+        <div class="delta">Nov 2025 &ndash; Nov 2026</div>
+      </div>
+      <div class="card kpi" data-tip="tr-seed|After Nov 2026, seeded AI Builder credits in Power Apps Premium, Power Automate Premium, and Dynamics 365 licenses are removed.">
+        <div class="lab">Seeded credits removed <i class="ic-i">i</i></div>
+        <div class="val" style="color:var(--rose)">Nov 2026</div>
+        <div class="delta">from all premium licenses</div>
+      </div>
+      <div class="card kpi" data-tip="tr-convert|There is no automatic conversion of AI Builder credits to Copilot Credits. You must purchase Copilot Credits separately.">
+        <div class="lab">Auto-conversion? <i class="ic-i">i</i></div>
+        <div class="val" style="color:var(--rose)">None</div>
+        <div class="delta">No AIB &rarr; CC conversion</div>
+      </div>
+    </div>
+
+    <h3 class="sect"><span class="bar"></span>Transition timeline</h3>
+    <div class="card" style="overflow-x:auto">
+      <p class="ctitle">Key dates and what changes at each milestone</p>
+      <table>
+        <thead><tr><th>Date</th><th>Event</th><th>Who is impacted</th><th>Impact</th></tr></thead>
+        <tbody>
+          <tr data-tip="tl1|New customers can no longer buy AI Builder capacity add-ons starting Nov 1, 2025.">
+            <td>Nov 1, 2025</td><td>End of new AI Builder add-on sales</td><td>New customers</td><td>Must purchase Copilot Credits for AI features</td></tr>
+          <tr data-tip="tl2|Existing customers keep their add-ons and seeded credits during the dual-mode period. AI Builder credits are consumed first.">
+            <td>Nov 2025 &ndash; Nov 2026</td><td>Dual-mode licensing</td><td>Existing customers</td><td>AIB credits consumed first; Copilot Credits as fallback</td></tr>
+          <tr data-tip="tl3|Seeded AI Builder credits from Power Apps/Automate Premium, Dynamics 365, etc. are permanently removed.">
+            <td>Nov 1, 2026</td><td>Seeded AIB credits removed</td><td>All customers</td><td>No more monthly AIB credits from premium licenses</td></tr>
+          <tr data-tip="tl4|Existing add-on customers can use remaining credits until contract expiration but cannot renew.">
+            <td>Nov 1, 2026</td><td>End of Life for AIB add-ons</td><td>Add-on customers</td><td>Cannot renew; use until contract expires</td></tr>
+          <tr data-tip="tl5|Copilot Credits are the sole currency for all AI features in Copilot Studio, Power Automate, and Power Apps.">
+            <td>Post Nov 2026</td><td>Copilot Credits only</td><td>Everyone</td><td>Universal currency for all AI automation</td></tr>
+        </tbody>
+      </table>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" target="_blank" rel="noopener">End of AI Builder credits (Microsoft Learn)</a></p>
+    </div>
+
+    <h3 class="sect"><span class="bar"></span>How dual-mode consumption works</h3>
+    <div class="grid g2">
+      <div class="card">
+        <p class="ctitle">Consumption priority during dual-mode <i class="ic-i" data-tip="dual-how|In Power Apps and Power Automate, AI Builder features first try AI Builder credits. If absent or exhausted, they fall back to Copilot Credits. If both are gone, features are blocked. Resets monthly.">i</i></p>
+        <div class="flow" style="flex-direction:column">
+          <div class="step" data-tip="dc1|AI Builder features in Power Apps or Power Automate first consume available AI Builder credits.">
+            <div class="n">1</div><h4>AI Builder credits consumed first</h4>
+            <p>Features in Power Apps and Power Automate use AIB credits when available.</p></div>
+          <div class="step" data-tip="dc2|When AI Builder credits are exhausted or unavailable, the system automatically falls back to Copilot Credits.">
+            <div class="n">2</div><h4>Copilot Credits as fallback</h4>
+            <p>If AIB credits are exhausted, Copilot Credits are used automatically.</p></div>
+          <div class="step" data-tip="dc3|If both currencies are unavailable, AI Builder features fail and are blocked until credits are replenished.">
+            <div class="n">3</div><h4>Both exhausted &rarr; blocked</h4>
+            <p>No credits available = AI features stop working. Resets monthly.</p></div>
+        </div>
+        <p class="note"><b>Important:</b> Copilot Studio agents and agent flows <em>always</em> consume Copilot Credits only, regardless of AI Builder credit availability.</p>
+      </div>
+      <div class="card">
+        <p class="ctitle">Transition planning checklist</p>
+        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2.1;color:var(--text)">
+          <li>Audit current AI Builder credit consumption in Power Platform admin center</li>
+          <li>Identify all flows and apps using AI Builder models or prompts</li>
+          <li>Map each AI Builder capability to its Copilot Credit rate (see Credit Rates tab)</li>
+          <li>Estimate monthly Copilot Credits needed to replace seeded AIB credits</li>
+          <li>Budget for Copilot Credits via packs, PayGo, or P3 before Nov 2026</li>
+          <li>Update monitoring dashboards to track Copilot Credit consumption</li>
+          <li>Communicate timeline to stakeholders: finance, IT, and business owners</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-tip="tr-faq|Common questions about the transition, sourced from Microsoft Learn FAQ.">
+      <p class="ctitle">Frequently asked questions</p>
+      <div class="acc">
+        <details><summary class="ahd">Will my existing contracts be honored?</summary>
+        <div class="abody"><p>Yes. Microsoft honors AI Builder entitlements for contracts that started before Nov 1, 2025, for their full duration. Seeded credits in premium licenses continue through Nov 1, 2026 (or the contract end date if covered by a prior agreement).</p></div></details>
+        <details><summary class="ahd">What if I have both AI Builder credits and Copilot Credits?</summary>
+        <div class="abody"><p>AI Builder features in Power Apps and Power Automate consume AI Builder credits first. When those are exhausted, the system falls back to Copilot Credits. Consumption resets monthly.</p></div></details>
+        <details><summary class="ahd">Is there an automatic conversion from AIB to Copilot Credits?</summary>
+        <div class="abody"><p>No. There is no automatic conversion. You must purchase Copilot Credits separately to replace your AI Builder credit capacity.</p></div></details>
+        <details><summary class="ahd">What happens to seeded credits in Power Automate Premium?</summary>
+        <div class="abody"><p>The ~5,000 AI Builder credits seeded monthly in Power Automate Premium and similar licenses will be removed after Nov 1, 2026. No Copilot Credits are seeded as a replacement.</p></div></details>
+      </div>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" target="_blank" rel="noopener">End of AI Builder credits FAQ (Microsoft Learn)</a></p>
+    </div>
+  </section>
+
+  <!-- ============ POWER AUTOMATE & FLOWS ============ -->
+  <section class="tab" id="paflows" role="tabpanel" aria-labelledby="tab-paflows" tabindex="0">
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>Power Automate &amp; Flows</span>
+      <h2>How Power Automate and Desktop consume Copilot Credits</h2>
+      <p>Copilot Credits apply to AI-powered actions in Power Automate cloud flows, agent flows, and Power Automate Desktop. Understanding which actions consume credits &mdash; and which don't &mdash; is critical for accurate budgeting.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card kpi" data-tip="pa-agent|Agent flows bill all actions through Copilot Credits at 13 CC per 100 actions. No Power Automate license needed.">
+        <div class="lab">Agent flow rate <i class="ic-i">i</i></div>
+        <div class="val" style="color:var(--blue)">13</div>
+        <div class="delta">CC per 100 actions (0.13 each)</div>
+      </div>
+      <div class="card kpi" data-tip="pa-doc|Document processing (invoices, receipts, custom models) costs 8 CC per page regardless of flow type.">
+        <div class="lab">Doc processing <i class="ic-i">i</i></div>
+        <div class="val" style="color:var(--violet)">8</div>
+        <div class="delta">CC per page (invoice, receipt, etc.)</div>
+      </div>
+      <div class="card kpi" data-tip="pa-rpa|Standard RPA actions in Power Automate Desktop (UI automation, file ops, mouse/keyboard) do NOT consume Copilot Credits.">
+        <div class="lab">Desktop RPA actions <i class="ic-i">i</i></div>
+        <div class="val" style="color:var(--emerald)">Free</div>
+        <div class="delta">Standard RPA: no Copilot Credits</div>
+      </div>
+    </div>
+
+    <h3 class="sect"><span class="bar"></span>Classic cloud flows vs agent flows</h3>
+    <div class="card" style="overflow-x:auto">
+      <p class="ctitle">Billing comparison <i class="ic-i" data-tip="pa-compare|Classic flows use Power Automate licensing for non-AI actions. Agent flows bill everything through Copilot Credits. Converting from classic to agent is one-way and permanent.">i</i></p>
+      <table>
+        <thead><tr><th>Aspect</th><th>Classic cloud flow</th><th>Agent flow (Copilot Studio)</th></tr></thead>
+        <tbody>
+          <tr><td><b>License</b></td><td>Power Automate Premium ($15/user/mo)</td><td>Copilot Credits (no PA license needed)</td></tr>
+          <tr><td><b>Non-AI actions</b></td><td>Covered by PA license; no CC consumed</td><td>13 CC per 100 actions</td></tr>
+          <tr><td><b>AI Builder actions</b></td><td>AIB credits first, then CC fallback</td><td>Copilot Credits only (always)</td></tr>
+          <tr><td><b>Premium connectors</b></td><td>Require PA Premium license</td><td>Included in Copilot Credits</td></tr>
+          <tr><td><b>Post Nov 2026</b></td><td>AI actions require CC only</td><td>CC only (no change)</td></tr>
+          <tr><td><b>Conversion</b></td><td colspan="2">Classic &rarr; agent flow: one-way, permanent. Changes billing model.</td></tr>
+          <tr><td><b>Testing</b></td><td>Consumes credits</td><td>Free in designer and test chat</td></tr>
+        </tbody>
+      </table>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/flows-overview" target="_blank" rel="noopener">Agent flows overview (Microsoft Learn)</a></p>
+    </div>
+
+    <h3 class="sect"><span class="bar"></span>What consumes Copilot Credits in Power Automate</h3>
+    <div class="grid g2">
+      <div class="card">
+        <p class="ctitle">Actions that consume Copilot Credits</p>
+        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
+          <li><b>AI prompts</b> &mdash; basic, standard, or premium LLM models</li>
+          <li><b>Document processing</b> &mdash; invoices, receipts, custom models</li>
+          <li><b>Text recognition (OCR)</b> &mdash; extracting text from images/scans</li>
+          <li><b>Sentiment analysis, key phrases, language detection</b></li>
+          <li><b>Entity extraction, category classification, translation</b></li>
+          <li><b>Object detection &amp; image description</b></li>
+          <li><b>Agent flow actions</b> &mdash; all actions in agent flows</li>
+          <li><b>Copilot Auto Repair</b> in Desktop (AI-powered UI selector repair)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="ctitle">Actions that do NOT consume Copilot Credits</p>
+        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
+          <li><b>Standard cloud flow actions</b> &mdash; triggers, conditions, loops</li>
+          <li><b>Connector actions</b> &mdash; SharePoint, Outlook, Teams, etc.</li>
+          <li><b>Desktop RPA actions</b> &mdash; UI automation, file management</li>
+          <li><b>Mouse/keyboard simulation</b> in Power Automate Desktop</li>
+          <li><b>Application launching &amp; window management</b></li>
+          <li><b>Data operations</b> &mdash; compose, parse JSON, filter array</li>
+          <li><b>Business card reader &amp; prediction</b> (free)</li>
+          <li><b>Testing</b> prompts in prompt builder or models in AI models page</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sect"><span class="bar"></span>Power Automate Desktop</h3>
+    <div class="grid g2">
+      <div class="card">
+        <p class="ctitle">Desktop: what's covered by your PA license <i class="ic-i" data-tip="pad-lic|Power Automate Premium includes attended RPA. Unattended requires the Process plan. Standard RPA actions have no Copilot Credit cost.">i</i></p>
+        <div class="flow" style="flex-direction:column">
+          <div class="step" data-tip="pad1|UI automation, file operations, Excel automation, web scraping, keyboard/mouse actions are all covered by the PA license.">
+            <div class="n">&#10003;</div><h4>Standard RPA &mdash; no Copilot Credits</h4>
+            <p>UI automation, file ops, Excel, web scraping, mouse/keyboard &mdash; all covered by Power Automate Premium license.</p></div>
+          <div class="step" data-tip="pad2|AI-powered features like Create text with GPT or Copilot Auto Repair do consume Copilot Credits.">
+            <div class="n">&#9889;</div><h4>AI actions &mdash; consume Copilot Credits</h4>
+            <p>Create text with GPT, Copilot Auto Repair, and any AI Builder model called from a connected cloud flow.</p></div>
+          <div class="step" data-tip="pad3|Unattended desktop flow runs require the Power Automate Process plan in addition to any Copilot Credits for AI actions.">
+            <div class="n">&#9881;</div><h4>Unattended runs &mdash; require Process plan</h4>
+            <p>Unattended desktop flows need the Power Automate Process license regardless of credit consumption.</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="ctitle">Real-world flow budgeting scenarios</p>
+        <table>
+          <thead><tr><th>Scenario</th><th>Actions</th><th class="num">CC / run</th></tr></thead>
+          <tbody>
+            <tr data-tip="sc1|10-page invoice via document processing: 10 pages x 8 CC = 80 CC per invoice."><td>Invoice processing (10 pages)</td><td>Receipt/invoice analysis</td><td class="num">80</td></tr>
+            <tr data-tip="sc2|3-page contract via custom doc processing model: 3 x 8 = 24 CC."><td>Contract extraction (3 pages)</td><td>Custom doc processing</td><td class="num">24</td></tr>
+            <tr data-tip="sc3|Sentiment analysis on a 5K-character email: 5 x 0.1 = 0.5 CC."><td>Email sentiment (5K chars)</td><td>Sentiment analysis</td><td class="num">0.5</td></tr>
+            <tr data-tip="sc4|GPT prompt for email draft, ~2K tokens basic model: 2 x 0.1 = 0.2 CC."><td>AI email draft (2K tokens)</td><td>Prompt (basic LLM)</td><td class="num">0.2</td></tr>
+            <tr data-tip="sc5|Agent flow with 50 actions: 50/100 x 13 = 6.5 CC."><td>Agent flow (50 actions)</td><td>Mixed flow actions</td><td class="num">6.5</td></tr>
+            <tr data-tip="sc6|Desktop RPA + cloud flow chain: RPA steps are free, only AI steps in the cloud flow cost credits."><td>Desktop RPA + cloud AI</td><td>RPA free; AI in cloud flow</td><td class="num">Varies</td></tr>
+          </tbody>
+        </table>
+        <p class="note"><b>Monthly estimate:</b> multiply CC/run by runs per month. Example: 500 invoices/mo &times; 80 CC = 40,000 CC = $400 at PayGo or look for P3 discount.</p>
+      </div>
     </div>
   </section>
 
@@ -535,21 +739,21 @@ a.ref .url .ext{flex:none}
         <h4>&#9889; Start here: Copilot Credit Estimator</h4>
         <p>Forecast a new agent's monthly Copilot Credit consumption, test low, medium, and high volume scenarios, then export a PDF for procurement. Opens the official Microsoft tool in a new tab.</p>
       </div>
-      <a class="btn" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener" data-tip="estimator-link|The official, latest Copilot Credit Estimator. Supersedes the old static Message Estimator and Calculator spreadsheets.|Source: microsoft.github.io/copilot-studio-estimator">Open Copilot Credit Estimator &#8599;</a>
+      <a class="btn" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener" data-tip="estimator-link|The official, latest Copilot Credit Estimator. Supersedes the old static Message Estimator and Calculator spreadsheets.">Open Copilot Credit Estimator &#8599;</a>
     </div>
 
     <div class="card">
       <p class="ctitle">The Copilot Credit Estimator workflow</p>
       <div class="flow">
-        <div class="step" data-tip="b1|Choose from Copilot Studio custom (B2E, B2C) and Dynamics 365 agent types. You can add multiple agents and departments.|Source: Copilot Credit Estimator, Get started">
+        <div class="step" data-tip="b1|Choose from Copilot Studio custom (B2E, B2C) and Dynamics 365 agent types. You can add multiple agents and departments.">
           <div class="n">1</div><h4>Select agent type</h4><p>Custom B2E / B2C or D365 Sales, Service, Finance, Supply Chain agents.</p></div>
-        <div class="step" data-tip="b2|Enter traffic volumes informed by the last 3 to 6 months of history. Validate, do not guess.|Source: Copilot Credit Estimator best practices">
+        <div class="step" data-tip="b2|Enter traffic volumes informed by the last 3 to 6 months of history. Validate, do not guess.">
           <div class="n">2</div><h4>Enter traffic</h4><p>Monthly conversations or triggers, ideally from 3 to 6 months of history.</p></div>
-        <div class="step" data-tip="b3|Set orchestration mode, knowledge sources, and tools. These map directly to the credit rates on the Credit Rates tab.|Source: Copilot Credit Estimator inputs">
+        <div class="step" data-tip="b3|Set orchestration mode, knowledge sources, and tools. These map directly to the credit rates on the Credit Rates tab.">
           <div class="n">3</div><h4>Configure features</h4><p>Orchestration, knowledge (grounding), actions, flows, and AI tools.</p></div>
-        <div class="step" data-tip="b4|The Copilot Credit Estimator returns total monthly credits, a breakdown by activity type, and per-agent detail in real time.|Source: Copilot Credit Estimator, Review results">
+        <div class="step" data-tip="b4|The Copilot Credit Estimator returns total monthly credits, a breakdown by activity type, and per-agent detail in real time.">
           <div class="n">4</div><h4>Review results</h4><p>Total monthly credits, breakdown by activity, per-agent contribution.</p></div>
-        <div class="step" data-tip="b5|Export a PDF with inputs, breakdown, totals, timestamp and disclaimer for procurement and finance.|Source: Copilot Credit Estimator, Export results">
+        <div class="step" data-tip="b5|Export a PDF with inputs, breakdown, totals, timestamp and disclaimer for procurement and finance.">
           <div class="n">5</div><h4>Export PDF</h4><p>Submit with purchase requisitions and annual budget proposals.</p></div>
       </div>
       <p class="note"><b>Always add a 10 to 20% buffer</b> above the estimate to absorb seasonality, business growth, and feature-adoption variance. Test low, medium, and high volume scenarios to bracket cost.</p>
@@ -557,7 +761,7 @@ a.ref .url .ext{flex:none}
 
     <div class="grid g2">
       <div class="card">
-        <p class="ctitle">Worked monthly forecast from the published examples <i class="ic-i" data-tip="b-monthly|Daily figures are Microsoft-published. The monthly view applies a 30-day assumption and the recommended 20% buffer, both clearly flagged.|Source: Billing examples (daily); 30-day and 20% buffer are stated assumptions, see Calculation Log">i</i></p>
+        <p class="ctitle">Worked monthly forecast from the published examples <i class="ic-i" data-tip="b-monthly|Daily figures are Microsoft-published. The monthly view applies a 30-day assumption and the recommended 20% buffer, both clearly flagged.">i</i></p>
         <svg id="monthlybars" height="280" style="width:100%"></svg>
         <div class="legend">
           <span><span class="dot" style="background:var(--blue)"></span>Estimated credits/mo</span>
@@ -570,9 +774,9 @@ a.ref .url .ext{flex:none}
         <table>
           <thead><tr><th>Agent</th><th class="num">Credits/mo*</th><th class="num">PayGo cost/mo</th></tr></thead>
           <tbody>
-            <tr data-tip="bm1|7,200/day x 30 = 216,000 credits; x $0.01 = $2,160. Add 20% buffer for a safe budget.|Source: derived from support example + PayGo rate"><td>Customer support</td><td class="num">216,000</td><td class="num">$2,160</td></tr>
-            <tr data-tip="bm2|4,800/day x 30 = 144,000 credits; x $0.01 = $1,440.|Source: derived from sales example + PayGo rate"><td>Sales performance</td><td class="num">144,000</td><td class="num">$1,440</td></tr>
-            <tr data-tip="bm3|20/day x 30 = 600 credits; x $0.01 = $6.|Source: derived from order example + PayGo rate"><td>Order processing</td><td class="num">600</td><td class="num">$6</td></tr>
+            <tr data-tip="bm1|7,200/day x 30 = 216,000 credits; x $0.01 = $2,160. Add 20% buffer for a safe budget."><td>Customer support</td><td class="num">216,000</td><td class="num">$2,160</td></tr>
+            <tr data-tip="bm2|4,800/day x 30 = 144,000 credits; x $0.01 = $1,440."><td>Sales performance</td><td class="num">144,000</td><td class="num">$1,440</td></tr>
+            <tr data-tip="bm3|20/day x 30 = 600 credits; x $0.01 = $6."><td>Order processing</td><td class="num">600</td><td class="num">$6</td></tr>
           </tbody>
         </table>
         <p class="note"><b>Then choose a model:</b> if monthly volume is steady, size credit packs (25,000 each). If variable or large, model a P3 tier. Keep PayGo linked as the overage safety net so agents never stop.</p>
@@ -592,30 +796,30 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="grid g3">
-      <div class="card kpi" data-tip="mon1|Enforcement triggers when a tenant reaches 125% of prepaid capacity. Custom agents are then disabled.|Source: Billing rates and management, Enforcement policy">
+      <div class="card kpi" data-tip="mon1|Enforcement triggers when a tenant reaches 125% of prepaid capacity. Custom agents are then disabled.">
         <div class="lab">Overage enforcement <i class="ic-i">i</i></div><div class="val breathe" style="color:var(--rose)">125%</div><div class="delta">of prepaid capacity, then agents disabled</div></div>
-      <div class="card kpi" data-tip="mon2|PPAC shows daily consumption at environment level for up to three months, plus monthly data for the past 12 months.|Source: Manage Copilot Studio credits and capacity">
+      <div class="card kpi" data-tip="mon2|PPAC shows daily consumption at environment level for up to three months, plus monthly data for the past 12 months.">
         <div class="lab">Daily consumption history <i class="ic-i">i</i></div><div class="val" style="color:var(--blue)">3 mo</div><div class="delta">daily detail; 12 mo monthly</div></div>
-      <div class="card kpi" data-tip="mon3|Two guardrails per agent: notifications as usage nears the limit, and a hard stop that turns the agent off at the limit.|Source: Manage monthly consumption limits for agents">
+      <div class="card kpi" data-tip="mon3|Two guardrails per agent: notifications as usage nears the limit, and a hard stop that turns the agent off at the limit.">
         <div class="lab">Per-agent guardrails <i class="ic-i">i</i></div><div class="val" style="color:var(--emerald)">2</div><div class="delta">notifications + hard stop</div></div>
     </div>
 
     <div class="grid g2">
       <div class="card">
-        <p class="ctitle">Where to monitor in <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> <i class="ic-i" data-tip="ppac|Licensing > Copilot Studio. Summary, Copilot credit capacity, and Environments tabs each surface a different lens on consumption.|Source: Manage Copilot Studio credits and capacity">i</i></p>
+        <p class="ctitle">Where to monitor in <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> <i class="ic-i" data-tip="ppac|Licensing > Copilot Studio. Summary, Copilot credit capacity, and Environments tabs each surface a different lens on consumption.">i</i></p>
         <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="p-1|Summary tab shows prepaid and pay-as-you-go capacity cards and the daily consumption trend.|Source: View summary information">
+          <div class="step" data-tip="p-1|Summary tab shows prepaid and pay-as-you-go capacity cards and the daily consumption trend.">
             <div class="n">A</div><h4>Summary tab</h4><p>Pay-as-you-go credits card, prepaid capacity card, daily consumption.</p></div>
-          <div class="step" data-tip="p-2|Capacity consumption by product, total trend over 3 months, and top environments by usage.|Source: Copilot credits capacity tab">
+          <div class="step" data-tip="p-2|Capacity consumption by product, total trend over 3 months, and top environments by usage.">
             <div class="n">B</div><h4>Copilot credit capacity tab</h4><p>By product, 3-month trend, top environments by usage.</p></div>
-          <div class="step" data-tip="p-3|Per-environment view: credits drawn from prepaid vs billed to pay-as-you-go, and status (within capacity or overage).|Source: View credit capacity consumed per environment">
+          <div class="step" data-tip="p-3|Per-environment view: credits drawn from prepaid vs billed to pay-as-you-go, and status (within capacity or overage).">
             <div class="n">C</div><h4>Environments tab</h4><p>Prepaid vs PayGo per environment, allocation and overage status.</p></div>
-          <div class="step" data-tip="p-4|Manage Agents lists every billing agent with month-to-date credits, configured limits, and status (Nearing, Over, Within limit).|Source: Manage monthly consumption limits">
+          <div class="step" data-tip="p-4|Manage Agents lists every billing agent with month-to-date credits, configured limits, and status (Nearing, Over, Within limit).">
             <div class="n">D</div><h4>Manage Agents</h4><p>Set monthly per-agent limits; status Nearing / Over / Within limit.</p></div>
         </div>
       </div>
       <div class="card">
-        <p class="ctitle">Overage and enforcement, step by step <i class="ic-i" data-tip="enf|How spend is controlled as it climbs from normal use through grace into enforcement.|Source: Overage enforcement and Enforcement policy">i</i></p>
+        <p class="ctitle">Overage and enforcement, step by step <i class="ic-i" data-tip="enf|How spend is controlled as it climbs from normal use through grace into enforcement.">i</i></p>
         <svg id="enfbar" height="150" style="width:100%"></svg>
         <ul style="margin:10px 0 0;padding-left:18px;font-size:12.5px;color:var(--muted);line-height:1.85">
           <li><b style="color:var(--text)">Under 100%:</b> normal consumption from allocated capacity.</li>
@@ -627,11 +831,11 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="grid g2">
-      <div class="card" data-tip="flowenf|Agent flow enforcement differs: when prepaid capacity is fully consumed, new flow runs are blocked while the parent agent keeps working for non-flow interactions. Resets monthly.|Source: Agent flow enforcement">
+      <div class="card" data-tip="flowenf|Agent flow enforcement differs: when prepaid capacity is fully consumed, new flow runs are blocked while the parent agent keeps working for non-flow interactions. Resets monthly.">
         <p class="ctitle">Agent flow enforcement is different</p>
         <p style="font-size:12.6px;color:var(--muted);margin:0">When prepaid capacity is fully consumed, new agent flow runs are blocked, but the parent agent continues to function for classic answers, generative answers, and agent actions. In-progress runs finish. M365 Copilot licensed users and test runs are exempt. Resolve by reallocating capacity, buying more credits, or enabling PayGo.</p>
       </div>
-      <div class="card" data-tip="alloc|Capacity can be allocated per environment. Reserved capacity is honored before tenant-level enforcement applies.|Source: Enforcement example, Microsoft Learn">
+      <div class="card" data-tip="alloc|Capacity can be allocated per environment. Reserved capacity is honored before tenant-level enforcement applies.">
         <p class="ctitle">Allocation example, 25,000 credits</p>
         <table><tbody>
           <tr><td>Environment A (allocated)</td><td class="num">10,000</td></tr>
@@ -654,16 +858,16 @@ a.ref .url .ext{flex:none}
     </div>
 
     <div class="grid g3">
-      <div class="card kpi" data-tip="val1|At Tier 9, committing $2.4M for 300M credits saves $600K versus buying the same credits at PayGo $0.01.|Source: derived, PayGo-equivalent minus tier price">
+      <div class="card kpi" data-tip="val1|At Tier 9, committing $2.4M for 300M credits saves $600K versus buying the same credits at PayGo $0.01.">
         <div class="lab">Top-tier savings <i class="ic-i">i</i></div><div class="val breathe" style="color:var(--emerald)">$600K</div><div class="delta">Tier 9 vs PayGo, 20% off</div></div>
-      <div class="card kpi" data-tip="val2|Effective per-credit price falls from $0.0095 at Tier 1 to $0.0080 at Tier 9, versus $0.01 PayGo.|Source: derived, price / credits">
+      <div class="card kpi" data-tip="val2|Effective per-credit price falls from $0.0095 at Tier 1 to $0.0080 at Tier 9, versus $0.01 PayGo.">
         <div class="lab">Best effective rate <i class="ic-i">i</i></div><div class="val" style="color:var(--blue)">$0.0080</div><div class="delta">per credit at Tier 9 vs $0.01 PayGo</div></div>
-      <div class="card kpi" data-tip="val3|P3 spend is MACC eligible, drawing down the Azure Consumption Commitment while funding agents.|Source: P3 deck slide 3">
+      <div class="card kpi" data-tip="val3|P3 spend is MACC eligible, drawing down the Azure Consumption Commitment while funding agents.">
         <div class="lab">MACC drawdown <i class="ic-i">i</i></div><div class="val" style="color:var(--amber)">Eligible</div><div class="delta">retire MACC faster</div></div>
     </div>
 
     <div class="card">
-      <p class="ctitle">Savings versus pay-as-you-go, by P3 tier <i class="ic-i" data-tip="val-chart|Each bar is the dollar saved by committing to a tier instead of buying the same credits at PayGo. Savings accelerate sharply at the top tiers.|Source: derived; see Calculation Log">i</i></p>
+      <p class="ctitle">Savings versus pay-as-you-go, by P3 tier <i class="ic-i" data-tip="val-chart|Each bar is the dollar saved by committing to a tier instead of buying the same credits at PayGo. Savings accelerate sharply at the top tiers.">i</i></p>
       <svg id="savingsbars" height="320" style="width:100%"></svg>
       <p class="src">Savings = (credits &times; $0.01 PayGo) - tier price. All figures reconcile to published 5 to 20% discounts.</p>
     </div>
@@ -674,10 +878,10 @@ a.ref .url .ext{flex:none}
         <thead><tr><th>Tier</th><th class="num">Credits</th><th class="num">PayGo-equivalent</th><th class="num">P3 price</th><th class="num">You save</th><th class="num">Discount</th></tr></thead>
         <tbody id="valrows"></tbody>
       </table>
-      <p class="src">PayGo-equivalent = credits &times; $0.01. Savings and effective rates derived; discount column is published. Source: Licensing Guide and P3 deck.</p>
+      <p class="src">PayGo-equivalent = credits &times; $0.01. Savings and effective rates derived; discount column is published. Source: Licensing Guide.</p>
     </div>
 
-    <p class="bigquote">"Like a gift card for agentic services" - commit upfront, draw down across the year, and unlock more savings the more you commit to. Source: P3 Overview deck.</p>
+    <p class="bigquote">"Like a gift card for agentic services" — commit upfront, draw down across the year, and unlock more savings the more you commit to.</p>
   </section>
 
   <!-- ============ HOW TO PURCHASE P3 ============ -->
@@ -690,7 +894,7 @@ a.ref .url .ext{flex:none}
 
     <h3 class="sect"><span class="bar"></span>Purchase P3 in the Azure Portal</h3>
     <div class="card">
-      <p class="ctitle">Step-by-step purchase flow <i class="ic-i" data-tip="flowmap-tip|Captured from the attached How to Purchase P3 process diagram. Scroll right to follow all seven steps; sub-cards hang beneath the steps that have them.|Source: attached How to Purchase P3 image">i</i></p>
+      <p class="ctitle">Step-by-step purchase flow <i class="ic-i" data-tip="flowmap-tip|Captured from the attached How to Purchase P3 process diagram. Scroll right to follow all seven steps; sub-cards hang beneath the steps that have them.">i</i></p>
       <div class="flowmap">
         <div class="fcol">
           <div class="fstep lead"><span class="fnum">1</span><p>To purchase P3, <b>one</b> of the following must be true.</p></div>
@@ -729,28 +933,28 @@ a.ref .url .ext{flex:none}
           <li>Follow the steps in <a class="ilink" href="https://learn.microsoft.com/en-us/partner-center/customers/azure-ri-server-subscriptions" target="_blank" rel="noopener">Acquire, provision, and manage Azure reserved VM instances (RI) + server subscriptions for customers</a>.</li>
         </ol>
       </div>
-      <p class="src">Captured from the attached How to Purchase P3 process diagram. Steps 1, 5, and 6 include the sub-items shown beneath them in the source.</p>
+      <p class="src">Steps 1, 5, and 6 include the sub-items shown beneath them.</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>Compare the three ways to buy</h3>
     <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Buying-options comparison from the deck <i class="ic-i" data-tip="cfg-matrix|The side-by-side from slide 2: price, where to purchase, purchase construct, and MACC eligibility. The P3 column is highlighted.|Source: P3 Overview deck, slide 2">i</i></p>
+      <p class="ctitle">Buying-options comparison <i class="ic-i" data-tip="cfg-matrix|Side-by-side comparison: price, where to purchase, purchase construct, and MACC eligibility. The P3 column is highlighted.">i</i></p>
       <table>
         <thead><tr><th>Dimension</th><th>Credit capacity packs</th><th>Pay-as-you-go</th><th class="colhi">Pre-Purchase Plan (P3)</th></tr></thead>
         <tbody>
-          <tr data-tip="m-price|Packs are a flat monthly subscription; PAYG is a flat per-unit rate; P3 applies built-in tiered volume discounts.|Source: deck slide 2, Price">
+          <tr data-tip="m-price|Packs are a flat monthly subscription; PAYG is a flat per-unit rate; P3 applies built-in tiered volume discounts.">
             <td><b>Price</b></td><td>$200 per pack/month/tenant</td><td>$0.01/message</td><td class="colhi">Built-in tiered volume discount depending on the tier</td></tr>
-          <tr data-tip="m-where|Packs use the M365 Admin Center; PAYG and P3 are both transacted in the Azure Portal and require an Azure subscription.|Source: deck slide 2, Where to Purchase">
+          <tr data-tip="m-where|Packs use the M365 Admin Center; PAYG and P3 are both transacted in the Azure Portal and require an Azure subscription.">
             <td><b>Where to purchase</b></td><td>Microsoft 365 Admin Center</td><td>Azure Portal (Azure subscription)</td><td class="colhi">Azure Portal (Azure subscription)</td></tr>
-          <tr data-tip="m-construct|Packs are a license subscription paid upfront; PAYG bills monthly in arrears; P3 is a one-time Azure purchase paid upfront.|Source: deck slide 2, Purchase/Construct">
+          <tr data-tip="m-construct|Packs are a license subscription paid upfront; PAYG bills monthly in arrears; P3 is a one-time Azure purchase paid upfront.">
             <td><b>Purchase model</b></td><td>License subscription (upfront)</td><td>Pay-as-you-go (monthly in arrears)</td><td class="colhi">One-time Azure purchase (paid upfront)</td></tr>
-          <tr data-tip="m-macc|Only the Azure-transacted models draw down a Microsoft Azure Consumption Commitment. Packs are not MACC eligible.|Source: deck slide 2, MACC Eligibility">
+          <tr data-tip="m-macc|Only the Azure-transacted models draw down a Microsoft Azure Consumption Commitment. Packs are not MACC eligible.">
             <td><b>MACC eligibility</b></td><td>Not eligible</td><td>Eligible</td><td class="colhi">Eligible</td></tr>
-          <tr data-tip="m-fit|Match the model to the demand pattern.|Source: deck slide 2, segment descriptions">
+          <tr data-tip="m-fit|Match the model to the demand pattern.">
             <td><b>Best for</b></td><td>Steady, predictable usage</td><td>No prior usage history</td><td class="colhi">Larger or variable demand</td></tr>
         </tbody>
       </table>
-      <p class="src">Source: Copilot Credit P3 Overview deck, slide 2. The deck labels the PAYG rate "$0.01/message"; the licensing guide states the same rate as $0.01 per Copilot Credit (currency renamed from messages in September 2025).</p>
+      <p class="src">The licensing guide states the rate as $0.01 per Copilot Credit (currency renamed from messages in September 2025).</p>
     </div>
   </section>
 
@@ -764,7 +968,7 @@ a.ref .url .ext{flex:none}
 
     <h3 class="sect"><span class="bar"></span>Linking your Azure subscription to your environment</h3>
     <div class="card">
-      <p class="ctitle">Step-by-step linking flow <i class="ic-i" data-tip="linkflow-tip|Captured from the attached Linking your Azure Subscription to your Environment process diagram. Follow the steps in number order; sub-cards hang beneath the steps that have them.|Source: attached Linking your Azure Subscription to your Environment image">i</i></p>
+      <p class="ctitle">Step-by-step linking flow <i class="ic-i" data-tip="linkflow-tip|Captured from the attached Linking your Azure Subscription to your Environment process diagram. Follow the steps in number order; sub-cards hang beneath the steps that have them.">i</i></p>
       <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Once P3 is purchased with an Azure subscription, the subscription needs to be linked to the environment via a billing plan in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> (PPAC). Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan - Power Platform | Microsoft Learn</a>.</p>
       <div class="flowmap">
         <div class="fcol"><div class="fstep"><span class="fnum">1</span><p>In the navigation pane, select <b>Licensing</b></p></div></div>
@@ -787,12 +991,12 @@ a.ref .url .ext{flex:none}
         <div class="fcol"><div class="fstep"><span class="fnum">10</span><p>In the Select environments pane, in the <b>Region</b> list, select your region. Then the list of environments in that region is displayed</p></div></div>
         <div class="fcol"><div class="fstep"><span class="fnum">11</span><p>Select <b>Save</b></p></div></div>
       </div>
-      <p class="src">Captured from the attached Linking your Azure Subscription to your Environment process diagram. Steps 6 and 7 include the sub-items shown beneath them in the source.</p>
+      <p class="src">Steps 6 and 7 include the sub-items shown beneath them.</p>
     </div>
 
     <h3 class="sect"><span class="bar"></span>Size your commitment</h3>
     <div class="card">
-      <p class="ctitle">Interactive tier configurator <i class="ic-i" data-tip="cfg-tip|Drag the slider to model any of the 9 published P3 tiers. Every value updates live from the source tier table; savings and effective rate are derived.|Source: P3 deck slide 4; derived figures in Calculation Log">i</i></p>
+      <p class="ctitle">Interactive tier configurator <i class="ic-i" data-tip="cfg-tip|Drag the slider to model any of the 9 published P3 tiers. Every value updates live from the source tier table; savings and effective rate are derived.">i</i></p>
       <div class="cfg">
         <div>
           <div class="slider-wrap">
@@ -807,13 +1011,13 @@ a.ref .url .ext{flex:none}
           <p class="bigquote" style="margin-top:14px">Like a gift card for agentic services.</p>
         </div>
         <div class="read">
-          <div class="cell" data-tip="cfg-cccu|Copilot Credit Commit Units purchased upfront for this tier.|Source: P3 tier table"><div class="k">CCCU</div><div class="v" id="cfgCccu">-</div></div>
-          <div class="cell" data-tip="cfg-cr|Copilot Credits available = CCCU x 100.|Source: P3 tier table; conversion 1 CCCU = 100 credits"><div class="k">Copilot Credits</div><div class="v" id="cfgCr">-</div></div>
-          <div class="cell" data-tip="cfg-price|Upfront one-year price for this tier.|Source: P3 tier table"><div class="k">Upfront price</div><div class="v" id="cfgPrice">-</div></div>
-          <div class="cell" data-tip="cfg-disc|Published discount versus the $0.01 PayGo rate.|Source: P3 tier table"><div class="k">Discount vs PayGo</div><div class="v" id="cfgDisc">-</div></div>
-          <div class="cell" data-tip="cfg-eff|Effective unit price = price / credits.|Source: derived"><div class="k">Effective $/credit</div><div class="v" id="cfgEff">-</div></div>
-          <div class="cell" data-tip="cfg-pack|How this tier maps to monthly MCS credit-pack purchases over 12 months.|Source: licensing guide pack-equivalent column"><div class="k">Pack equivalent</div><div class="v" id="cfgPack" style="font-size:13px">-</div></div>
-          <div class="cell hero" data-tip="cfg-sav|Dollars saved versus buying the same credits at PayGo $0.01.|Source: derived, PayGo-equivalent minus price"><div class="k">You save vs PayGo</div><div class="v" id="cfgSav">-</div></div>
+          <div class="cell" data-tip="cfg-cccu|Copilot Credit Commit Units purchased upfront for this tier."><div class="k">CCCU</div><div class="v" id="cfgCccu">-</div></div>
+          <div class="cell" data-tip="cfg-cr|Copilot Credits available = CCCU x 100."><div class="k">Copilot Credits</div><div class="v" id="cfgCr">-</div></div>
+          <div class="cell" data-tip="cfg-price|Upfront one-year price for this tier."><div class="k">Upfront price</div><div class="v" id="cfgPrice">-</div></div>
+          <div class="cell" data-tip="cfg-disc|Published discount versus the $0.01 PayGo rate."><div class="k">Discount vs PayGo</div><div class="v" id="cfgDisc">-</div></div>
+          <div class="cell" data-tip="cfg-eff|Effective unit price = price / credits."><div class="k">Effective $/credit</div><div class="v" id="cfgEff">-</div></div>
+          <div class="cell" data-tip="cfg-pack|How this tier maps to monthly MCS credit-pack purchases over 12 months."><div class="k">Pack equivalent</div><div class="v" id="cfgPack" style="font-size:13px">-</div></div>
+          <div class="cell hero" data-tip="cfg-sav|Dollars saved versus buying the same credits at PayGo $0.01."><div class="k">You save vs PayGo</div><div class="v" id="cfgSav">-</div></div>
         </div>
       </div>
       <p class="src">Tier, CCCU, credits, price, discount, and pack-equivalent are published. Effective rate and savings are derived (price/credits; credits x $0.01 - price).</p>
@@ -821,12 +1025,12 @@ a.ref .url .ext{flex:none}
 
     <h3 class="sect"><span class="bar"></span>Why choose P3</h3>
     <div class="grid g3">
-      <div class="card" data-tip="b1|Tiered thresholds discount every credit, up to 20% off PayGo at the top tier.|Source: deck slide 3"><span class="tag vi">Discounts</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Built-in tiered discount thresholds based on volume, up to 20% off PayGo rates.</p></div>
-      <div class="card" data-tip="b2|CCCUs live for a full year rather than expiring monthly like packs.|Source: deck slide 3"><span class="tag em">Annual flexibility</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Annual expiration of CCCU versus monthly expiry with capacity packs.</p></div>
-      <div class="card" data-tip="b3|Commit a predictable lump sum and add tiers whenever demand grows.|Source: deck slide 3"><span class="tag blue">Predictable</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Predictable pre-pay model with flexibility to add P3 tiers at any time.</p></div>
-      <div class="card" data-tip="b4|P3 spend draws down your Azure Consumption Commitment.|Source: deck slide 3"><span class="tag am">MACC eligible</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">MACC eligible, maximizing existing Azure investment.</p></div>
-      <div class="card" data-tip="b5|See utilization live in the Azure Portal across the term.|Source: deck slide 3"><span class="tag te">Real-time tracking</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Easily track P3 utilization in real time through the Azure Portal.</p></div>
-      <div class="card" data-tip="b6|No M365 Admin Center license required, unlike capacity packs.|Source: deck slide 3"><span class="tag ro">No M365 license</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">No need for a license in the Microsoft 365 Admin Center, as required for capacity packs.</p></div>
+      <div class="card" data-tip="b1|Tiered thresholds discount every credit, up to 20% off PayGo at the top tier."><span class="tag vi">Discounts</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Built-in tiered discount thresholds based on volume, up to 20% off PayGo rates.</p></div>
+      <div class="card" data-tip="b2|CCCUs live for a full year rather than expiring monthly like packs."><span class="tag em">Annual flexibility</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Annual expiration of CCCU versus monthly expiry with capacity packs.</p></div>
+      <div class="card" data-tip="b3|Commit a predictable lump sum and add tiers whenever demand grows."><span class="tag blue">Predictable</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Predictable pre-pay model with flexibility to add P3 tiers at any time.</p></div>
+      <div class="card" data-tip="b4|P3 spend draws down your Azure Consumption Commitment."><span class="tag am">MACC eligible</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">MACC eligible, maximizing existing Azure investment.</p></div>
+      <div class="card" data-tip="b5|See utilization live in the Azure Portal across the term."><span class="tag te">Real-time tracking</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Easily track P3 utilization in real time through the Azure Portal.</p></div>
+      <div class="card" data-tip="b6|No M365 Admin Center license required, unlike capacity packs."><span class="tag ro">No M365 license</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">No need for a license in the Microsoft 365 Admin Center, as required for capacity packs.</p></div>
     </div>
   </section>
 
@@ -972,8 +1176,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
 const p3rows=document.getElementById('p3rows');
 P3.forEach(d=>{const eff=(d.price/d.cr);
   const tr=document.createElement('tr');
-  tr.setAttribute('data-tip',`Tier ${d.t}|${fmtN(d.cr)} credits for ${fmtM(d.price)}, ${d.disc}% off PayGo. Effective $${eff.toFixed(5)} per credit.|Source: Licensing Guide tier table; eff. rate derived`);
-  tr.innerHTML=`<td><b>${d.t}</b></td><td class="num">${fmtN(d.cccu)}</td><td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(d.price)}</td>
+  tr.setAttribute('data-tip',`Tier ${d.t}|${fmtN(d.cr)} credits for ${fmtM(d.price)}, ${d.disc}% off PayGo. Effective $${eff.toFixed(5)} per credit.`);
+  tr.innerHTML=`<td class="num">${fmtN(d.cccu)}</td><td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(d.price)}</td>
     <td class="num"><span class="pill" style="background:color-mix(in srgb,var(--violet) 16%,transparent);color:var(--violet)">${d.disc}%</span></td>
     <td class="num">$${eff.toFixed(5)}</td><td>${d.pack}</td>`;
   p3rows.appendChild(tr);});
@@ -981,8 +1185,8 @@ P3.forEach(d=>{const eff=(d.price/d.cr);
 const valrows=document.getElementById('valrows');
 P3.forEach(d=>{const pe=d.cr*PAYG;const sav=pe-d.price;
   const tr=document.createElement('tr');
-  tr.setAttribute('data-tip',`Tier ${d.t}|Committing ${fmtM(d.price)} for ${fmtN(d.cr)} credits saves ${fmtM(sav)} vs ${fmtM(pe)} at PayGo.|Source: derived, PayGo-equivalent minus price`);
-  tr.innerHTML=`<td><b>${d.t}</b></td><td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(pe)}</td><td class="num">${fmtM(d.price)}</td>
+  tr.setAttribute('data-tip',`Tier ${d.t}|Committing ${fmtM(d.price)} for ${fmtN(d.cr)} credits saves ${fmtM(sav)} vs ${fmtM(pe)} at PayGo.`);
+  tr.innerHTML=`<td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(pe)}</td><td class="num">${fmtM(d.price)}</td>
     <td class="num" style="color:var(--emerald);font-weight:700">${fmtM(sav)}</td>
     <td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">${d.disc}%</span></td>`;
   valrows.appendChild(tr);});
