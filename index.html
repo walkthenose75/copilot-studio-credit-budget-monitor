@@ -365,8 +365,8 @@ a.ref .url .ext{flex:none}
             <td><b>Credit pack (MCS license)</b></td><td>Annual bill, monthly expiry</td><td class="num">$200 / 25,000 credits</td><td>Steady, predictable monthly usage</td><td>M365 Admin Center license</td></tr>
           <tr data-tip="o-cccu|One-year pre-paid CCCU pool with tiered discounts up to 20%. MACC eligible. Unused CCCU expire annually.">
             <td><b>Copilot Credit P3</b></td><td>1 year, annual expiry</td><td class="num">1 CCCU = 100 credits = $1</td><td>Large or variable demand</td><td>Azure Portal + billing policy</td></tr>
-          <tr data-tip="o-acu|Unified one-year pool spanning Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits. Annual expiry.">
-            <td><b>Microsoft Agent P3</b></td><td>1 year, annual expiry</td><td class="num">1 ACU = 100 credits = $1</td><td>Agentic spend across MCS + Foundry</td><td>Azure Portal + billing policy</td></tr>
+          <tr data-tip="o-acu|Unified one-year pool spanning Copilot Studio, Foundry, Fabric, and GitHub. 1 ACU = $1 = 100 credits. Annual expiry.">
+            <td><b>Microsoft Agent P3</b></td><td>1 year, annual expiry</td><td class="num">1 ACU = 100 credits = $1</td><td>Agentic spend across MCS, Foundry, Fabric, GitHub</td><td>Azure Portal + billing policy</td></tr>
           <tr data-tip="o-m365|Employee-facing (B2E) agent usage is included in the M365 Copilot USL when the agent runs as the licensed user. Classic, generative, and tenant graph grounding are zero-rated. Fair usage limits apply.">
             <td><b>Microsoft 365 Copilot inclusion</b></td><td>Per user/month</td><td class="num">$30 / user / mo</td><td>B2E scenarios on M365 surfaces</td><td>M365 Copilot license</td></tr>
         </tbody>
@@ -511,8 +511,36 @@ a.ref .url .ext{flex:none}
     </div>
 
     <h3 class="sect"><span class="bar"></span>Microsoft Agent Pre-Purchase Plan (ACUs)</h3>
-    <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Unified agentic spend across Copilot Studio and Microsoft Foundry <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units that cover eligible usage in both Copilot Studio and Microsoft Foundry. 1 ACU = $1 = 100 credits.">i</i></p>
+    <div class="card">
+      <p class="ctitle">What are ACUs &mdash; and what can they be used for? <i class="ic-i" data-tip="acu-what|An Agent Commit Unit (ACU) is a prepaid, discounted commit unit bought through Azure Reservations. 100 ACUs pay down $100 of retail usage. One-year term, auto-renew, no roll-over.">i</i></p>
+      <p style="font-size:12.9px;line-height:1.75;color:var(--text);margin:0 0 12px">An <b>Agent Commit Unit (ACU)</b> is a prepaid, discounted commit unit purchased through Azure Reservations. <b>1 ACU = $1 = 100 Copilot Credits.</b> Purchased ACUs automatically pay down qualifying usage in US dollars from a single shared pool &mdash; no redeployment or reassignment needed &mdash; for a one-year term. Unlike the Copilot Credit P3 plan (which is scoped to Copilot Studio), ACUs span <b>multiple Microsoft AI services</b>, making them the unified budget for organizations running agents across more than one platform.</p>
+      <div class="grid g2">
+        <div>
+          <p class="ctitle" style="font-size:12.6px">Eligible usage the pool can pay for <i class="ic-i" data-tip="acu-cover|Microsoft reserves the right to update the list of Copilot Credit-eligible products. Always confirm current coverage in the Azure portal before purchase.">i</i></p>
+          <ul style="margin:0;padding-left:18px;font-size:12.6px;line-height:1.95;color:var(--text)">
+            <li><b>Microsoft Copilot Studio</b> &mdash; Copilot Credits for custom agents, Dynamics 365 first-party agents, and Copilot</li>
+            <li><b>Microsoft Foundry</b> &mdash; PTU (Provisioned Throughput Unit) hours for AI model deployments</li>
+            <li><b>Microsoft Fabric</b> &mdash; Copilot capacity, metered on tokens processed</li>
+            <li><b>GitHub</b> &mdash; GitHub Copilot and other GitHub AI usage (via linked Azure subscription)</li>
+          </ul>
+        </div>
+        <div>
+          <p class="ctitle" style="font-size:12.6px">How the plan works</p>
+          <ul style="margin:0;padding-left:18px;font-size:12.6px;line-height:1.95;color:var(--text)">
+            <li>Buy a tier of ACUs in the <b>Azure portal &rsaquo; Reservations</b> blade</li>
+            <li>Eligible usage deducts <b>automatically</b> from the pool in USD</li>
+            <li>More ACUs purchased = larger discount (5% / 10% / 15%)</li>
+            <li>One-year term, auto-renews by default; unused ACUs <b>do not roll over</b></li>
+            <li>Requires Owner or Reservation Purchaser role (or EA / CSP equivalent)</li>
+            <li>Plan discount is applied independently and <b>does not stack</b> with other discounts</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note" style="margin-top:12px"><b>Sizing example (Microsoft):</b> 1,500,000 Copilot Credits ($15,000 at PayGo) + 5,000 Foundry PTU hours ($5,000) = $20,000 pay-as-you-go. A Tier&nbsp;1 plan of 20,000 ACUs costs $19,000 &mdash; about a 5% / $1,000 saving for predictable workloads.</p>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/agent-pre-purchase" target="_blank" rel="noopener">Microsoft Agent Prepurchase Plan (Microsoft Learn)</a>.</p>
+    </div>
+    <div class="card" style="overflow-x:auto;margin-top:18px">
+      <p class="ctitle">Unified agentic spend across Copilot Studio, Foundry, Fabric &amp; GitHub <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units (ACUs) that cover eligible usage across Microsoft Copilot Studio, Microsoft Foundry, Microsoft Fabric, and GitHub. 1 ACU = $1 = 100 credits.">i</i></p>
       <table>
         <thead><tr><th>Tier</th><th class="num">ACUs</th><th class="num">Credit equivalent</th><th class="num">Price</th><th class="num">Discount</th></tr></thead>
         <tbody>
