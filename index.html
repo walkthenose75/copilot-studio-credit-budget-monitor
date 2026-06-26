@@ -177,7 +177,7 @@ a.ref .url .ext{flex:none}
 .gstep .subs li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--blue);opacity:.65}
 .gstep .subs li b{color:var(--text)}
 .gstep .src{margin-top:8px}
-/* purchase flow map (from attached process image) - wraps to fit, no horizontal scroll */
+/* purchase flow map - wraps to fit, no horizontal scroll */
 .flowmap{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 30px;padding:16px 2px 8px}
 .fcol{display:flex;flex-direction:column;gap:12px;position:relative}
 .fcol::after{content:"";position:absolute;top:44px;right:-21px;width:0;height:0;
@@ -247,35 +247,133 @@ a.ref .url .ext{flex:none}
 <body class="light">
 <div id="tip" role="status"></div>
 
+<style>
+/* ===== supplemental — all colors come from index.html tokens, so dark mode works automatically ===== */
+#tip .tb{font-size:12.3px;line-height:1.45}
+#tip .ts{font-size:10.5px;color:#9fb0d9;margin-top:6px;font-style:italic}
+
+/* journey breadcrumb (the connective tissue) */
+.journey{display:flex;align-items:center;gap:7px;margin-bottom:22px;flex-wrap:wrap}
+.journey .jstep{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);border:1px solid var(--line);background:var(--surface);border-radius:30px;padding:5px 13px}
+.journey .jn{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+.journey .jstep.done{color:var(--text)}
+.journey .jstep.done .jn{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.journey .jstep.cur{color:var(--text);font-weight:600;border-color:color-mix(in srgb,var(--blue) 50%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 12%,transparent)}
+.journey .jstep.cur .jn{background:var(--blue);border-color:var(--blue);color:#fff}
+.journey .jline{flex:1;min-width:8px;height:2px;border-radius:2px;background:var(--line)}
+@media(max-width:820px){.journey .jline{display:none}}
+
+/* next / prev connective nav */
+.nextnav{display:flex;justify-content:space-between;gap:14px;margin-top:34px;border-top:1px solid var(--line);padding-top:20px}
+.navchip{flex:1;max-width:350px;border:1px solid var(--line);border-radius:13px;padding:12px 16px;background:var(--surface);text-decoration:none;color:var(--text);transition:transform .18s,box-shadow .18s,border-color .18s}
+.navchip:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--blue) 30%,var(--line))}
+.navchip .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.navchip .v{font-size:14.5px;font-weight:600;margin-top:3px}
+.navchip.next{margin-left:auto;text-align:right;border-color:color-mix(in srgb,var(--teal) 45%,var(--line));background:color-mix(in srgb,var(--teal) 7%,var(--surface))}
+.navchip.next .v{color:var(--teal)}
+
+/* coin motif */
+.coin{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,color-mix(in srgb,var(--amber) 18%,var(--surface)),var(--surface));border:1px solid color-mix(in srgb,var(--amber) 40%,var(--line));border-radius:30px;padding:6px 14px;font-size:13px;font-weight:600}
+.coin .c{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f5c451,#d97706);box-shadow:inset 0 0 0 1.5px #b5780b}
+
+/* hero credit explainer */
+.equation{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:15px}
+.equation .pc{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px 18px;box-shadow:var(--shadow);min-width:120px}
+.equation .pc b{font-size:20px}
+.equation .pc span{font-size:11px;color:var(--muted)}
+.equation .op{font-size:22px;color:var(--muted);font-weight:300}
+
+/* layer stack */
+.stack{max-width:780px}
+.usage-in{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.8px;text-align:center;margin-bottom:8px}
+.layer{border-radius:14px;padding:15px 20px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.layer .ln{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.layer h4{margin:3px 0 4px;font-size:16px}
+.layer p{margin:0;font-size:12.6px;color:var(--muted)}
+.layer.prepaid{background:color-mix(in srgb,var(--violet) 10%,var(--surface));border-color:color-mix(in srgb,var(--violet) 35%,var(--line))}
+.layer.prepaid .ln{color:var(--violet)}
+.layer.meter{background:color-mix(in srgb,var(--teal) 10%,var(--surface));border-color:color-mix(in srgb,var(--teal) 35%,var(--line))}
+.layer.meter .ln{color:var(--teal)}
+.layflow{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--muted);font-size:12px;padding:9px 0}
+.layflow b{color:var(--text)}
+.callout{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--amber) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 38%,var(--line));border-radius:13px;padding:14px 17px;margin-top:16px;max-width:780px}
+.callout .ci{font-size:18px;line-height:1.2}
+.callout p{margin:0;font-size:12.8px;color:var(--text)}
+.refbox{max-width:780px;margin-top:16px;border:1px dashed var(--line);border-radius:13px;background:var(--surface2)}
+.refbox summary{cursor:pointer;padding:13px 18px;font-size:13px;font-weight:600;color:var(--blue)}
+.refbox[open] summary{border-bottom:1px solid var(--line)}
+.refbox .rb{padding:14px 20px}
+.refbox .rb > p{margin:0 0 6px;font-size:12.6px;color:var(--muted)}
+.refbox ol{margin:8px 0 0;padding-left:20px}
+.refbox li{font-size:12.8px;padding:3px 0;color:var(--muted)}
+.refbox li b{color:var(--text)}
+
+/* ACU coverage */
+.fhdr{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--violet),color-mix(in srgb,var(--violet) 55%,var(--blue)));color:#fff;border-radius:13px;padding:12px 20px;margin-bottom:14px}
+.fhdr .ft{font-weight:700;font-size:16px;display:flex;align-items:center;gap:9px}
+.fhdr .fc{font-size:11px;background:rgba(255,255,255,.22);border-radius:20px;padding:3px 12px}
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.cat{padding:15px 17px;border-right:1px solid var(--line2)}
+.cat:last-child{border-right:0}
+.cat .ct{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--violet);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.cat .ct .cn{font-size:10px;font-weight:700;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:20px;padding:1px 8px}
+.cat ul{margin:0;padding:0;list-style:none}
+.cat li{font-size:12px;padding:5px 0;border-bottom:1px solid var(--line2);color:var(--text)}
+.cat li:last-child{border:0}
+@media(max-width:1080px){.catgrid{grid-template-columns:1fr 1fr}.cat{border-bottom:1px solid var(--line2)}.cat:nth-child(2){border-right:0}}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media(max-width:880px){.trio{grid-template-columns:1fr}}
+
+/* CCCU vs ACU */
+.vs{display:grid;grid-template-columns:135px 1fr 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface)}
+.vs > div{padding:12px 16px;border-bottom:1px solid var(--line2);font-size:13px}
+.vs .vh{font-weight:700;background:var(--surface2)}
+.vs .vh.c{color:var(--violet)}.vs .vh.a{color:var(--amber)}
+.vs .rl{font-weight:600;color:var(--muted);background:var(--surface2)}
+.vs > div:nth-last-child(-n+3){border-bottom:0}
+
+/* generic table */
+.rt{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.rt th,.rt td{padding:10px 15px;text-align:left;border-bottom:1px solid var(--line2)}
+.rt th{background:var(--surface2);font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.rt td.num{text-align:right;font-variant-numeric:tabular-nums}
+.rt tr:last-child td{border-bottom:0}
+
+.ic-i{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:1px solid var(--line);font-size:10px;font-style:normal;color:var(--muted);cursor:help;margin-left:2px}
+.lead2{font-size:14px;color:var(--muted);max-width:820px;margin:0 0 6px}
+h3.blk{font-size:18px;margin:30px 0 12px}
+</style>
+
 <div class="shell">
   <button class="navtoggle" id="navToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">&#9776;</span></button>
   <div class="navback" id="navBack"></div>
+
   <!-- ================= LEFT NAV ================= -->
   <aside class="nav" id="primaryNav" aria-label="Guide navigation">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
-      <div><h1>Copilot Credits<br/>Budgeting &amp; Monitoring</h1><div class="sub">Copilot Studio &middot; Power Automate &middot; AI Builder &middot; P3 Plan</div></div>
+      <div><h1>Copilot Credits<br/>A Buyer's Guide</h1><div class="sub">What it is &middot; how it's spent &middot; how it's bought &middot; control</div></div>
     </div>
     <div class="navlist" role="tablist" aria-orientation="vertical" aria-label="Guide sections">
-      <div class="navlbl" role="presentation">Understand</div>
-      <button class="navbtn active" role="tab" id="tab-overview" aria-controls="overview" aria-selected="true" tabindex="0" data-tab="overview"><span class="ic" aria-hidden="true">&#9737;</span>Overview</button>
-      <button class="navbtn" role="tab" id="tab-options" aria-controls="options" aria-selected="false" tabindex="-1" data-tab="options"><span class="ic" aria-hidden="true">&#9636;</span>Licensing Options</button>
-      <button class="navbtn" role="tab" id="tab-rates" aria-controls="rates" aria-selected="false" tabindex="-1" data-tab="rates"><span class="ic" aria-hidden="true">&#9889;</span>Credit Rates</button>
-      <button class="navbtn" role="tab" id="tab-p3" aria-controls="p3" aria-selected="false" tabindex="-1" data-tab="p3"><span class="ic" aria-hidden="true">&#9650;</span>P3 Plan &amp; Tiers</button>
-      <button class="navbtn" role="tab" id="tab-transition" aria-controls="transition" aria-selected="false" tabindex="-1" data-tab="transition"><span class="ic" aria-hidden="true">&#8634;</span>AI Builder Transition</button>
-      <button class="navbtn" role="tab" id="tab-usage" aria-controls="usage" aria-selected="false" tabindex="-1" data-tab="usage"><span class="ic" aria-hidden="true">&#9681;</span>Usage-Based Billing</button>
-      <div class="navlbl" role="presentation">Apply</div>
-      <button class="navbtn" role="tab" id="tab-budget" aria-controls="budget" aria-selected="false" tabindex="-1" data-tab="budget"><span class="ic" aria-hidden="true">&#9881;</span>Budget a New Agent</button>
-      <button class="navbtn" role="tab" id="tab-paflows" aria-controls="paflows" aria-selected="false" tabindex="-1" data-tab="paflows"><span class="ic" aria-hidden="true">&#9107;</span>Power Automate &amp; Flows</button>
-      <button class="navbtn" role="tab" id="tab-monitor" aria-controls="monitor" aria-selected="false" tabindex="-1" data-tab="monitor"><span class="ic" aria-hidden="true">&#9678;</span>Monitor &amp; Control</button>
-      <button class="navbtn" role="tab" id="tab-value" aria-controls="value" aria-selected="false" tabindex="-1" data-tab="value"><span class="ic" aria-hidden="true">&#9733;</span>P3 Savings Analysis</button>
-      <button class="navbtn" role="tab" id="tab-purchasep3" aria-controls="purchasep3" aria-selected="false" tabindex="-1" data-tab="purchasep3"><span class="ic" aria-hidden="true">&#9379;</span>How to Purchase P3 Plan</button>
-      <button class="navbtn" role="tab" id="tab-configp3" aria-controls="configp3" aria-selected="false" tabindex="-1" data-tab="configp3"><span class="ic" aria-hidden="true">&#9874;</span>Configuring the P3 Plan</button>
+      <div class="navlbl" role="presentation">1 &middot; What it is</div>
+      <button class="navbtn active" role="tab" id="tab-hero" aria-controls="hero" aria-selected="true" tabindex="0" data-tab="hero"><span class="ic" aria-hidden="true">&#9737;</span>The Copilot Credit</button>
+      <div class="navlbl" role="presentation">2 &middot; How it's spent</div>
+      <button class="navbtn" role="tab" id="tab-spent-rates" aria-controls="spent-rates" aria-selected="false" tabindex="-1" data-tab="spent-rates"><span class="ic" aria-hidden="true">&#9889;</span>Per-feature rates</button>
+      <button class="navbtn" role="tab" id="tab-spent-usage" aria-controls="spent-usage" aria-selected="false" tabindex="-1" data-tab="spent-usage"><span class="ic" aria-hidden="true">&#9681;</span>Usage-based &amp; Cowork</button>
+      <div class="navlbl" role="presentation">3 &middot; How it's bought</div>
+      <button class="navbtn" role="tab" id="tab-buy-overview" aria-controls="buy-overview" aria-selected="false" tabindex="-1" data-tab="buy-overview"><span class="ic" aria-hidden="true">&#9636;</span>Four ways to buy</button>
+      <button class="navbtn" role="tab" id="tab-buy-how" aria-controls="buy-how" aria-selected="false" tabindex="-1" data-tab="buy-how"><span class="ic" aria-hidden="true">&#36;</span>How to purchase</button>
+      <button class="navbtn" role="tab" id="tab-buy-plans" aria-controls="buy-plans" aria-selected="false" tabindex="-1" data-tab="buy-plans"><span class="ic" aria-hidden="true">&#9650;</span>Plans, tiers &amp; sizing</button>
+      <button class="navbtn" role="tab" id="tab-buy-savings" aria-controls="buy-savings" aria-selected="false" tabindex="-1" data-tab="buy-savings"><span class="ic" aria-hidden="true">&#9783;</span>Savings analysis</button>
+      <div class="navlbl" role="presentation">4 &middot; Keep it controlled</div>
+      <button class="navbtn" role="tab" id="tab-control-setup" aria-controls="control-setup" aria-selected="false" tabindex="-1" data-tab="control-setup"><span class="ic" aria-hidden="true">&#9741;</span>Set up &amp; allocate</button>
+      <button class="navbtn" role="tab" id="tab-control-budget" aria-controls="control-budget" aria-selected="false" tabindex="-1" data-tab="control-budget"><span class="ic" aria-hidden="true">&#9881;</span>Budget &amp; monitor</button>
+      <button class="navbtn" role="tab" id="tab-control-govern" aria-controls="control-govern" aria-selected="false" tabindex="-1" data-tab="control-govern"><span class="ic" aria-hidden="true">&#9678;</span>Govern &amp; enforce</button>
       <div class="navlbl" role="presentation">Reference</div>
-      <button class="navbtn" role="tab" id="tab-appendix" aria-controls="appendix" aria-selected="false" tabindex="-1" data-tab="appendix"><span class="ic" aria-hidden="true">&#9783;</span>Appendix: Sources</button>
+      <button class="navbtn" role="tab" id="tab-ref" aria-controls="ref" aria-selected="false" tabindex="-1" data-tab="ref"><span class="ic" aria-hidden="true">&#9783;</span>Sources &amp; details</button>
     </div>
     <div class="navfoot">
-      Data sourced from the public Copilot Studio Licensing Guide, the Copilot Credit Estimator, and Microsoft Learn billing and capacity pages. All USD, subject to change.
+      Sourced from the public Copilot Studio Licensing Guide, the Customer Cowork Estimator, and Microsoft Learn billing &amp; capacity pages. All USD, subject to change.
     </div>
   </aside>
 
@@ -283,129 +381,69 @@ a.ref .url .ext{flex:none}
   <button class="themebtn" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">&#9790;</button>
   <main class="main">
 
-  <!-- ============ OVERVIEW ============ -->
-  <section class="tab show" id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
+  <!-- ============ STAGE 1 · THE CREDIT ============ -->
+  <section class="tab show" id="hero" role="tabpanel" aria-labelledby="tab-hero" tabindex="0">
+    <div class="journey">
+      <span class="jstep cur"><span class="jn">1</span>What it is</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">2</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Executive overview</span>
-      <h2>Three ways to buy Copilot Credits, one universal currency</h2>
-      <p>Copilot Credits are the universal currency for agent usage across Microsoft Copilot Studio, Power Automate (cloud flows and agent flows), AI Builder capabilities, Dynamics 365 first-party agents, and Copilot Chat. With AI Builder credits being retired by November 2026, Copilot Credits become the single billing unit for all AI-powered automation. This guide covers buying options, per-feature rates, budgeting, and monitoring across the entire platform.</p>
+      <span class="eyebrow"><span class="live"></span>Start here</span>
+      <h2>One currency runs every Microsoft AI agent</h2>
+      <p>Before you compare plans or argue about budget, there's one idea the whole story hangs on: the <b>Copilot Credit</b>. Every agent response, every automated action, every AI-powered task across Copilot Studio, Power Automate, Dynamics 365 agents, and Copilot Chat is paid for in this single unit. Understand the credit, and everything that follows &mdash; rates, plans, governance &mdash; is just <i>spending</i> it or <i>buying</i> it.</p>
     </div>
 
-    <div class="grid g4">
-      <div class="card kpi" data-tip="universal|Copilot Credits are the single metering unit. The number decremented per response or action depends on task complexity.">
-        <div class="lab">Universal currency <i class="ic-i">i</i></div>
-        <div class="val breathe">Copilot<br/>Credits</div>
-        <div class="delta">Used across MCS, D365 first-party agents &amp; Copilot Chat</div>
+    <div class="card" style="margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><span class="coin"><span class="c"></span>1 Copilot Credit</span><span style="color:var(--muted);font-size:13px">the atom of the whole system</span></div>
+      <div class="equation">
+        <div class="pc"><b>$0.01</b><span>pay-as-you-go list price</span></div>
+        <div class="op">=</div>
+        <div class="pc"><b>1 credit</b><span>the metered unit</span></div>
+        <div class="op">&rarr;</div>
+        <div class="pc"><b>100 credits</b><span>= 1 commit unit ($1)</span></div>
       </div>
-      <div class="card kpi" data-tip="payg|Postpay at a flat rate for exactly what agents consume each month. No upfront commitment.">
-        <div class="lab">Pay-as-you-go rate <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--blue)">$0.01</div>
-        <div class="delta">per Copilot Credit, billed in arrears</div>
-      </div>
-      <div class="card kpi" data-tip="pack|A Copilot Credit pack is the subscription option for steady, predictable monthly usage. Unused credits do not roll over.">
-        <div class="lab">1 Credit pack <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--emerald)">25,000</div>
-        <div class="delta">credits for $200/mo (billed annually)</div>
-      </div>
-      <div class="card kpi" data-tip="cccu|P3 sells Copilot Credit Commit Units. Each CCCU = $1 of usage = 100 Copilot Credits, usable across a one-year term.">
-        <div class="lab">1 CCCU (P3) <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--violet)">100</div>
-        <div class="delta">Copilot Credits = $1 of usage</div>
-      </div>
+      <p class="src">The number of credits a task consumes scales with complexity &mdash; a simple answer costs less than a multi-step agent action that calls tools.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Pick the model that matches the usage pattern</h3>
+    <h3 class="blk">The whole guide in one sentence</h3>
     <div class="grid g3">
-      <div class="card" data-tip="model-pack|Best when monthly volume is known and stable. Capacity is enforced monthly and expires monthly.">
-        <span class="tag em">Credit capacity packs</span>
-        <p class="ctitle" style="margin-top:11px">Steady, predictable usage</p>
-        <p style="font-size:12.5px;color:var(--muted);margin:0">MCS license subscription. Buy the number of packs you expect to consume each month. Requires a tenant license in the M365 Admin Center. Monthly expiry.</p>
+      <div class="card kpi" data-tip="spend|Rates differ per feature: classic answers, generative answers, agent actions, autonomous triggers, and flow runs each draw a set number of credits.">
+        <div class="lab">You SPEND credits <i class="ic-i">i</i></div>
+        <div class="val">By feature</div>
+        <div class="delta">Different agent actions draw different credit amounts each time they run.</div>
       </div>
-      <div class="card" data-tip="model-payg|Best for getting started or covering overage with no commitment. Bills in arrears via an Azure subscription.">
-        <span class="tag blue">Pay-as-you-go</span>
-        <p class="ctitle" style="margin-top:11px">No prior usage history</p>
-        <p style="font-size:12.5px;color:var(--muted);margin:0">Postpay for actual consumption through an Azure subscription billing policy. No upfront commitment. Ideal safety net so critical agents never stop.</p>
+      <div class="card kpi" data-tip="buy|Four supply routes: pay-as-you-go meter, prepaid capacity packs, Copilot Credit P3 (CCCU), and Microsoft Agent P3 (ACU).">
+        <div class="lab">You BUY credits <i class="ic-i">i</i></div>
+        <div class="val">Four ways</div>
+        <div class="delta">From flat pay-as-you-go to discounted annual prepaid commitments.</div>
       </div>
-      <div class="card" data-tip="model-p3|Best for larger or variable demand. Annual pre-pay pool with tiered discounts up to 20% and MACC eligibility.">
-        <span class="tag vi">Pre-Purchase Plan (P3)</span>
-        <p class="ctitle" style="margin-top:11px">Larger or variable demand</p>
-        <p style="font-size:12.5px;color:var(--muted);margin:0">One-year pre-paid CCCU pool. Built-in tiered discounts up to 20% off PayGo, annual (not monthly) expiry, MACC eligible, tracked in the Azure Portal. No M365 Admin Center license needed.</p>
+      <div class="card kpi" data-tip="control|Allocate capacity per environment, set budgets and alerts, and let overage enforcement protect against runaway spend.">
+        <div class="lab">You CONTROL spend <i class="ic-i">i</i></div>
+        <div class="val">By environment</div>
+        <div class="delta">Budgets, alerts, and enforcement keep consumption predictable.</div>
       </div>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>How credits flow from features to your bill</h3>
-    <div class="card">
-      <p class="ctitle">Credit consumption engine <i class="ic-i" data-tip="engine|Each user interaction can trigger several billable features at once. This canvas traces feature events into pooled credit consumption.">i</i></p>
-      <svg id="engine" height="240" style="width:100%"></svg>
-      <div class="legend">
-        <span><span class="dot" style="background:var(--blue)"></span>Classic answer 1</span>
-        <span><span class="dot" style="background:var(--emerald)"></span>Generative answer 2</span>
-        <span><span class="dot" style="background:var(--amber)"></span>Agent action 5</span>
-        <span><span class="dot" style="background:var(--violet)"></span>Tenant graph grounding 10</span>
-      </div>
-      <p class="src">Example from Microsoft Learn: a tenant-graph-grounded complex prompt can use 12 credits (10 grounding + 2 generative).</p>
+    <div class="nextnav">
+      <span></span>
+      <a class="navchip next" href="#" data-gototab="spent-rates"><div class="k">Next &middot; Stage 2</div><div class="v">See how credits are spent &rarr;</div></a>
     </div>
   </section>
 
-  <!-- ============ OPTIONS ============ -->
-  <section class="tab" id="options" role="tabpanel" aria-labelledby="tab-options" tabindex="0">
+  <!-- ============ STAGE 2 · RATES ============ -->
+  <section class="tab" id="spent-rates" role="tabpanel" aria-labelledby="tab-spent-rates" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">2</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Licensing options</span>
-      <h2>Compare every way to fund Copilot Studio</h2>
-      <p>Five funding paths, side by side: the pay-as-you-go meter, the Copilot Credit pack subscription, the Copilot Credit P3 plan, the Microsoft Agent P3 plan, and the Microsoft 365 Copilot inclusion that zero-rates many employee-facing scenarios.</p>
-    </div>
-
-    <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Funding options at a glance</p>
-      <table>
-        <thead><tr><th>Option</th><th>Term &amp; expiry</th><th class="num">Unit / rate</th><th>Best for</th><th>Admin path</th></tr></thead>
-        <tbody>
-          <tr data-tip="o-payg|Postpaid, billed in arrears each month via Azure. No upfront cost, no expiry risk.">
-            <td><b>Pay-as-you-go meter</b></td><td>Monthly, postpaid</td><td class="num">$0.01 / credit</td><td>No usage history; overage safety net</td><td>Azure subscription + billing policy</td></tr>
-          <tr data-tip="o-pack|Subscription billed annually. Unused credits expire monthly. Requires tenant + user license.">
-            <td><b>Credit pack (MCS license)</b></td><td>Annual bill, monthly expiry</td><td class="num">$200 / 25,000 credits</td><td>Steady, predictable monthly usage</td><td>M365 Admin Center license</td></tr>
-          <tr data-tip="o-cccu|One-year pre-paid CCCU pool with tiered discounts up to 20%. MACC eligible. Unused CCCU expire annually.">
-            <td><b>Copilot Credit P3</b></td><td>1 year, annual expiry</td><td class="num">1 CCCU = 100 credits = $1</td><td>Large or variable demand</td><td>Azure Portal + billing policy</td></tr>
-          <tr data-tip="o-acu|Unified one-year pool spanning Copilot Studio, Foundry, Fabric, and GitHub. 1 ACU = $1 = 100 credits. Annual expiry.">
-            <td><b>Microsoft Agent P3</b></td><td>1 year, annual expiry</td><td class="num">1 ACU = 100 credits = $1</td><td>Agentic spend across MCS, Foundry, Fabric, GitHub</td><td>Azure Portal + billing policy</td></tr>
-          <tr data-tip="o-m365|Employee-facing (B2E) agent usage is included in the M365 Copilot USL when the agent runs as the licensed user. Classic, generative, and tenant graph grounding are zero-rated. Fair usage limits apply.">
-            <td><b>Microsoft 365 Copilot inclusion</b></td><td>Per user/month</td><td class="num">$30 / user / mo</td><td>B2E scenarios on M365 surfaces</td><td>M365 Copilot license</td></tr>
-        </tbody>
-      </table>
-      <p class="src">All pricing USD, subject to change. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Microsoft Copilot Studio Licensing Guide (PDF)</a>.</p>
-      <p class="note" style="margin-top:13px"><b>Newer agentic experiences</b> &mdash; Copilot Cowork and AI teammates &mdash; add usage-based billing on top of a base subscription. See the <a class="ilink" href="#" data-gototab="usage">Usage-Based Billing</a> page for how they and connectors are costed.</p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>What Microsoft 365 Copilot zero-rates</h3>
-    <div class="grid g2">
-      <div class="card" data-tip="m365-zero|When an M365 Copilot licensed user runs an agent on M365 surfaces, these core features do not draw from your credit pack or meter.">
-        <p class="ctitle">No charge for M365 Copilot users</p>
-        <table><tbody>
-          <tr><td>Classic answer</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
-          <tr><td>Generative answer</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
-          <tr><td>Agent action</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
-          <tr><td>Tenant graph grounding</td><td class="num"><span class="pill" style="background:color-mix(in srgb,var(--emerald) 16%,transparent);color:var(--emerald)">No charge</span></td></tr>
-        </tbody></table>
-      </div>
-      <div class="card" data-tip="m365-inc|The M365 Copilot license bundles these agent-building and analytics rights at no extra Copilot Studio charge.">
-        <p class="ctitle">Included with M365 Copilot</p>
-        <ul style="margin:0;padding-left:18px;font-size:12.7px;color:var(--muted);line-height:1.9">
-          <li>Build and publish agents and plugins to extend M365 Copilot</li>
-          <li>Agent capabilities in Copilot Studio used in M365, Teams, or SharePoint</li>
-          <li>Agents for Teams, SharePoint and M365 Copilot at no additional charge</li>
-          <li>Copilot Analytics and SharePoint Advanced Management</li>
-        </ul>
-        <p class="note" style="margin-top:13px"><b>Fair usage:</b> inclusion is limited to fair usage limits; Microsoft may update limits as usage patterns evolve.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ RATES ============ -->
-  <section class="tab" id="rates" role="tabpanel" aria-labelledby="tab-rates" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>Credit rates</span>
-      <h2>Per-feature billing rates that drive consumption</h2>
-      <p>These rates apply across all language models Copilot Studio provides (bring-your-own models bill separately). Knowing them lets you predict the credit cost of any agent design before a single user touches it.</p>
+      <span class="eyebrow"><span class="live"></span>How it's spent &middot; 1 of 2</span>
+      <h2>Each agent action draws a set number of credits</h2>
+      <p>Now that the credit is the unit, "cost" just means <i>how many credits</i> a given interaction burns. Rates are published per capability &mdash; so you can estimate a workload by counting the actions it performs, not by guessing at dollars.</p>
     </div>
 
     <div class="grid g2">
@@ -462,14 +500,232 @@ a.ref .url .ext{flex:none}
         </div>
       </div>
     </div>
+
+    <div class="callout">
+      <div class="ci">&#128161;</div>
+      <p><b>Connector &amp; external-system costs vary.</b> Some third-party connectors (for example ServiceNow) carry their own associated costs on top of agent credits, so model real scenarios before you commit to a budget.</p>
+    </div>
+
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="hero"><div class="k">&larr; Back</div><div class="v">The Copilot Credit</div></a>
+      <a class="navchip next" href="#" data-gototab="spent-usage"><div class="k">Next</div><div class="v">Usage-based billing &amp; Cowork &rarr;</div></a>
+    </div>
   </section>
 
-  <!-- ============ P3 ============ -->
-  <section class="tab" id="p3" role="tabpanel" aria-labelledby="tab-p3" tabindex="0">
+  <!-- ============ STAGE 2 · USAGE ============ -->
+  <section class="tab" id="spent-usage" role="tabpanel" aria-labelledby="tab-spent-usage" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">2</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Pre-Purchase Plan</span>
-      <h2>P3: commit more, save more, up to 20% off PayGo</h2>
-      <p>P3 is a new way to buy Copilot Credit as Copilot Credit Commit Units (CCCU) to pay for agentic services across Copilot Studio, D365 first-party agents, and Copilot Chat over one year. Think of it as a gift card for agentic services, with built-in tiered discounts and MACC eligibility.</p>
+      <span class="eyebrow"><span class="live"></span>How it's spent &middot; 2 of 2</span>
+      <h2>Usage-based billing &mdash; and estimating Cowork</h2>
+      <p>Some newer experiences (like <b>Cowork</b> and AI teammates) bill on a <b>usage</b> basis that draws Copilot Credits alongside a base Copilot subscription. Organizations get a short window to set up their billing model, so it pays to pilot with a small group first and charge usage back to the right business units.</p>
+    </div>
+
+    <div class="cta">
+      <div class="txt">
+        <h4><span class="coin"><span class="c"></span></span>Customer Cowork Estimator</h4>
+        <p>Microsoft's official tool to model expected Cowork credit consumption before you roll out. Use it to size a pilot and forecast monthly spend per team.</p>
+      </div>
+      <a class="btn" href="https://aka.ms/CustomerCoworkEstimator" target="_blank" rel="noopener">Open estimator &rarr;</a>
+      <span class="shine" aria-hidden="true"></span>
+    </div>
+
+    <div class="grid g3">
+      <div class="card kpi"><div class="lab">Cowork billing</div><div class="val">Usage-based</div><div class="delta">Draws credits on top of a base Copilot subscription.</div></div>
+      <div class="card kpi"><div class="lab">AI teammate billing</div><div class="val">Usage-based</div><div class="delta">Confirmed usage-based; see the published Microsoft article for specifics.</div></div>
+      <div class="card kpi"><div class="lab">Setup window</div><div class="val">~2 weeks</div><div class="delta">Time to configure your billing model before usage accrues.</div></div>
+    </div>
+
+    <div class="callout">
+      <div class="ci">&#9878;</div>
+      <p><b>Pilot before you scale.</b> A small POC reveals real consumption patterns and lets finance validate cost allocation &mdash; charging each business unit for its own usage &mdash; before a tenant-wide rollout.</p>
+    </div>
+
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="spent-rates"><div class="k">&larr; Back</div><div class="v">Per-feature rates</div></a>
+      <a class="navchip next" href="#" data-gototab="buy-overview"><div class="k">Next &middot; Stage 3</div><div class="v">How credits are bought &rarr;</div></a>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 3 · BUY OVERVIEW ============ -->
+  <section class="tab" id="buy-overview" role="tabpanel" aria-labelledby="tab-buy-overview" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>How it's bought &middot; 1 of 4</span>
+      <h2>Four supply routes for the same credit</h2>
+      <p>You spend one currency &mdash; but you can source it four ways, from zero-commitment metering to deep annual discounts. They're not mutually exclusive; most customers layer a prepaid plan on top of pay-as-you-go.</p>
+    </div>
+
+    <div class="grid g4">
+      <div class="card"><span class="tag blue">Flexible</span><h4 style="margin:10px 0 5px;font-size:15px">Pay-as-you-go</h4><p style="margin:0;font-size:12.4px;color:var(--muted)">Postpay the list rate for exactly what you consume. No commitment. Billed to an Azure subscription.</p></div>
+      <div class="card"><span class="tag em">Prepaid</span><h4 style="margin:10px 0 5px;font-size:15px">Capacity packs</h4><p style="margin:0;font-size:12.4px;color:var(--muted)">Monthly prepaid credit blocks. Can run stand-alone &mdash; but pause when empty unless paired with pay-as-you-go.</p></div>
+      <div class="card"><span class="tag vi">Annual</span><h4 style="margin:10px 0 5px;font-size:15px">Copilot Credit P3</h4><p style="margin:0;font-size:12.4px;color:var(--muted)">A one-year prepaid pool of CCCUs for Copilot Credit usage, at a tiered discount.</p></div>
+      <div class="card"><span class="tag am">Annual &middot; broad</span><h4 style="margin:10px 0 5px;font-size:15px">Microsoft Agent P3</h4><p style="margin:0;font-size:12.4px;color:var(--muted)">A one-year prepaid pool of ACUs spanning Copilot, Foundry, Fabric &amp; GitHub.</p></div>
+    </div>
+
+    <h3 class="blk">The three Copilot-Credit buying options, side by side</h3>
+    <div class="card" style="overflow-x:auto">
+      <p class="ctitle">Buying-options comparison <i class="ic-i" data-tip="cfg-matrix|Side-by-side comparison: price, where to purchase, purchase construct, and MACC eligibility. The P3 column is highlighted.">i</i></p>
+      <table>
+        <thead><tr><th>Dimension</th><th>Credit capacity packs</th><th>Pay-as-you-go</th><th class="colhi">Pre-Purchase Plan (P3)</th></tr></thead>
+        <tbody>
+          <tr data-tip="m-price|Packs are a flat monthly subscription; PAYG is a flat per-unit rate; P3 applies built-in tiered volume discounts.">
+            <td><b>Price</b></td><td>$200 per pack/month/tenant &mdash; each pack = <b>25,000 credits</b>, refreshed monthly</td><td>$0.01/credit</td><td class="colhi">Built-in tiered volume discount depending on the tier</td></tr>
+          <tr data-tip="m-where|Packs use the M365 Admin Center; PAYG and P3 are both transacted in the Azure Portal and require an Azure subscription.">
+            <td><b>Where to purchase</b></td><td>Microsoft 365 Admin Center</td><td>Azure Portal (Azure subscription)</td><td class="colhi">Azure Portal (Azure subscription)</td></tr>
+          <tr data-tip="m-construct|Packs are a license subscription paid upfront; PAYG bills monthly in arrears; P3 is a one-time Azure purchase paid upfront.">
+            <td><b>Purchase model</b></td><td>License subscription (upfront)</td><td>Pay-as-you-go (monthly in arrears)</td><td class="colhi">One-time Azure purchase (paid upfront)</td></tr>
+          <tr data-tip="m-macc|Only the Azure-transacted models draw down a Microsoft Azure Consumption Commitment. Packs are not MACC eligible.">
+            <td><b>MACC eligibility</b></td><td>Not eligible</td><td>Eligible</td><td class="colhi">Eligible</td></tr>
+          <tr data-tip="m-fit|Match the model to the demand pattern.">
+            <td><b>Best for</b></td><td>Steady, predictable usage</td><td>No prior usage history</td><td class="colhi">Larger or variable demand</td></tr>
+        </tbody>
+      </table>
+      <p class="src">The licensing guide states the rate as $0.01 per Copilot Credit. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
+    </div>
+
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="spent-usage"><div class="k">&larr; Back</div><div class="v">Usage-based &amp; Cowork</div></a>
+      <a class="navchip next" href="#" data-gototab="buy-how"><div class="k">Next</div><div class="v">How to purchase &rarr;</div></a>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 3 · HOW TO PURCHASE ============ -->
+  <section class="tab" id="buy-how" role="tabpanel" aria-labelledby="tab-buy-how" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>How it's bought &middot; 2 of 4</span>
+      <h2>How to purchase</h2>
+      <p>Three purchase paths, two portals. <b>Pay-as-you-go</b> is set up against an Azure subscription and bills monthly in arrears at the list rate, doubling as the overage safety net. <b>Copilot Credit packs</b> are bought as a subscription add-on in the Microsoft admin center &mdash; the simplest route for steady, predictable monthly usage. The <b>P3 pre-purchase plan</b> is a one-time, upfront Azure reservation for a discounted annual commitment.</p>
+    </div>
+
+    <h3 class="blk">Pay-as-you-go (Azure Portal)</h3>
+    <div class="card">
+      <p class="ctitle">Step-by-step pay-as-you-go setup <i class="ic-i" data-tip="paygoflow-tip|Pay-as-you-go has no upfront purchase &mdash; you link an Azure subscription and usage bills monthly in arrears at the list rate. It also serves as the overage safety net for packs and P3.">i</i></p>
+      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">No upfront commitment &mdash; you consume at the list rate ($0.01 / credit) and pay monthly in arrears against an Azure subscription. Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan (Microsoft Learn)</a>.</p>
+      <div class="flowmap">
+        <div class="fcol">
+          <div class="fstep lead"><span class="fnum">1</span><p>Pay-as-you-go requires an <b>Azure subscription</b>.</p></div>
+          <div class="sub pre"><span class="pn">1</span><div>Owner or Contributor on the subscription</div></div>
+          <div class="sub pre"><span class="pn">2</span><div>Reserved Instances policy enabled, or EA admin</div></div>
+        </div>
+        <div class="fcol"><div class="fstep"><span class="fnum">2</span><p>In the <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure portal</a>, create or select the subscription to be billed</p></div></div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">3</span><p>In the <a href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a>, set up a <b>pay-as-you-go billing plan</b> linking that subscription to your environments</p></div>
+          <div class="sub">The full billing-plan flow is under <b>Set up &amp; allocate</b></div>
+        </div>
+        <div class="fcol"><div class="fstep"><span class="fnum">4</span><p>Usage meters at <b>$0.01 / credit</b> and bills <b>monthly in arrears</b> to Azure</p></div></div>
+      </div>
+      <p class="note" style="margin-top:6px"><b>Safety net:</b> keep pay-as-you-go linked alongside packs or P3 so agents keep running when a prepaid pool empties &mdash; overage simply bills here.</p>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan (Microsoft Learn)</a>.</p>
+    </div>
+
+    <h3 class="blk">Copilot Credit Packs (Microsoft Admin Center)</h3>
+    <div class="card">
+      <p class="ctitle">Step-by-step pack purchase <i class="ic-i" data-tip="packflow-tip|Copilot Credit packs are bought as a subscription add-on in the Microsoft 365 admin center. Each pack is a fixed monthly block of credits, billed annually.">i</i></p>
+      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Packs are the simplest route &mdash; a Microsoft Copilot Studio license subscription with no Azure subscription required. Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener">Manage Copilot Studio credits and capacity (Microsoft Learn)</a>.</p>
+      <div class="flowmap">
+        <div class="fcol">
+          <div class="fstep lead"><span class="fnum">1</span><p>Buying packs requires <b>one</b> of these admin roles.</p></div>
+          <div class="sub pre"><span class="pn">1</span><div>Global administrator</div></div>
+          <div class="sub pre"><span class="pn">2</span><div>Billing administrator</div></div>
+        </div>
+        <div class="fcol"><div class="fstep"><span class="fnum">2</span><p>Sign in to the <a href="https://admin.microsoft.com" target="_blank" rel="noopener">Microsoft 365 admin center</a></p></div></div>
+        <div class="fcol"><div class="fstep"><span class="fnum">3</span><p>In the navigation pane, select <b>Billing</b> &rsaquo; <b>Purchase services</b></p></div></div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">4</span><p>Search for <b>Copilot Studio</b> and select the <b>Copilot Credit pack</b> add-on</p></div>
+          <div class="sub">Each pack = <b>25,000 Copilot Credits</b> for <b>$200 / month</b>, billed annually</div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">5</span><p>Set the <b>number of packs</b> to match expected monthly usage, then review</p></div>
+          <div class="sub">Capacity is enforced monthly; unused credits <b>do not roll over</b></div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">6</span><p>Choose a payment method and <b>place the order</b></p></div>
+          <div class="sub">After purchase, allocate the capacity to environments in the Power Platform admin center &mdash; see <b>Set up &amp; allocate</b></div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:6px"><b>No Azure subscription needed</b> for packs themselves &mdash; but pair them with pay-as-you-go if you want agents to keep running once a pack empties.</p>
+      <p class="src">Pack pricing per the licensing guide: $200 per pack / month / tenant for 25,000 credits. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
+    </div>
+
+    <h3 class="blk">The P3 pre-purchase plan (Azure Portal)</h3>
+    <div class="card">
+      <p class="ctitle">Step-by-step purchase flow <i class="ic-i" data-tip="flowmap-tip|Follows the official Azure Portal Reservations purchase flow. Sub-cards hang beneath the steps that have them.">i</i></p>
+      <div class="flowmap">
+        <div class="fcol">
+          <div class="fstep lead"><span class="fnum">1</span><p>To purchase P3, <b>one</b> of the following must be true.</p></div>
+          <div class="sub pre"><span class="pn">1</span><div>Owner role for at least one Enterprise or Microsoft Customer Agreement<sup>1</sup></div></div>
+          <div class="sub pre"><span class="pn">2</span><div>Individual subscription with pay-as-you-go rates subscription</div></div>
+          <div class="sub pre"><span class="pn">3</span><div>The required role for CSP subscriptions<sup>2</sup></div></div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">2</span><p>Go to the <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure portal</a></p></div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">3</span><p>If needed, navigate to <b>Reservations</b> and then at the top of the page, select <b>+ Add</b></p></div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">4</span><p>On the Purchase reservations page, select <b>Copilot Credit Pre-Purchase Plan</b> (for Copilot Credit / CCCU) or <b>Microsoft Agent Pre-Purchase Plan</b> (for ACU)</p></div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">5</span><p>On the Select the product you want to purchase page, select a subscription.</p></div>
+          <div class="sub">Use the <b>Subscription</b> list to select the subscription used to pay for the reserved capacity</div>
+          <div class="sub">The payment method of the subscription is charged the upfront costs for P3</div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">6</span><p>Select a scope. Use the <b>Scope</b> list to select a subscription scope</p></div>
+          <div class="sub scope"><b>Single resource group scope</b> - Applies the reservation discount to the matching resources in the selected resource group only</div>
+          <div class="sub scope"><b>Single subscription scope</b> - Applies the reservation discount to the matching resources in the selected subscription</div>
+          <div class="sub scope"><b>Shared scope</b> - Applies the reservation discount to matching resources in eligible subscriptions that are in the billing context. For Enterprise Agreement customers, the billing context is the enrollment</div>
+          <div class="sub scope"><b>Management group</b> - Applies the reservation discount to the matching resource in the list of subscriptions that are a part of both the management group and billing scope</div>
+        </div>
+        <div class="fcol">
+          <div class="fstep"><span class="fnum">7</span><p>Select how many Copilot Credit commit units you want to purchase and complete the purchase</p></div>
+        </div>
+      </div>
+      <div class="fnote">
+        <ol>
+          <li>The <b>Reserved Instances</b> policy option must be enabled in the Azure portal. Or if that setting is disabled, you must be an EA Admin of the subscription.</li>
+          <li>Follow the steps in <a class="ilink" href="https://learn.microsoft.com/en-us/partner-center/customers/azure-ri-server-subscriptions" target="_blank" rel="noopener">Acquire, provision, and manage Azure reserved VM instances (RI) + server subscriptions for customers</a>.</li>
+        </ol>
+      </div>
+      <p class="src">Steps 1, 5, and 6 include the sub-items shown beneath them.</p>
+    </div>
+
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="buy-overview"><div class="k">&larr; Back</div><div class="v">Four ways to buy</div></a>
+      <a class="navchip next" href="#" data-gototab="buy-plans"><div class="k">Next</div><div class="v">Prepaid plans, tiers &amp; sizing &rarr;</div></a>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 3 · PLANS + LAYER STACK ============ -->
+  <section class="tab" id="buy-plans" role="tabpanel" aria-labelledby="tab-buy-plans" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>How it's bought &middot; 3 of 4</span>
+      <h2>The Copilot Credit P3 plan &mdash; commit more, save more</h2>
+      <p>P3 sells Copilot Credit as <b>Commit Units (CCCU)</b> &mdash; a one-year prepaid pool for agentic usage across Copilot Studio, D365 first-party agents, and Copilot, at up to 20% off pay-as-you-go. Below: the tiers, what to commit, and how the plan rides on top of pay-as-you-go.</p>
     </div>
 
     <div class="grid g4">
@@ -503,19 +759,95 @@ a.ref .url .ext{flex:none}
       </div>
     </div>
 
-    <div class="card" style="overflow-x:auto;margin-top:18px">
+    <div class="card" style="overflow-x:auto">
       <p class="ctitle">All nine P3 tiers, with pack-equivalent conversion <i class="ic-i" data-tip="p3-table|Full published tier ladder. Pack-equivalent column shows how each tier maps to monthly MCS credit-pack purchases over 12 months.">i</i></p>
       <table>
         <thead><tr><th class="num">Tier</th><th class="num">CCCU</th><th class="num">Copilot Credits</th><th class="num">Price</th><th class="num">Discount</th><th class="num">Eff. $/credit</th><th>Pack equivalent</th></tr></thead>
         <tbody id="p3rows"></tbody>
       </table>
-      <p class="src">Effective $/credit = price &divide; credits (derived). Discount and pack-equivalent columns are published. Tier 2 credits reconciled to 1,500,000 and Tier 7 packs to 150,000,000 per the consistent CCCU x100 rule.</p>
+      <p class="src">Effective $/credit = price &divide; credits (derived). Discount and pack-equivalent columns are published. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Microsoft Agent Pre-Purchase Plan (ACUs)</h3>
+    <div class="card">
+      <p class="ctitle">Size your commitment &mdash; interactive tier configurator <i class="ic-i" data-tip="cfg-tip|Drag the slider to model any of the 9 published P3 tiers. Every value updates live from the source tier table; savings and effective rate are derived.">i</i></p>
+      <div class="cfg">
+        <div>
+          <div class="slider-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:12.5px;color:var(--muted)">Commitment tier</span>
+              <span id="cfgTierBig" style="font-size:15px;font-weight:700;color:var(--violet)">Tier 3</span>
+            </div>
+            <input id="tierSlider" type="range" min="1" max="9" value="3" step="1" aria-label="P3 commitment tier"/>
+            <div class="ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+          </div>
+          <p style="font-size:12.5px;color:var(--muted);margin:14px 0 0">P3 sells Copilot Credit Commit Units (CCCU). Each CCCU equals $1 of usage and converts to 100 Copilot Credits, usable any time across the one-year term. Add more tiers at any time.</p>
+          <p class="bigquote" style="margin-top:14px">Like a gift card for agentic services.</p>
+        </div>
+        <div class="read">
+          <div class="cell" data-tip="cfg-cccu|Copilot Credit Commit Units purchased upfront for this tier."><div class="k">CCCU</div><div class="v" id="cfgCccu">-</div></div>
+          <div class="cell" data-tip="cfg-cr|Copilot Credits available = CCCU x 100."><div class="k">Copilot Credits</div><div class="v" id="cfgCr">-</div></div>
+          <div class="cell" data-tip="cfg-price|Upfront one-year price for this tier."><div class="k">Upfront price</div><div class="v" id="cfgPrice">-</div></div>
+          <div class="cell" data-tip="cfg-disc|Published discount versus the $0.01 PayGo rate."><div class="k">Discount vs PayGo</div><div class="v" id="cfgDisc">-</div></div>
+          <div class="cell" data-tip="cfg-eff|Effective unit price = price / credits."><div class="k">Effective $/credit</div><div class="v" id="cfgEff">-</div></div>
+          <div class="cell" data-tip="cfg-pack|How this tier maps to monthly MCS credit-pack purchases over 12 months."><div class="k">Pack equivalent</div><div class="v" id="cfgPack" style="font-size:13px">-</div></div>
+          <div class="cell hero" data-tip="cfg-sav|Dollars saved versus buying the same credits at PayGo $0.01."><div class="k">You save vs PayGo</div><div class="v" id="cfgSav">-</div></div>
+        </div>
+      </div>
+      <p class="src">Tier, CCCU, credits, price, discount, and pack-equivalent are published. Effective rate and savings are derived (price/credits; credits x $0.01 - price).</p>
+    </div>
+
+    <h3 class="blk">How the prepaid plan stacks on pay-as-you-go</h3>
+    <div class="stack">
+      <div class="usage-in">&#9660; Every credit of usage is metered &#9660;</div>
+      <div class="layer prepaid">
+        <div class="ln">&#9312; Prepaid plan &mdash; pays first</div>
+        <h4>Copilot Credit P3 (CCCU) or Microsoft Agent P3 (ACU)</h4>
+        <p>A prepaid pool that <b>pays down your retail USD usage at a discount</b> (1 commit unit = $1 = 100 credits). Larger commitments unlock deeper discounts.</p>
+      </div>
+      <div class="layflow">&#9474; once the prepaid pool is exhausted, usage <b>automatically continues</b> &#9660;</div>
+      <div class="layer meter">
+        <div class="ln">&#9313; Pay-as-you-go meter &mdash; the pipe</div>
+        <h4>Azure billing policy (Azure subscription)</h4>
+        <p>The metering layer every credit flows through at retail USD. The prepaid plan <b>requires</b> this billing policy &mdash; and any overage beyond your prepaid pool simply bills here.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="ci">&#9888;&#65039;</div>
+      <p><b>The one stand-alone exception:</b> a monthly <b>capacity pack</b> can run without an Azure subscription &mdash; but then there's <b>no overage path</b>, so service pauses when the pack empties. P3 / ACU reservations always ride on the pay-as-you-go layer above.</p>
+    </div>
+
+    <details class="refbox">
+      <summary>Advanced &middot; which benefit pays first when you own several (precedence)</summary>
+      <div class="rb">
+        <p>Most customers buy <b>one</b> plan, so this rarely matters. It only applies <b>if you hold multiple benefits at once</b> &mdash; then they drain in this order before pay-as-you-go:</p>
+        <ol>
+          <li><b>Foundry PTU Reservation</b> &mdash; pays provisioned-throughput usage first</li>
+          <li><b>Fabric Capacity Reservation</b> &mdash; pays Fabric capacity usage</li>
+          <li><b>Copilot Credit P3 (CCCU)</b> &mdash; Copilot-specific prepaid pool</li>
+          <li><b>Microsoft Agent P3 (ACU)</b> &mdash; broad prepaid pool across platforms</li>
+          <li><b>Pay-as-you-go</b> &mdash; anything beyond your benefits, at retail</li>
+        </ol>
+        <p style="margin-top:8px">Reservations always apply before prepurchase plans. If you own only one, it simply pays &mdash; there's no cascade.</p>
+      </div>
+    </details>
+
+    <h3 class="blk">CCCU vs ACU &mdash; which prepaid plan?</h3>
+    <div class="vs">
+      <div class="vh"></div><div class="vh c">CCCU &middot; Copilot Credit P3</div><div class="vh a">ACU &middot; Microsoft Agent P3</div>
+      <div class="rl">Scope</div><div>Copilot Credit usage only</div><div>Copilot + Foundry + Fabric + GitHub</div>
+      <div class="rl">Unit</div><div>1 CCCU = $1 = 100 credits</div><div>1 ACU = $1 = 100 credits</div>
+      <div class="rl">Best for</div><div>"All-in on Copilot Studio agents"</div><div>"AI across multiple MS platforms"</div>
+      <div class="rl">Term</div><div>1 yr &middot; auto-renew &middot; no rollover</div><div>1 yr &middot; auto-renew &middot; no rollover</div>
+      <div class="rl">Example</div><div>15,000 CU &rarr; $14,100 (6% off)</div><div>Same tiered discount curve</div>
+    </div>
+
+    <h3 class="blk">What the Agent (ACU) plan covers across Microsoft</h3>
+    <p style="font-size:12.9px;color:var(--muted);margin:-4px 0 12px">ACU is the broad prepaid pool: one commitment that pays down AI usage across four Microsoft platforms. The biggest surface is <b>Microsoft Foundry</b> &mdash; 34 covered services.</p>
+
     <div class="card">
       <p class="ctitle">What are ACUs &mdash; and what can they be used for? <i class="ic-i" data-tip="acu-what|An Agent Commit Unit (ACU) is a prepaid, discounted commit unit bought through Azure Reservations. 100 ACUs pay down $100 of retail usage. One-year term, auto-renew, no roll-over.">i</i></p>
-      <p style="font-size:12.9px;line-height:1.75;color:var(--text);margin:0 0 12px">An <b>Agent Commit Unit (ACU)</b> is a prepaid, discounted commit unit purchased through Azure Reservations. <b>1 ACU = $1 = 100 Copilot Credits.</b> Purchased ACUs automatically pay down qualifying usage in US dollars from a single shared pool &mdash; no redeployment or reassignment needed &mdash; for a one-year term. Unlike the Copilot Credit P3 plan (which is scoped to Copilot Studio), ACUs span <b>multiple Microsoft AI services</b>, making them the unified budget for organizations running agents across more than one platform.</p>
+      <p style="font-size:12.9px;line-height:1.75;color:var(--text);margin:0 0 12px">An <b>Agent Commit Unit (ACU)</b> is a prepaid, discounted commit unit purchased through Azure Reservations. <b>1 ACU = $1 = 100 Copilot Credits.</b> Purchased ACUs automatically pay down qualifying usage in US dollars from a single shared pool &mdash; no redeployment or reassignment needed &mdash; for a one-year term. Unlike the Copilot Credit P3 plan (which covers Copilot Credit usage across Copilot Studio, D365 first-party agents, and Copilot), ACUs span <b>multiple Microsoft AI services</b>, making them the unified budget for organizations running agents across more than one platform.</p>
       <div class="grid g2">
         <div>
           <p class="ctitle" style="font-size:12.6px">Eligible usage the pool can pay for <i class="ic-i" data-tip="acu-cover|Microsoft reserves the right to update the list of Copilot Credit-eligible products. Always confirm current coverage in the Azure portal before purchase.">i</i></p>
@@ -541,8 +873,9 @@ a.ref .url .ext{flex:none}
       <p class="note" style="margin-top:12px"><b>Sizing example (Microsoft):</b> 1,500,000 Copilot Credits ($15,000 at PayGo) + 5,000 Foundry PTU hours ($5,000) = $20,000 pay-as-you-go. A Tier&nbsp;1 plan of 20,000 ACUs costs $19,000 &mdash; about a 5% / $1,000 saving for predictable workloads.</p>
       <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/agent-pre-purchase" target="_blank" rel="noopener">Microsoft Agent Prepurchase Plan (Microsoft Learn)</a>.</p>
     </div>
-    <div class="card" style="overflow-x:auto;margin-top:18px">
-      <p class="ctitle">Unified agentic spend across Copilot Studio, Foundry, Fabric &amp; GitHub <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units (ACUs) that cover eligible usage across Microsoft Copilot Studio, Microsoft Foundry, Microsoft Fabric, and GitHub. 1 ACU = $1 = 100 credits.">i</i></p>
+
+    <div class="card" style="overflow-x:auto">
+      <p class="ctitle">The three Agent P3 (ACU) tiers <i class="ic-i" data-tip="acu|The Agent P3 plan pools Agent Commit Units (ACUs) that cover eligible usage across Microsoft Copilot Studio, Microsoft Foundry, Microsoft Fabric, and GitHub. 1 ACU = $1 = 100 credits.">i</i></p>
       <table>
         <thead><tr><th>Tier</th><th class="num">ACUs</th><th class="num">Credit equivalent</th><th class="num">Price</th><th class="num">Discount</th></tr></thead>
         <tbody>
@@ -553,516 +886,62 @@ a.ref .url .ext{flex:none}
       </table>
       <p class="src">Credit equivalent = ACUs &times; 100 (derived from 1 ACU = 100 credits). Pricing subject to change. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
-  </section>
 
-  <!-- ============ AI BUILDER TRANSITION ============ -->
-  <section class="tab" id="transition" role="tabpanel" aria-labelledby="tab-transition" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>AI Builder transition</span>
-      <h2>Transition to Copilot Credits from AI Builder</h2>
-      <p>Microsoft is unifying AI Builder billing under <b>Copilot Credits</b>. Seeded AI Builder credits in Power Apps Premium, Power Automate Premium, and Dynamics 365 licenses are being retired, and AI Builder add-on sales have ended. This guide covers the licensing model change, the dual-mode timeline, billing plan setup, and how to ensure zero disruption to existing workloads during the transition.</p>
+    <h3 class="blk">The full coverage surface &mdash; what ACU pays down</h3>
+    <div class="fhdr">
+      <div class="ft"><span aria-hidden="true">&#9670;</span> Microsoft Foundry</div>
+      <div class="fc">34 services</div>
     </div>
-
-    <!-- ── AI BUILDER TRANSITION ── -->
-    <h3 class="sect"><span class="bar"></span>AI Builder credits &rarr; Copilot Credits</h3>
-
-    <div class="grid g3">
-      <div class="card kpi" data-tip="tr-dual|From Nov 2025 to Nov 2026, environments consume AI Builder credits first, then fall back to Copilot Credits if exhausted.">
-        <div class="lab">Dual-mode period <i class="ic-i">i</i></div>
-        <div class="val breathe" style="color:var(--amber)">12 mo</div>
-        <div class="delta">Nov 2025 &ndash; Nov 2026</div>
+    <div class="catgrid">
+      <div class="cat">
+        <div class="ct"><span>Models</span><span class="cn">16</span></div>
+        <ul>
+          <li>Azure OpenAI</li><li>Azure OpenAI Embedding</li><li>Azure OpenAI GPT5</li><li>Azure OpenAI Media</li><li>Azure OpenAI OSS models</li><li>Azure OpenAI PP GPT4s</li><li>Azure OpenAI Reasoning</li><li>Azure DeepSeek Models</li><li>Meta Llama Models</li><li>Mistral Models</li><li>Phi Models</li><li>Qwen Models</li><li>Azure Cohere Models</li><li>Azure Grok Models</li><li>Azure BFL Flux Models</li><li>Kimi-K2-Thinking Model</li>
+        </ul>
       </div>
-      <div class="card kpi" data-tip="tr-seed|After Nov 2026, seeded AI Builder credits in Power Apps Premium, Power Automate Premium, and Dynamics 365 licenses are removed.">
-        <div class="lab">Seeded credits removed <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--rose)">Nov 2026</div>
-        <div class="delta">from all premium licenses</div>
+      <div class="cat">
+        <div class="ct"><span>Vision &middot; Speech &middot; Language</span><span class="cn">9</span></div>
+        <ul>
+          <li>Azure Vision</li><li>Azure Vision &ndash; disconnected</li><li>Azure Face</li><li>Azure Speech</li><li>Azure Speech &ndash; disconnected</li><li>Translator Speech</li><li>Azure Translator</li><li>Azure Language</li><li>Azure Language &ndash; disconnected</li>
+        </ul>
       </div>
-      <div class="card kpi" data-tip="tr-convert|There is no automatic conversion of AI Builder credits to Copilot Credits. You must purchase Copilot Credits separately.">
-        <div class="lab">Auto-conversion? <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--rose)">None</div>
-        <div class="delta">No AIB &rarr; CC conversion</div>
+      <div class="cat">
+        <div class="ct"><span>Doc &middot; Content Intelligence</span><span class="cn">4</span></div>
+        <ul>
+          <li>Azure Document Intelligence</li><li>Azure Document Intelligence &ndash; disconnected</li><li>Azure Content Understanding</li><li>Content Safety</li>
+        </ul>
       </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Transition timeline</h3>
-    <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Key dates and what changes at each milestone</p>
-      <table>
-        <thead><tr><th>Date</th><th>Event</th><th>Who is impacted</th><th>Impact</th></tr></thead>
-        <tbody>
-          <tr data-tip="tl1|New customers can no longer buy AI Builder capacity add-ons starting Nov 1, 2025.">
-            <td>Nov 1, 2025</td><td>End of new AI Builder add-on sales</td><td>New customers</td><td>Must purchase Copilot Credits for AI features</td></tr>
-          <tr data-tip="tl2|Existing customers keep their add-ons and seeded credits during the dual-mode period. AI Builder credits are consumed first.">
-            <td>Nov 2025 &ndash; Nov 2026</td><td>Dual-mode licensing</td><td>Existing customers</td><td>AIB credits consumed first; Copilot Credits as fallback</td></tr>
-          <tr data-tip="tl3|Seeded AI Builder credits from Power Apps/Automate Premium, Dynamics 365, etc. are permanently removed.">
-            <td>Nov 1, 2026</td><td>Seeded AIB credits removed</td><td>All customers</td><td>No more monthly AIB credits from premium licenses</td></tr>
-          <tr data-tip="tl4|Existing add-on customers can use remaining credits until contract expiration but cannot renew.">
-            <td>Nov 1, 2026</td><td>End of Life for AIB add-ons</td><td>Add-on customers</td><td>Cannot renew; use until contract expires</td></tr>
-          <tr data-tip="tl5|Copilot Credits are the sole currency for all AI features in Copilot Studio, Power Automate, and Power Apps.">
-            <td>Post Nov 2026</td><td>Copilot Credits only</td><td>Everyone</td><td>Universal currency for all AI automation</td></tr>
-        </tbody>
-      </table>
-      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" target="_blank" rel="noopener">End of AI Builder credits (Microsoft Learn)</a></p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>How dual-mode consumption works</h3>
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Consumption priority during dual-mode <i class="ic-i" data-tip="dual-how|In Power Apps and Power Automate, AI Builder features first try AI Builder credits. If absent or exhausted, they fall back to Copilot Credits. If both are gone, features are blocked. Resets monthly.">i</i></p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="dc1|AI Builder features in Power Apps or Power Automate first consume available AI Builder credits.">
-            <div class="n">1</div><h4>AI Builder credits consumed first</h4>
-            <p>Features in Power Apps and Power Automate use AIB credits when available.</p></div>
-          <div class="step" data-tip="dc2|When AI Builder credits are exhausted or unavailable, the system automatically falls back to Copilot Credits.">
-            <div class="n">2</div><h4>Copilot Credits as fallback</h4>
-            <p>If AIB credits are exhausted, Copilot Credits are used automatically.</p></div>
-          <div class="step" data-tip="dc3|If both currencies are unavailable, AI Builder features fail and are blocked until credits are replenished.">
-            <div class="n">3</div><h4>Both exhausted &rarr; blocked</h4>
-            <p>No credits available = AI features stop working. Resets monthly.</p></div>
-        </div>
-        <p class="note"><b>Important:</b> Copilot Studio agents and agent flows <em>always</em> consume Copilot Credits only, regardless of AI Builder credit availability.</p>
-      </div>
-      <div class="card">
-        <p class="ctitle">AI Builder transition planning checklist</p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2.1;color:var(--text)">
-          <li>Audit current AI Builder credit consumption in Power Platform admin center</li>
-          <li>Identify all flows and apps using AI Builder models or prompts</li>
-          <li>Map each AI Builder capability to its Copilot Credit rate (see Credit Rates tab)</li>
-          <li>Estimate monthly Copilot Credits needed to replace seeded AIB credits</li>
-          <li>Budget for Copilot Credits via packs, PayGo, or P3 before Nov 2026</li>
-          <li>Update monitoring dashboards to track Copilot Credit consumption</li>
-          <li>Communicate timeline to stakeholders: finance, IT, and business owners</li>
+      <div class="cat">
+        <div class="ct"><span>Search &middot; Tools &middot; Platform</span><span class="cn">5</span></div>
+        <ul>
+          <li>Azure AI Search</li><li>Azure Metrics Advisor</li><li>Foundry Model Tools</li><li>Observability in Foundry Control Plane</li><li>Azure Agent Unit</li>
         </ul>
       </div>
     </div>
 
-    <!-- ── ENSURING NO DISRUPTION ── -->
-    <h3 class="sect"><span class="bar"></span>Ensuring zero disruption during transition</h3>
-
-    <div class="grid g2">
-      <div class="card" data-tip="cont-link|Understanding how P3 prepaid credits flow through PPAC billing plans to environments is critical for a smooth cutover. The billing plan bridges Azure reservations to Power Platform environments.|Source: Microsoft Learn, Set up a pay-as-you-go plan">
-        <p class="ctitle">How P3 credits link to PPAC billing plans</p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step">
-            <div class="n">1</div><h4>P3 purchased in Azure Portal</h4>
-            <p>One-time upfront reservation tied to an Azure subscription. Credits appear as reserved capacity.</p></div>
-          <div class="step">
-            <div class="n">2</div><h4>Billing plan created in PPAC</h4>
-            <p>In PPAC &rarr; Licensing &rarr; Pay-as-you-go plans, create a billing plan linked to the <b>same Azure subscription</b> used for P3.</p></div>
-          <div class="step">
-            <div class="n">3</div><h4>Environments assigned to billing plan</h4>
-            <p>Select environments to associate with the plan. Each environment draws from the tenant-wide prepaid pool; optionally allocate specific credit amounts per environment.</p></div>
-          <div class="step">
-            <div class="n">4</div><h4>Credits flow automatically</h4>
-            <p>Agents in linked environments consume from prepaid P3 capacity first. If exhausted, PayGo meters on the Azure subscription absorb any overage&mdash;no disruption.</p></div>
-        </div>
-        <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan (Microsoft Learn)</a></p>
-      </div>
-      <div class="card" data-tip="cont-check|Pre-transition readiness checklist to ensure workloads continue without disruption during and after the migration from AI Builder credits to Copilot Credits.">
-        <p class="ctitle">Transition readiness checklist</p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2.1;color:var(--text)">
-          <li><b>Purchase credits first:</b> ensure Copilot Credits (packs, PayGo, or P3) are active <em>before</em> legacy entitlements expire</li>
-          <li><b>Enable PayGo as a safety net:</b> link a pay-as-you-go meter so agents overflow to Azure billing instead of being disabled</li>
-          <li><b>Allocate capacity per environment:</b> in PPAC, set per-environment allocations to protect production from dev/test overspend</li>
-          <li><b>Set per-agent limits:</b> use PPAC &rarr; Manage Agents to cap individual agent consumption and receive threshold alerts</li>
-          <li><b>Run parallel:</b> keep AI Builder credits and Copilot Credits both active during dual-mode until workloads are fully validated</li>
-          <li><b>Test in isolation:</b> Copilot Studio test chat and designer runs are free&mdash;use them before publishing</li>
-          <li><b>Monitor daily:</b> check PPAC &rarr; Licensing &rarr; Copilot Studio &rarr; Summary tab daily during cutover</li>
-          <li><b>Notify stakeholders:</b> communicate transition dates to finance, IT, and business owners with rollback plan</li>
-        </ul>
-        <p class="note" style="margin-top:10px"><b>Key guarantee:</b> Microsoft honors existing AI Builder entitlements for the duration of your current contract, and seeded credits continue through the dual-mode period (to Nov 1, 2026). You can run both credit types simultaneously during transition&mdash;there is no mid-contract forced cutover.</p>
-      </div>
+    <div class="trio">
+      <div class="card"><h4 style="margin:0 0 8px;font-size:15px;color:var(--violet)">Copilot Studio</h4><ul style="margin:0;padding-left:18px;font-size:12.6px;color:var(--muted)"><li>Microsoft 365 Copilot Chat</li><li>Dynamics 365 first-party agents</li><li>Copilot Studio</li></ul></div>
+      <div class="card"><h4 style="margin:0 0 8px;font-size:15px;color:var(--teal)">Fabric</h4><ul style="margin:0;padding-left:18px;font-size:12.6px;color:var(--muted)"><li>Fabric Capacity (F-SKUs)</li><li>OneLake compute</li></ul></div>
+      <div class="card"><h4 style="margin:0 0 8px;font-size:15px;color:var(--amber)">GitHub</h4><ul style="margin:0;padding-left:18px;font-size:12.6px;color:var(--muted)"><li>GitHub Copilot</li></ul></div>
     </div>
+    <p class="src">Services list as of February 2026, subject to change. Copilot Credit-eligible agentic services: Microsoft Copilot Studio, Dynamics 365 first-party agents, and Copilot.</p>
 
-    <div class="card" data-tip="tr-faq|Common questions about the transition, sourced from Microsoft Learn FAQ.">
-      <p class="ctitle">Frequently asked questions</p>
-      <div class="acc">
-        <details><summary class="ahd">How do prepaid P3 credits connect to my PPAC billing plan?</summary>
-        <div class="abody"><p>P3 is purchased as an Azure reservation tied to a subscription. In PPAC, create a billing plan linked to that same Azure subscription, then assign environments. Agents in those environments automatically draw from P3 prepaid capacity first. Any overage bills to the Azure subscription via pay-as-you-go meters.</p></div></details>
-        <details><summary class="ahd">Will my existing contracts be honored?</summary>
-        <div class="abody"><p>Yes. Microsoft honors AI Builder entitlements for contracts that started before Nov 1, 2025, for their full duration. Seeded credits in premium licenses continue through Nov 1, 2026 (or the contract end date if covered by a prior agreement).</p></div></details>
-        <details><summary class="ahd">What if I have both AI Builder credits and Copilot Credits?</summary>
-        <div class="abody"><p>AI Builder features in Power Apps and Power Automate consume AI Builder credits first. When those are exhausted, the system falls back to Copilot Credits. Consumption resets monthly.</p></div></details>
-        <details><summary class="ahd">Is there an automatic conversion from AIB to Copilot Credits?</summary>
-        <div class="abody"><p>No. There is no automatic conversion. You must purchase Copilot Credits separately to replace your AI Builder credit capacity.</p></div></details>
-        <details><summary class="ahd">What happens to seeded credits in Power Automate Premium?</summary>
-        <div class="abody"><p>The ~5,000 AI Builder credits seeded monthly in Power Automate Premium and similar licenses will be removed after Nov 1, 2026. No Copilot Credits are seeded as a replacement.</p></div></details>
-        <details><summary class="ahd">How do I prevent disruption during the transition?</summary>
-        <div class="abody"><p>Enable a pay-as-you-go meter alongside prepaid credits so agents overflow to Azure billing instead of being disabled. Allocate capacity per environment in PPAC, set per-agent limits, and run legacy and new agents in parallel until fully validated. See the Transition Readiness Checklist above.</p></div></details>
-      </div>
-      <p class="src">Sources: <a class="ilink" href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" target="_blank" rel="noopener">End of AI Builder credits FAQ</a> &middot; <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide</a></p>
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="buy-how"><div class="k">&larr; Back</div><div class="v">How to purchase</div></a>
+      <a class="navchip next" href="#" data-gototab="buy-savings"><div class="k">Next</div><div class="v">The savings analysis &rarr;</div></a>
     </div>
   </section>
 
-  <!-- ============ USAGE-BASED BILLING ============ -->
-  <section class="tab" id="usage" role="tabpanel" aria-labelledby="tab-usage" tabindex="0">
+  <!-- ============ STAGE 3 · SAVINGS ANALYSIS ============ -->
+  <section class="tab" id="buy-savings" role="tabpanel" aria-labelledby="tab-buy-savings" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">3</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Usage-based billing</span>
-      <h2>Agentic experiences, connectors, and what they cost</h2>
-      <p>Newer agentic experiences &mdash; Microsoft 365 Copilot Cowork and agent &ldquo;AI teammates&rdquo; &mdash; bill on a usage basis in Copilot Credits, layered on top of a base Copilot subscription. Connecting agents to premium and external systems adds its own cost considerations. This page covers both.</p>
-    </div>
-
-    <div class="grid g3">
-      <div class="card kpi" data-tip="ub-layers|Usage-based experiences require a base Copilot subscription (the per-user seat) plus metered Copilot Credit consumption for the agentic work itself.">
-        <div class="lab">Cost model <i class="ic-i">i</i></div>
-        <div class="val breathe" style="color:var(--blue)">2 layers</div>
-        <div class="delta">base subscription + usage in credits</div>
-      </div>
-      <div class="card kpi" data-tip="ub-activities|Activities such as model responses, tool and skill calls, image generation, and browser tasks all count toward your organization's Copilot Credit consumption.">
-        <div class="lab">What consumes credits <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--violet)">4 types</div>
-        <div class="delta">responses, tool/skill calls, images, browser</div>
-      </div>
-      <div class="card kpi" data-tip="ub-frontier|Tenants in the Copilot Cowork early-access (Frontier) program must configure usage-based billing in the Microsoft 365 admin center by June 30, 2026, or agentic experiences are gated until billing is set up.">
-        <div class="lab">Frontier setup deadline <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--rose)">Jun 30 2026</div>
-        <div class="delta">pilot tenants: set up billing or gate access</div>
-      </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Cowork &amp; AI teammate billing</h3>
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">How agentic experiences are billed <i class="ic-i" data-tip="ub-model|Cowork and agent/AI teammate experiences use a usage-based model on top of a base Copilot subscription. You pay the per-user subscription and metered Copilot Credits for the agentic work.">i</i></p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
-          <li><b>Base subscription still required</b> &mdash; the per-user Copilot seat remains the entry point.</li>
-          <li><b>Usage billed in Copilot Credits</b> &mdash; Cowork and AI teammate agents meter consumption on top of the seat.</li>
-          <li><b>AI teammate billing is usage-based</b> &mdash; agent activity is metered like other usage-based experiences.</li>
-          <li><b>Credit-consuming activities</b> &mdash; model responses, tool and skill calls, image generation, and browser tasks.</li>
-          <li><b>Common currency</b> &mdash; the same Copilot Credits used across Copilot Studio and other eligible services.</li>
-        </ul>
-        <p class="src">Sources: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-admin-governance" target="_blank" rel="noopener">Manage Copilot Cowork (Microsoft Learn)</a> &middot; <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener">Usage-based billing overview</a></p>
-      </div>
-      <div class="card">
-        <p class="ctitle">Enable &amp; govern in the Microsoft 365 admin center <i class="ic-i" data-tip="ub-enable|Admins enable usage-based billing under Copilot > Cost Management, then activate a default spending policy and choose a billing method.">i</i></p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="ube1|A Global administrator or Billing administrator opens the Cost Management node under Copilot to unlock usage-based experiences (currently Cowork and Work IQ API).">
-            <div class="n">A</div><h4>Copilot &rarr; Cost Management</h4>
-            <p>Global or Billing admin selects <b>Get Started</b> to unlock usage-based experiences (Cowork, Work IQ API).</p></div>
-          <div class="step" data-tip="ube2|Activate the default spending policy and select how the organization is billed: prepaid credits (P3), pay-as-you-go, or existing capacity.">
-            <div class="n">B</div><h4>Activate a spending policy</h4>
-            <p>Pick a billing method: prepaid P3, pay-as-you-go, or existing capacity.</p></div>
-          <div class="step" data-tip="ube3|Set monthly and per-user spending limits and define alert thresholds so a single user can't drain the organization's credits.">
-            <div class="n">C</div><h4>Set limits &amp; alerts</h4>
-            <p>Monthly + per-user caps and alert thresholds prevent runaway spend.</p></div>
-        </div>
-        <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-manage-copilot-credits" target="_blank" rel="noopener">Managing AI experiences enabled by usage-based billing (Microsoft Learn)</a></p>
-      </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Connector &amp; external-system costs</h3>
-    <div class="grid g3">
-      <div class="card kpi" data-tip="conn-action|Agent actions that call connectors &mdash; including premium and non-Microsoft (third-party) connectors &mdash; are metered in Copilot Credits at the agent-action rate of 5 credits per action.">
-        <div class="lab">Connector agent action <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--blue)">5</div>
-        <div class="delta">credits per action (premium &amp; third-party)</div>
-      </div>
-      <div class="card kpi" data-tip="conn-ext|External systems can carry their own licensing, subscription, or API costs that the platform bills directly &mdash; separate from and in addition to Copilot Credits.">
-        <div class="lab">External platform cost <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--amber)">Separate</div>
-        <div class="delta">billed by the platform, not in credits</div>
-      </div>
-      <div class="card kpi" data-tip="conn-m365|Microsoft 365 Copilot (Graph) connectors add no extra charge for full M365 Copilot licensed users. Grounding shared tenant data through Copilot Chat is usage-based, metered in Copilot Credits.">
-        <div class="lab">M365 Copilot connectors <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--emerald)">No charge<sup class="fn">*</sup></div>
-        <div class="delta">*under M365 Copilot license</div>
-      </div>
-    </div>
-
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Where connector cost comes from <i class="ic-i" data-tip="conn-detail|Connector calls inside an agent action consume Copilot Credits at the agent-action rate. The external system may bill its own platform costs on top.">i</i></p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
-          <li><b>In Copilot Studio</b> &mdash; a connector call inside an agent action is metered at <b>5 credits per agent action</b>, the same rate shown on the Credit Rates page.</li>
-          <li><b>External platform costs</b> &mdash; e.g., <b>ServiceNow</b> can charge its own licensing/API costs for the integrated system; these vary by vendor and are billed outside Copilot Credits.</li>
-          <li><b>M365 Copilot (Graph) connectors</b> &mdash; no extra charge for full M365 Copilot licensed users; <b>Copilot Chat grounding</b> of shared tenant data (SharePoint, Copilot connectors) is usage-based in Copilot Credits.</li>
-        </ul>
-        <p class="src">Sources: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noopener">Billing rates (Microsoft Learn)</a> &middot; <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/cost-considerations" target="_blank" rel="noopener">Extensibility cost considerations</a></p>
-      </div>
-      <div class="card">
-        <p class="ctitle">Example: a ServiceNow integration <i class="ic-i" data-tip="conn-snow|ServiceNow is a real Microsoft 365 Copilot connector. The agent action that calls it costs Copilot Credits; ServiceNow's own platform licensing is billed by ServiceNow.">i</i></p>
-        <table>
-          <thead><tr><th>Cost component</th><th>Who bills it</th><th class="num">Copilot Credits?</th></tr></thead>
-          <tbody>
-            <tr data-tip="snow1|Each agent action that calls the connector is metered at the agent-action rate."><td>Agent action calling the connector</td><td>Microsoft (Copilot)</td><td class="num">5 / action</td></tr>
-            <tr data-tip="snow2|Generative answers grounded on the returned data bill at the generative-answer rate."><td>Generative answer on returned data</td><td>Microsoft (Copilot)</td><td class="num">2 / answer</td></tr>
-            <tr data-tip="snow3|ServiceNow's own subscription, instance, and API costs are billed by ServiceNow and vary by agreement."><td>ServiceNow platform &amp; API</td><td>ServiceNow</td><td class="num">Separate</td></tr>
-          </tbody>
-        </table>
-        <p class="note"><b>Budget tip:</b> size the Copilot Credit cost from agent-action and answer rates, then add the external system's own licensing separately &mdash; it is not part of your credit pool.</p>
-        <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/servicenow-catalog-overview" target="_blank" rel="noopener">ServiceNow Catalog Copilot connector (Microsoft Learn)</a></p>
-      </div>
-    </div>
-
-    <p class="note" style="margin-top:4px"><b>Govern the spend:</b> pilot, cap, and charge usage-based experiences back to the right business unit on the <a class="ilink" href="#" data-gototab="monitor">Monitor &amp; Control</a> page.</p>
-  </section>
-
-  <!-- ============ POWER AUTOMATE & FLOWS ============ -->
-  <section class="tab" id="paflows" role="tabpanel" aria-labelledby="tab-paflows" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>Power Automate &amp; Flows</span>
-      <h2>How Power Automate and Desktop consume Copilot Credits</h2>
-      <p>Copilot Credits apply to AI-powered actions in Power Automate cloud flows, agent flows, and Power Automate Desktop. Understanding which actions consume credits &mdash; and which don't &mdash; is critical for accurate budgeting.</p>
-    </div>
-
-    <div class="grid g3">
-      <div class="card kpi" data-tip="pa-agent|Agent flows bill all actions through Copilot Credits at 13 CC per 100 actions. No Power Automate license needed.">
-        <div class="lab">Agent flow rate <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--blue)">13</div>
-        <div class="delta">CC per 100 actions (0.13 each)</div>
-      </div>
-      <div class="card kpi" data-tip="pa-doc|Document processing (invoices, receipts, custom models) costs 8 CC per page regardless of flow type.">
-        <div class="lab">Doc processing <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--violet)">8</div>
-        <div class="delta">CC per page (invoice, receipt, etc.)</div>
-      </div>
-      <div class="card kpi" data-tip="pa-rpa|Standard RPA actions in Power Automate Desktop (UI automation, file ops, mouse/keyboard) do NOT consume Copilot Credits.">
-        <div class="lab">Desktop RPA actions <i class="ic-i">i</i></div>
-        <div class="val" style="color:var(--emerald)">Free</div>
-        <div class="delta">Standard RPA: no Copilot Credits</div>
-      </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Classic cloud flows vs agent flows</h3>
-    <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Billing comparison <i class="ic-i" data-tip="pa-compare|Classic flows use Power Automate licensing for non-AI actions. Agent flows bill everything through Copilot Credits. Converting from classic to agent is one-way and permanent.">i</i></p>
-      <table>
-        <thead><tr><th>Aspect</th><th>Classic cloud flow</th><th>Agent flow (Copilot Studio)</th></tr></thead>
-        <tbody>
-          <tr><td><b>License</b></td><td>Power Automate Premium ($15/user/mo)</td><td>Copilot Credits (no PA license needed)</td></tr>
-          <tr><td><b>Non-AI actions</b></td><td>Covered by PA license; no CC consumed</td><td>13 CC per 100 actions</td></tr>
-          <tr><td><b>AI Builder actions</b></td><td>AIB credits first, then CC fallback</td><td>Copilot Credits only (always)</td></tr>
-          <tr><td><b>Premium connectors</b></td><td>Require PA Premium license</td><td>Included in Copilot Credits</td></tr>
-          <tr><td><b>Post Nov 2026</b></td><td>AI actions require CC only</td><td>CC only (no change)</td></tr>
-          <tr><td><b>Conversion</b></td><td colspan="2">Classic &rarr; agent flow: one-way, permanent. Changes billing model.</td></tr>
-          <tr><td><b>Testing</b></td><td>Consumes credits</td><td>Free in designer and test chat</td></tr>
-        </tbody>
-      </table>
-      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/flows-overview" target="_blank" rel="noopener">Agent flows overview (Microsoft Learn)</a></p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>What consumes Copilot Credits in Power Automate</h3>
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Actions that consume Copilot Credits</p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
-          <li><b>AI prompts</b> &mdash; basic, standard, or premium LLM models</li>
-          <li><b>Document processing</b> &mdash; invoices, receipts, custom models</li>
-          <li><b>Text recognition (OCR)</b> &mdash; extracting text from images/scans</li>
-          <li><b>Sentiment analysis, key phrases, language detection</b></li>
-          <li><b>Entity extraction, category classification, translation</b></li>
-          <li><b>Object detection &amp; image description</b></li>
-          <li><b>Agent flow actions</b> &mdash; all actions in agent flows</li>
-          <li><b>Copilot Auto Repair</b> in Desktop (AI-powered UI selector repair)</li>
-        </ul>
-      </div>
-      <div class="card">
-        <p class="ctitle">Actions that do NOT consume Copilot Credits</p>
-        <ul style="margin:0;padding-left:18px;font-size:12.8px;line-height:2;color:var(--text)">
-          <li><b>Standard cloud flow actions</b> &mdash; triggers, conditions, loops</li>
-          <li><b>Connector actions</b> &mdash; SharePoint, Outlook, Teams, etc.</li>
-          <li><b>Desktop RPA actions</b> &mdash; UI automation, file management</li>
-          <li><b>Mouse/keyboard simulation</b> in Power Automate Desktop</li>
-          <li><b>Application launching &amp; window management</b></li>
-          <li><b>Data operations</b> &mdash; compose, parse JSON, filter array</li>
-          <li><b>Variables, expressions &amp; scope blocks</b></li>
-          <li><b>Testing</b> prompts in prompt builder or models in AI models page</li>
-        </ul>
-      </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Power Automate Desktop</h3>
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Desktop: what's covered by your PA license <i class="ic-i" data-tip="pad-lic|Power Automate Premium includes attended RPA. Unattended requires the Process plan. Standard RPA actions have no Copilot Credit cost.">i</i></p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="pad1|UI automation, file operations, Excel automation, web scraping, keyboard/mouse actions are all covered by the PA license.">
-            <div class="n">&#10003;</div><h4>Standard RPA &mdash; no Copilot Credits</h4>
-            <p>UI automation, file ops, Excel, web scraping, mouse/keyboard &mdash; all covered by Power Automate Premium license.</p></div>
-          <div class="step" data-tip="pad2|AI-powered features like Create text with GPT or Copilot Auto Repair do consume Copilot Credits.">
-            <div class="n">&#9889;</div><h4>AI actions &mdash; consume Copilot Credits</h4>
-            <p>Create text with GPT, Copilot Auto Repair, and any AI Builder model called from a connected cloud flow.</p></div>
-          <div class="step" data-tip="pad3|Unattended desktop flow runs require the Power Automate Process plan in addition to any Copilot Credits for AI actions.">
-            <div class="n">&#9881;</div><h4>Unattended runs &mdash; require Process plan</h4>
-            <p>Unattended desktop flows need the Power Automate Process license regardless of credit consumption.</p></div>
-        </div>
-      </div>
-      <div class="card">
-        <p class="ctitle">Real-world flow budgeting scenarios</p>
-        <table>
-          <thead><tr><th>Scenario</th><th>Actions</th><th class="num">CC / run</th></tr></thead>
-          <tbody>
-            <tr data-tip="sc1|10-page invoice via document processing: 10 pages x 8 CC = 80 CC per invoice."><td>Invoice processing (10 pages)</td><td>Receipt/invoice analysis</td><td class="num">80</td></tr>
-            <tr data-tip="sc2|3-page contract via custom doc processing model: 3 x 8 = 24 CC."><td>Contract extraction (3 pages)</td><td>Custom doc processing</td><td class="num">24</td></tr>
-            <tr data-tip="sc3|Sentiment analysis on ~5K tokens of email text: 5 x 0.1 = 0.5 CC. Text AI models bill per 1,000 tokens, not characters."><td>Email sentiment (~5K tokens)</td><td>Sentiment analysis</td><td class="num">0.5</td></tr>
-            <tr data-tip="sc4|GPT prompt for email draft, ~2K tokens basic model: 2 x 0.1 = 0.2 CC."><td>AI email draft (2K tokens)</td><td>Prompt (basic LLM)</td><td class="num">0.2</td></tr>
-            <tr data-tip="sc5|Agent flow with 50 actions: 50/100 x 13 = 6.5 CC."><td>Agent flow (50 actions)</td><td>Mixed flow actions</td><td class="num">6.5</td></tr>
-            <tr data-tip="sc6|Desktop RPA + cloud flow chain: RPA steps are free, only AI steps in the cloud flow cost credits."><td>Desktop RPA + cloud AI</td><td>RPA free; AI in cloud flow</td><td class="num">Varies</td></tr>
-          </tbody>
-        </table>
-        <p class="note"><b>Monthly estimate:</b> multiply CC/run by runs per month. Example: 500 invoices/mo &times; 80 CC = 40,000 CC = $400 at PayGo or look for P3 discount.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ BUDGET ============ -->
-  <section class="tab" id="budget" role="tabpanel" aria-labelledby="tab-budget" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>New agent playbook</span>
-      <h2>Budget a new agent in five steps</h2>
-      <p>Use this workflow with the <a class="ilink" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Credit Estimator</a> to forecast a new agent's monthly Copilot Credit consumption for budget planning, procurement approval, and stakeholder review before you buy.</p>
-    </div>
-
-    <div class="cta">
-      <div class="shine"></div>
-      <div class="txt">
-        <h4>&#9889; Start here: Copilot Credit Estimator</h4>
-        <p>Forecast a new agent's monthly Copilot Credit consumption, test low, medium, and high volume scenarios, then export a PDF for procurement. Opens the official Microsoft tool in a new tab.</p>
-      </div>
-      <a class="btn" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener" data-tip="estimator-link|The official, latest Copilot Credit Estimator. Supersedes the old static Message Estimator and Calculator spreadsheets.">Open Copilot Credit Estimator &#8599;</a>
-    </div>
-
-    <div class="card">
-      <p class="ctitle">The Copilot Credit Estimator workflow</p>
-      <div class="flow">
-        <div class="step" data-tip="b1|Choose from Copilot Studio custom (B2E, B2C) and Dynamics 365 agent types. You can add multiple agents and departments.">
-          <div class="n">1</div><h4>Select agent type</h4><p>Custom B2E / B2C or D365 Sales, Service, Finance, Supply Chain agents.</p></div>
-        <div class="step" data-tip="b2|Enter traffic volumes informed by the last 3 to 6 months of history. Validate, do not guess.">
-          <div class="n">2</div><h4>Enter traffic</h4><p>Monthly conversations or triggers, ideally from 3 to 6 months of history.</p></div>
-        <div class="step" data-tip="b3|Set orchestration mode, knowledge sources, and tools. These map directly to the credit rates on the Credit Rates tab.">
-          <div class="n">3</div><h4>Configure features</h4><p>Orchestration, knowledge (grounding), actions, flows, and AI tools.</p></div>
-        <div class="step" data-tip="b4|The Copilot Credit Estimator returns total monthly credits, a breakdown by activity type, and per-agent detail in real time.">
-          <div class="n">4</div><h4>Review results</h4><p>Total monthly credits, breakdown by activity, per-agent contribution.</p></div>
-        <div class="step" data-tip="b5|Export a PDF with inputs, breakdown, totals, timestamp and disclaimer for procurement and finance.">
-          <div class="n">5</div><h4>Export PDF</h4><p>Submit with purchase requisitions and annual budget proposals.</p></div>
-      </div>
-      <p class="note"><b>Always add a 10 to 20% buffer</b> above the estimate to absorb seasonality, business growth, and feature-adoption variance. Test low, medium, and high volume scenarios to bracket cost.</p>
-    </div>
-
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Worked monthly forecast from the published examples <i class="ic-i" data-tip="b-monthly|Daily figures are Microsoft-published. The monthly view applies a 30-day assumption and the recommended 20% buffer, both clearly flagged.">i</i></p>
-        <svg id="monthlybars" height="280" style="width:100%"></svg>
-        <div class="legend">
-          <span><span class="dot" style="background:var(--blue)"></span>Estimated credits/mo</span>
-          <span><span class="dot" style="background:var(--violet)"></span>+20% buffer</span>
-        </div>
-        <p class="src">Daily credits are source figures. Monthly = daily &times; 30 (assumption). Buffer = &times;1.2 per Copilot Credit Estimator guidance.</p>
-      </div>
-      <div class="card">
-        <p class="ctitle">Translate credits into a budget line</p>
-        <table>
-          <thead><tr><th>Agent</th><th class="num">Credits/mo*</th><th class="num">PayGo cost/mo</th></tr></thead>
-          <tbody>
-            <tr data-tip="bm1|7,200/day x 30 = 216,000 credits; x $0.01 = $2,160. Add 20% buffer for a safe budget."><td>Customer support</td><td class="num">216,000</td><td class="num">$2,160</td></tr>
-            <tr data-tip="bm2|4,800/day x 30 = 144,000 credits; x $0.01 = $1,440."><td>Sales performance</td><td class="num">144,000</td><td class="num">$1,440</td></tr>
-            <tr data-tip="bm3|20/day x 30 = 600 credits; x $0.01 = $6."><td>Order processing</td><td class="num">600</td><td class="num">$6</td></tr>
-          </tbody>
-        </table>
-        <p class="note"><b>Then choose a model:</b> if monthly volume is steady, size credit packs (25,000 each). If variable or large, model a P3 tier. Keep PayGo linked as the overage safety net so agents never stop.</p>
-        <p class="src">*Monthly = published daily figure &times; 30-day assumption. Cost at PayGo $0.01/credit. Not a quote.</p>
-      </div>
-    </div>
-
-    <p class="note" style="margin-top:6px"><b>Copilot Credit Estimator disclaimer:</b> the Copilot Credit Estimator gives informational estimates only, not a quote or guarantee. Actual consumption varies by region, workload, user count and other factors. After purchase, monitor actual versus estimated consumption in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> and adjust.</p>
-  </section>
-
-  <!-- ============ MONITOR ============ -->
-  <section class="tab" id="monitor" role="tabpanel" aria-labelledby="tab-monitor" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>Govern &amp; monitor</span>
-      <h2>Monitor consumption, set limits, control overage</h2>
-      <p>Capacity is enforced monthly and unused credits do not carry over. The <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> gives you daily consumption visibility, per-agent limits, and the guardrails to prevent runaway spend before enforcement ever triggers.</p>
-    </div>
-
-    <div class="grid g3">
-      <div class="card kpi" data-tip="mon1|Enforcement triggers when a tenant reaches 125% of prepaid capacity. Custom agents are then disabled.">
-        <div class="lab">Overage enforcement <i class="ic-i">i</i></div><div class="val breathe" style="color:var(--rose)">125%</div><div class="delta">of prepaid capacity, then agents disabled</div></div>
-      <div class="card kpi" data-tip="mon2|PPAC shows daily consumption at environment level for up to three months, plus monthly data for the past 12 months.">
-        <div class="lab">Daily consumption history <i class="ic-i">i</i></div><div class="val" style="color:var(--blue)">3 mo</div><div class="delta">daily detail; 12 mo monthly</div></div>
-      <div class="card kpi" data-tip="mon3|Two guardrails per agent: notifications as usage nears the limit, and a hard stop that turns the agent off at the limit.">
-        <div class="lab">Per-agent guardrails <i class="ic-i">i</i></div><div class="val" style="color:var(--emerald)">2</div><div class="delta">notifications + hard stop</div></div>
-    </div>
-
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Where to monitor in <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> <i class="ic-i" data-tip="ppac|Licensing > Copilot Studio. Summary, Copilot credit capacity, and Environments tabs each surface a different lens on consumption.">i</i></p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="p-1|Summary tab shows prepaid and pay-as-you-go capacity cards and the daily consumption trend.">
-            <div class="n">A</div><h4>Summary tab</h4><p>Pay-as-you-go credits card, prepaid capacity card, daily consumption.</p></div>
-          <div class="step" data-tip="p-2|Capacity consumption by product, total trend over 3 months, and top environments by usage.">
-            <div class="n">B</div><h4>Copilot credit capacity tab</h4><p>By product, 3-month trend, top environments by usage.</p></div>
-          <div class="step" data-tip="p-3|Per-environment view: credits drawn from prepaid vs billed to pay-as-you-go, and status (within capacity or overage).">
-            <div class="n">C</div><h4>Environments tab</h4><p>Prepaid vs PayGo per environment, allocation and overage status.</p></div>
-          <div class="step" data-tip="p-4|Manage Agents lists every billing agent with month-to-date credits, configured limits, and status (Nearing, Over, Within limit).">
-            <div class="n">D</div><h4>Manage Agents</h4><p>Set monthly per-agent limits; status Nearing / Over / Within limit.</p></div>
-        </div>
-      </div>
-      <div class="card">
-        <p class="ctitle">Overage and enforcement, step by step <i class="ic-i" data-tip="enf|How spend is controlled as it climbs from normal use through grace into enforcement.">i</i></p>
-        <svg id="enfbar" height="150" style="width:100%"></svg>
-        <ul style="margin:10px 0 0;padding-left:18px;font-size:12.5px;color:var(--muted);line-height:1.85">
-          <li><b style="color:var(--text)">Under 100%:</b> normal consumption from allocated capacity.</li>
-          <li><b style="color:var(--text)">100 to 125%:</b> grace overage allowed so business processes are not blocked.</li>
-          <li><b style="color:var(--text)">At 125%:</b> custom agents disabled; admin emailed and notified in <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">PPAC</a>. Users see "This agent is currently unavailable. It has reached its usage limit."</li>
-        </ul>
-        <p class="note"><b>Avoid enforcement:</b> reallocate capacity, purchase more credits, or link a pay-as-you-go meter so overage bills to Azure instead of blocking agents.</p>
-      </div>
-    </div>
-
-    <div class="grid g2">
-      <div class="card" data-tip="flowenf|Agent flow enforcement differs: when prepaid capacity is fully consumed, new flow runs are blocked while the parent agent keeps working for non-flow interactions. Resets monthly.">
-        <p class="ctitle">Agent flow enforcement is different</p>
-        <p style="font-size:12.6px;color:var(--muted);margin:0">When prepaid capacity is fully consumed, new agent flow runs are blocked, but the parent agent continues to function for classic answers, generative answers, and agent actions. In-progress runs finish. M365 Copilot licensed users and test runs are exempt. Resolve by reallocating capacity, buying more credits, or enabling PayGo.</p>
-      </div>
-      <div class="card" data-tip="alloc|Capacity can be allocated per environment. Reserved capacity is honored before tenant-level enforcement applies.">
-        <p class="ctitle">Allocation example, 25,000 credits</p>
-        <table><tbody>
-          <tr><td>Environment A (allocated)</td><td class="num">10,000</td></tr>
-          <tr><td>Environment B</td><td class="num">0</td></tr>
-          <tr><td>Environment C</td><td class="num">0</td></tr>
-          <tr><td>Environment D (allocated + PayGo)</td><td class="num">500</td></tr>
-          <tr><td><b>Remaining tenant pool</b></td><td class="num"><b>14,500</b></td></tr>
-        </tbody></table>
-        <p class="src">Remaining = 25,000 - 10,000 - 500 (published example). B and C draw from the 14,500 pool; enforcement at 125% of it.</p>
-      </div>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Pilot, cap &amp; charge back usage-based experiences</h3>
-    <div class="grid g2">
-      <div class="card">
-        <p class="ctitle">Run a pilot before broad rollout <i class="ic-i" data-tip="pilot|Start usage-based experiences (Cowork, AI teammates) with a small scoped group and tight caps, watch the alerts, then expand once spend is understood.">i</i></p>
-        <div class="flow" style="flex-direction:column">
-          <div class="step" data-tip="pil1|Scope the trial to a small group or single business unit so spend is observable and contained.">
-            <div class="n">1</div><h4>Scope to a small group</h4><p>Pilot with one team or business unit, not the whole tenant.</p></div>
-          <div class="step" data-tip="pil2|Set low monthly and per-user spending limits on the pilot's spending policy so nobody can drain the pool.">
-            <div class="n">2</div><h4>Set low monthly + per-user caps</h4><p>Constrain the pilot's spending policy with tight limits.</p></div>
-          <div class="step" data-tip="pil3|Watch the Cost Management alerts and consumption trend over the first weeks, then widen access once the cost-per-user pattern is clear.">
-            <div class="n">3</div><h4>Watch alerts, then expand</h4><p>Monitor consumption and alerts before scaling out.</p></div>
-        </div>
-        <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/pay-as-you-go/overview" target="_blank" rel="noopener">Microsoft 365 Copilot pay-as-you-go overview (Microsoft Learn)</a></p>
-      </div>
-      <div class="card">
-        <p class="ctitle">Spending policies &amp; cost allocation <i class="ic-i" data-tip="policy|In the Microsoft 365 admin center Cost Management dashboard, spending policies control who can consume credits, set limits, and allocate spend to the right business unit.">i</i></p>
-        <table>
-          <thead><tr><th>Control</th><th>What it does</th></tr></thead>
-          <tbody>
-            <tr data-tip="pol1|Spending policies define who can consume Copilot Credits and how much, scoped by user or group."><td><b>Who can consume</b></td><td>Policy scoped per user or group</td></tr>
-            <tr data-tip="pol2|Set a monthly cap on a policy, and a per-user cap so one person can't spend the whole pool."><td><b>Monthly &amp; per-user limits</b></td><td>Caps that prevent overspending</td></tr>
-            <tr data-tip="pol3|Define alert thresholds and recipients; emails fire at the threshold and continue until the month resets or limits change."><td><b>Alerts &amp; hard caps</b></td><td>Thresholds + stakeholder notifications</td></tr>
-            <tr data-tip="pol4|Allocate and charge spend to the appropriate business unit so usage-based cost maps to the consuming team, not one central pool only."><td><b>Charge back to business units</b></td><td>Allocate spend to the consuming BU</td></tr>
-          </tbody>
-        </table>
-        <p class="note"><b>Governance best practice:</b> a per-business-unit spending policy makes chargeback clean &mdash; each unit's usage rolls up to its own limit and alerts.</p>
-        <p class="src">Sources: <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener">Usage-based billing &amp; cost management</a> &middot; <a class="ilink" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-manage-copilot-credits" target="_blank" rel="noopener">Managing AI experiences enabled by usage-based billing</a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ VALUE ============ -->
-  <section class="tab" id="value" role="tabpanel" aria-labelledby="tab-value" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>P3 savings analysis</span>
+      <span class="eyebrow"><span class="live"></span>How it's bought &middot; 4 of 4</span>
       <h2>The numbers that make the P3 case</h2>
       <p>For each P3 tier, the table compares the committed price to the equivalent pay-as-you-go spend for the same credits. Every savings figure is derived transparently and reconciles exactly to the published discount percentages.</p>
     </div>
@@ -1091,95 +970,51 @@ a.ref .url .ext{flex:none}
       <p class="src">PayGo-equivalent = credits &times; $0.01. Savings and effective rates derived; discount column is published. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
     </div>
 
-    <p class="bigquote">"Like a gift card for agentic services" — commit upfront, draw down across the year, and unlock more savings the more you commit to.</p>
-  </section>
+    <p class="bigquote">"Like a gift card for agentic services" &mdash; commit upfront, draw down across the year, and unlock more savings the more you commit to.</p>
 
-  <!-- ============ HOW TO PURCHASE P3 ============ -->
-  <section class="tab" id="purchasep3" role="tabpanel" aria-labelledby="tab-purchasep3" tabindex="0">
-    <div class="head">
-      <span class="eyebrow"><span class="live"></span>Buy the plan</span>
-      <h2>How to Purchase the P3 Plan</h2>
-      <p>P3 is purchased in the Azure Portal as a one-time, upfront reservation. The flow below captures the full purchase process, from prerequisite roles through selecting the Copilot Credit Pre-Purchase Plan, the subscription, the scope, and the number of commit units. Follow the seven steps left to right.</p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Purchase P3 in the Azure Portal</h3>
-    <div class="card">
-      <p class="ctitle">Step-by-step purchase flow <i class="ic-i" data-tip="flowmap-tip|Captured from the attached How to Purchase P3 process diagram. Scroll right to follow all seven steps; sub-cards hang beneath the steps that have them.">i</i></p>
-      <div class="flowmap">
-        <div class="fcol">
-          <div class="fstep lead"><span class="fnum">1</span><p>To purchase P3, <b>one</b> of the following must be true.</p></div>
-          <div class="sub pre"><span class="pn">1</span><div>Owner role for at least one Enterprise or Microsoft Customer Agreement<sup>1</sup></div></div>
-          <div class="sub pre"><span class="pn">2</span><div>Individual subscription with pay-as-you-go rates subscription</div></div>
-          <div class="sub pre"><span class="pn">3</span><div>The required role for CSP subscriptions<sup>2</sup></div></div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">2</span><p>Go to the <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure portal</a></p></div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">3</span><p>If needed, navigate to <b>Reservations</b> and then at the top of the page, select <b>+ Add</b></p></div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">4</span><p>On the Purchase reservations page, select <b>Copilot Credit Pre-Purchase Plan</b></p></div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">5</span><p>On the Select the product you want to purchase page, select a subscription.</p></div>
-          <div class="sub">Use the <b>Subscription</b> list to select the subscription used to pay for the reserved capacity</div>
-          <div class="sub">The payment method of the subscription is charged the upfront costs for P3</div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">6</span><p>Select a scope. Use the <b>Scope</b> list to select a subscription scope</p></div>
-          <div class="sub scope"><b>Single resource group scope</b> - Applies the reservation discount to the matching resources in the selected resource group only</div>
-          <div class="sub scope"><b>Single subscription scope</b> - Applies the reservation discount to the matching resources in the selected subscription</div>
-          <div class="sub scope"><b>Shared scope</b> - Applies the reservation discount to matching resources in eligible subscriptions that are in the billing context. For Enterprise Agreement customers, the billing context is the enrollment</div>
-          <div class="sub scope"><b>Management group</b> - Applies the reservation discount to the matching resource in the list of subscriptions that are a part of both the management group and billing scope</div>
-        </div>
-        <div class="fcol">
-          <div class="fstep"><span class="fnum">7</span><p>Select how many Copilot Credit commit units you want to purchase and complete the purchase</p></div>
-        </div>
-      </div>
-      <div class="fnote">
-        <ol>
-          <li>The <b>Reserved Instances</b> policy option must be enabled in the Azure portal. Or if that setting is disabled, you must be an EA Admin of the subscription.</li>
-          <li>Follow the steps in <a class="ilink" href="https://learn.microsoft.com/en-us/partner-center/customers/azure-ri-server-subscriptions" target="_blank" rel="noopener">Acquire, provision, and manage Azure reserved VM instances (RI) + server subscriptions for customers</a>.</li>
-        </ol>
-      </div>
-      <p class="src">Steps 1, 5, and 6 include the sub-items shown beneath them.</p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Compare the three ways to buy</h3>
-    <div class="card" style="overflow-x:auto">
-      <p class="ctitle">Buying-options comparison <i class="ic-i" data-tip="cfg-matrix|Side-by-side comparison: price, where to purchase, purchase construct, and MACC eligibility. The P3 column is highlighted.">i</i></p>
-      <table>
-        <thead><tr><th>Dimension</th><th>Credit capacity packs</th><th>Pay-as-you-go</th><th class="colhi">Pre-Purchase Plan (P3)</th></tr></thead>
-        <tbody>
-          <tr data-tip="m-price|Packs are a flat monthly subscription; PAYG is a flat per-unit rate; P3 applies built-in tiered volume discounts.">
-            <td><b>Price</b></td><td>$200 per pack/month/tenant</td><td>$0.01/credit</td><td class="colhi">Built-in tiered volume discount depending on the tier</td></tr>
-          <tr data-tip="m-where|Packs use the M365 Admin Center; PAYG and P3 are both transacted in the Azure Portal and require an Azure subscription.">
-            <td><b>Where to purchase</b></td><td>Microsoft 365 Admin Center</td><td>Azure Portal (Azure subscription)</td><td class="colhi">Azure Portal (Azure subscription)</td></tr>
-          <tr data-tip="m-construct|Packs are a license subscription paid upfront; PAYG bills monthly in arrears; P3 is a one-time Azure purchase paid upfront.">
-            <td><b>Purchase model</b></td><td>License subscription (upfront)</td><td>Pay-as-you-go (monthly in arrears)</td><td class="colhi">One-time Azure purchase (paid upfront)</td></tr>
-          <tr data-tip="m-macc|Only the Azure-transacted models draw down a Microsoft Azure Consumption Commitment. Packs are not MACC eligible.">
-            <td><b>MACC eligibility</b></td><td>Not eligible</td><td>Eligible</td><td class="colhi">Eligible</td></tr>
-          <tr data-tip="m-fit|Match the model to the demand pattern.">
-            <td><b>Best for</b></td><td>Steady, predictable usage</td><td>No prior usage history</td><td class="colhi">Larger or variable demand</td></tr>
-        </tbody>
-      </table>
-      <p class="src">The licensing guide states the rate as $0.01 per Copilot Credit. Source: <a class="ilink" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener">Copilot Studio Licensing Guide (PDF)</a>.</p>
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="buy-plans"><div class="k">&larr; Back</div><div class="v">Prepaid plans &amp; sizing</div></a>
+      <a class="navchip next" href="#" data-gototab="control-setup"><div class="k">Next &middot; Stage 4</div><div class="v">Set up &amp; allocate credits &rarr;</div></a>
     </div>
   </section>
 
-  <!-- ============ CONFIGURE P3 ============ -->
-  <section class="tab" id="configp3" role="tabpanel" aria-labelledby="tab-configp3" tabindex="0">
+  <!-- ============ STAGE 4 · SETUP / ALLOCATE ============ -->
+  <section class="tab" id="control-setup" role="tabpanel" aria-labelledby="tab-control-setup" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Set up &amp; configure</span>
-      <h2>Configuring the P3 Plan</h2>
-      <p>Once you have purchased P3, link your Azure subscription to your environment, then size the right commitment. The flow below shows how to link the subscription via a billing plan in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a>; the interactive configurator draws on the published tier table.</p>
+      <span class="eyebrow"><span class="live"></span>Keep it controlled &middot; 1 of 3</span>
+      <h2>Set up &amp; allocate &mdash; packs, pay-as-you-go, and P3</h2>
+      <p>Buying credits is only half the job. Each funding path has its own setup. <b>Credit packs</b> allocate tenant capacity to environments; <b>pay-as-you-go</b> links an Azure subscription as the metered safety net; and <b>P3</b> links the subscription, then allocates the prepurchased pool. The detailed link and allocate flows live under P3 below &mdash; packs and pay-as-you-go reuse them.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Linking your Azure subscription to your environment</h3>
+    <h3 class="blk">Credit packs &middot; Microsoft 365 admin center</h3>
     <div class="card">
-      <p class="ctitle">Step-by-step linking flow <i class="ic-i" data-tip="linkflow-tip|Captured from the attached Linking your Azure Subscription to your Environment process diagram. Follow the steps in number order; sub-cards hang beneath the steps that have them.">i</i></p>
-      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Once P3 is purchased with an Azure subscription, the subscription needs to be linked to the environment via a billing plan in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> (PPAC). Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan - Power Platform | Microsoft Learn</a>.</p>
+      <p class="ctitle">Allocate pack capacity to environments <i class="ic-i" data-tip="pack-setup|Copilot Credit packs are tenant-level prepaid capacity from the Microsoft 365 admin center. No Azure subscription is required to consume them.">i</i></p>
+      <p style="font-size:12.9px;line-height:1.7;color:var(--text);margin:0 0 8px">Packs need <b>no Azure subscription</b>. Once purchased, the prepaid Copilot credit capacity is pooled at the tenant and you put it to work by <b>allocating it to each environment</b> using capacity management (<b>Manage Capacity</b>) in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> &mdash; the same allocation flow shown under <b>P3</b> below.</p>
+      <ul style="margin:0;padding-left:18px;font-size:12.6px;line-height:1.9;color:var(--muted)">
+        <li>Capacity is enforced <b>monthly</b>; unused credits do not roll over</li>
+        <li>Reallocate unconsumed credits between environments at any time</li>
+        <li>If a pack empties with <b>no pay-as-you-go linked</b>, agent runs pause until the next month</li>
+      </ul>
+      <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener">Manage Copilot Studio credits and capacity (Microsoft Learn)</a>.</p>
+    </div>
+
+    <h3 class="blk">Pay-as-you-go &middot; Azure subscription</h3>
+    <div class="card">
+      <p class="ctitle">Link an Azure subscription as the metered safety net <i class="ic-i" data-tip="paygo-setup|Pay-as-you-go meters usage at retail and bills monthly in arrears to a linked Azure subscription. It is also the overage path that keeps agents running when a pack or P3 pool is exhausted.">i</i></p>
+      <p style="font-size:12.9px;line-height:1.7;color:var(--text);margin:0 0 8px">Pay-as-you-go meters every credit at retail and <b>bills monthly in arrears</b> to a linked Azure subscription. It is also the <b>overage safety net</b>: when a pack or P3 pool runs dry, usage flows here instead of stopping. Setup is to <b>link the Azure subscription</b> to your environments via a billing plan in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> &mdash; the exact billing-plan flow shown under <b>P3</b> below.</p>
+      <p class="src">Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan (Microsoft Learn)</a>.</p>
+    </div>
+
+    <h3 class="blk">P3 pre-purchase plan &middot; link the subscription, then allocate credits</h3>
+    <div class="card">
+      <p class="ctitle">Step-by-step linking flow <i class="ic-i" data-tip="linkflow-tip|Follows the Power Platform admin center billing-plan setup flow. Sub-cards hang beneath the steps that have them.">i</i></p>
+      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Once P3 is purchased with an Azure subscription, the subscription needs to be linked to the environment via a billing plan in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> (PPAC). Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener">Set up a pay-as-you-go plan (Microsoft Learn)</a>.</p>
       <div class="flowmap">
         <div class="fcol"><div class="fstep"><span class="fnum">1</span><p>In the navigation pane, select <b>Licensing</b></p></div></div>
         <div class="fcol"><div class="fstep"><span class="fnum">2</span><p>In the Licensing pane, select <b>Pay-as-you-go plans</b>. The Billing plans page is displayed</p></div></div>
@@ -1189,25 +1024,24 @@ a.ref .url .ext{flex:none}
         <div class="fcol">
           <div class="fstep"><span class="fnum">6</span><p>From the <b>Azure subscription</b> dropdown list, select the Azure subscription you'd like to bill</p></div>
           <div class="sub scope">This list shows all the Azure subscriptions in your tenant for which you have sufficient permissions</div>
-          <div class="sub scope">If you don't see a subscription that you expect to be listed, or if you receive a permission error at any point, contact the owner of that subscription or your Azure administrator and ensure you have the right permissions as outlined. Learn more at <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up#procure-or-create-an-azure-subscription" target="_blank" rel="noopener">Procure or create an Azure subscription</a></div>
+          <div class="sub scope">If you don't see a subscription that you expect, or you receive a permission error, contact the owner of that subscription or your Azure administrator. Learn more at <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up#procure-or-create-an-azure-subscription" target="_blank" rel="noopener">Procure or create an Azure subscription</a></div>
         </div>
         <div class="fcol">
           <div class="fstep"><span class="fnum">7</span><p>From the <b>Resource group</b> dropdown list, specify a resource group with that subscription</p></div>
-          <div class="sub scope">The Power Platform account resource - that's associated with this billing plan - is created in this resource group. If there are no resource groups in the specified subscription, you need to create one in the Azure portal before proceeding</div>
-          <div class="sub scope">To learn more about Azure resources, go to <a class="ilink" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview" target="_blank" rel="noopener">What is Azure Resource Manager?</a></div>
+          <div class="sub scope">The Power Platform account resource associated with this billing plan is created in this resource group. If there are no resource groups, create one in the Azure portal first</div>
+          <div class="sub scope">To learn more, go to <a class="ilink" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview" target="_blank" rel="noopener">What is Azure Resource Manager?</a></div>
         </div>
-        <div class="fcol"><div class="fstep"><span class="fnum">8</span><p>From the <b>Power Platform products</b> dropdown list, select the Power Platform product for which the corresponding meters are applied to in the billing plan</p></div></div>
+        <div class="fcol"><div class="fstep"><span class="fnum">8</span><p>From the <b>Power Platform products</b> dropdown list, select the product whose meters apply to this billing plan</p></div></div>
         <div class="fcol"><div class="fstep"><span class="fnum">9</span><p>Select <b>Next</b></p></div></div>
-        <div class="fcol"><div class="fstep"><span class="fnum">10</span><p>In the Select environments pane, in the <b>Region</b> list, select your region. Then the list of environments in that region is displayed</p></div></div>
+        <div class="fcol"><div class="fstep"><span class="fnum">10</span><p>In the Select environments pane, in the <b>Region</b> list, select your region. The environments in that region are displayed</p></div></div>
         <div class="fcol"><div class="fstep"><span class="fnum">11</span><p>Select <b>Save</b></p></div></div>
       </div>
       <p class="src">Steps 6 and 7 include the sub-items shown beneath them.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Allocate credits to your environments</h3>
     <div class="card">
-      <p class="ctitle">Assign Copilot credits per environment in PPAC <i class="ic-i" data-tip="alloc-tip|After the subscription is linked, capacity management lets you allocate prepurchased Copilot credit capacity across environments based on anticipated usage. Reallocate any time.">i</i></p>
-      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Once the Azure subscription is linked, use capacity management in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> (PPAC) to allocate Copilot credits to specific environments based on expected usage. Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener">Manage Copilot Studio credits and capacity - Power Platform | Microsoft Learn</a>.</p>
+      <p class="ctitle">Then: assign Copilot credits per environment in PPAC <i class="ic-i" data-tip="alloc-tip|After the subscription is linked, capacity management lets you allocate prepurchased Copilot credit capacity across environments based on anticipated usage. Reallocate any time.">i</i></p>
+      <p style="font-size:12.6px;color:var(--muted);margin:0 0 6px">Once the Azure subscription is linked, use capacity management in the <a class="ilink" href="https://admin.powerplatform.microsoft.com/" target="_blank" rel="noopener">Power Platform admin center</a> (PPAC) to allocate Copilot credits to specific environments based on expected usage. Reference: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener">Manage Copilot Studio credits and capacity (Microsoft Learn)</a>.</p>
       <div class="flowmap">
         <div class="fcol"><div class="fstep"><span class="fnum">1</span><p>In the navigation pane, select <b>Licensing</b></p></div></div>
         <div class="fcol"><div class="fstep"><span class="fnum">2</span><p>In the <b>Licensing</b> pane, under <b>Products</b>, select <b>Copilot Studio</b></p></div></div>
@@ -1218,118 +1052,158 @@ a.ref .url .ext{flex:none}
         </div>
       </div>
       <p class="note" style="margin-top:6px"><b>Overage management:</b> when an environment's allocation is consumed, choose to draw from the available tenant capacity or route overage to the linked pay-as-you-go plan.</p>
-      <p style="font-size:12.4px;color:var(--muted);margin:8px 0 0">For finer control, set per-agent monthly consumption limits with <b>Notifications</b> and <b>Hard stop</b> guardrails via <b>Manage Agents</b> &mdash; see the <b>Monitor &amp; Control</b> tab.</p>
+      <p style="font-size:12.4px;color:var(--muted);margin:8px 0 0">For finer control, set per-agent monthly consumption limits with <b>Notifications</b> and <b>Hard stop</b> guardrails via <b>Manage Agents</b> &mdash; covered next under govern &amp; enforce.</p>
       <p class="src">Source: <a class="ilink" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener">Manage Copilot Studio credits and capacity (Microsoft Learn)</a>.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Size your commitment</h3>
-    <div class="card">
-      <p class="ctitle">Interactive tier configurator <i class="ic-i" data-tip="cfg-tip|Drag the slider to model any of the 9 published P3 tiers. Every value updates live from the source tier table; savings and effective rate are derived.">i</i></p>
-      <div class="cfg">
-        <div>
-          <div class="slider-wrap">
-            <div style="display:flex;justify-content:space-between;align-items:baseline">
-              <span style="font-size:12.5px;color:var(--muted)">Commitment tier</span>
-              <span id="cfgTierBig" style="font-size:15px;font-weight:700;color:var(--violet)">Tier 3</span>
-            </div>
-            <input id="tierSlider" type="range" min="1" max="9" value="3" step="1" aria-label="P3 commitment tier"/>
-            <div class="ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-          </div>
-          <p style="font-size:12.5px;color:var(--muted);margin:14px 0 0">P3 sells Copilot Credit Commit Units (CCCU). Each CCCU equals $1 of usage and converts to 100 Copilot Credits, usable any time across the one-year term. Add more tiers at any time.</p>
-          <p class="bigquote" style="margin-top:14px">Like a gift card for agentic services.</p>
-        </div>
-        <div class="read">
-          <div class="cell" data-tip="cfg-cccu|Copilot Credit Commit Units purchased upfront for this tier."><div class="k">CCCU</div><div class="v" id="cfgCccu">-</div></div>
-          <div class="cell" data-tip="cfg-cr|Copilot Credits available = CCCU x 100."><div class="k">Copilot Credits</div><div class="v" id="cfgCr">-</div></div>
-          <div class="cell" data-tip="cfg-price|Upfront one-year price for this tier."><div class="k">Upfront price</div><div class="v" id="cfgPrice">-</div></div>
-          <div class="cell" data-tip="cfg-disc|Published discount versus the $0.01 PayGo rate."><div class="k">Discount vs PayGo</div><div class="v" id="cfgDisc">-</div></div>
-          <div class="cell" data-tip="cfg-eff|Effective unit price = price / credits."><div class="k">Effective $/credit</div><div class="v" id="cfgEff">-</div></div>
-          <div class="cell" data-tip="cfg-pack|How this tier maps to monthly MCS credit-pack purchases over 12 months."><div class="k">Pack equivalent</div><div class="v" id="cfgPack" style="font-size:13px">-</div></div>
-          <div class="cell hero" data-tip="cfg-sav|Dollars saved versus buying the same credits at PayGo $0.01."><div class="k">You save vs PayGo</div><div class="v" id="cfgSav">-</div></div>
-        </div>
-      </div>
-      <p class="src">Tier, CCCU, credits, price, discount, and pack-equivalent are published. Effective rate and savings are derived (price/credits; credits x $0.01 - price).</p>
-    </div>
-
-    <h3 class="sect"><span class="bar"></span>Why choose P3</h3>
-    <div class="grid g3">
-      <div class="card" data-tip="b1|Tiered thresholds discount every credit, up to 20% off PayGo at the top tier."><span class="tag vi">Discounts</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Built-in tiered discount thresholds based on volume, up to 20% off PayGo rates.</p></div>
-      <div class="card" data-tip="b2|CCCUs live for a full year rather than expiring monthly like packs."><span class="tag em">Annual flexibility</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Annual expiration of CCCU versus monthly expiry with capacity packs.</p></div>
-      <div class="card" data-tip="b3|Commit a predictable lump sum and add tiers whenever demand grows."><span class="tag blue">Predictable</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Predictable pre-pay model with flexibility to add P3 tiers at any time.</p></div>
-      <div class="card" data-tip="b4|P3 spend draws down your Azure Consumption Commitment."><span class="tag am">MACC eligible</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">MACC eligible, maximizing existing Azure investment.</p></div>
-      <div class="card" data-tip="b5|See utilization live in the Azure Portal across the term."><span class="tag te">Real-time tracking</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">Easily track P3 utilization in real time through the Azure Portal.</p></div>
-      <div class="card" data-tip="b6|No M365 Admin Center license required, unlike capacity packs."><span class="tag ro">No M365 license</span><p style="font-size:12.6px;color:var(--muted);margin:10px 0 0">No need for a license in the Microsoft 365 Admin Center, as required for capacity packs.</p></div>
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="buy-savings"><div class="k">&larr; Back</div><div class="v">The savings analysis</div></a>
+      <a class="navchip next" href="#" data-gototab="control-budget"><div class="k">Next</div><div class="v">Budget &amp; monitor &rarr;</div></a>
     </div>
   </section>
 
-  <!-- ============ APPENDIX ============ -->
-  <section class="tab" id="appendix" role="tabpanel" aria-labelledby="tab-appendix" tabindex="0">
+  <!-- ============ STAGE 4 · BUDGET ============ -->
+  <section class="tab" id="control-budget" role="tabpanel" aria-labelledby="tab-control-budget" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">4</span>Keep it controlled</span>
+    </div>
     <div class="head">
-      <span class="eyebrow"><span class="live"></span>Appendix</span>
-      <h2>Sources and public reference links</h2>
-      <p>Every figure in this guide traces to one of the public Microsoft pages below. All links open in a new tab. Pricing is USD and subject to change; always confirm against the latest Microsoft pages before a purchase decision.</p>
+      <span class="eyebrow"><span class="live"></span>Keep it controlled &middot; 2 of 3</span>
+      <h2>Budget per environment, then watch the meter</h2>
+      <p>Credits are allocated and consumed per <b>environment</b>. Size each one from its expected workload, set a budget with milestone alerts, and monitor actual consumption so finance never gets surprised.</p>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Estimation tools</h3>
-    <a class="card ref" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener" data-tip="ref-est|The official, latest Copilot Credit Estimator. Supersedes the static Message Estimator and Calculator spreadsheets.|Used on: Budget a New Agent tab">
-      <p class="rtitle"><span class="rn">1</span>Copilot Credit Estimator (official tool)</p>
-      <p>Forecast monthly Copilot Credit consumption by selecting agent type, traffic, orchestration, knowledge, and tools; test low, medium, and high volume scenarios; apply the 10 to 20% buffer; and export a PDF for procurement. Supersedes the static Message Estimator and Calculator spreadsheets.</p>
-      <span class="url"><span class="ext">&#128279;</span>microsoft.github.io/copilot-studio-estimator/</span>
-    </a>
+    <div class="grid g3">
+      <div class="card kpi"><div class="lab">Allocate</div><div class="val">Per env</div><div class="delta">Distribute tenant capacity to the environments that need it.</div></div>
+      <div class="card kpi"><div class="lab">Alert</div><div class="val">Milestones</div><div class="delta">Email notifications at budget percentage thresholds.</div></div>
+      <div class="card kpi"><div class="lab">Charge back</div><div class="val">By BU</div><div class="delta">Attribute usage to the business unit that drove it.</div></div>
+    </div>
 
-    <h3 class="sect"><span class="bar"></span>Licensing and billing</h3>
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="control-setup"><div class="k">&larr; Back</div><div class="v">Set up &amp; allocate</div></a>
+      <a class="navchip next" href="#" data-gototab="control-govern"><div class="k">Next</div><div class="v">Govern &amp; enforce &rarr;</div></a>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 4 · GOVERN ============ -->
+  <section class="tab" id="control-govern" role="tabpanel" aria-labelledby="tab-control-govern" tabindex="0">
+    <div class="journey">
+      <span class="jstep done"><span class="jn">&check;</span>What it is</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's spent</span><span class="jline"></span>
+      <span class="jstep done"><span class="jn">&check;</span>How it's bought</span><span class="jline"></span>
+      <span class="jstep cur"><span class="jn">4</span>Keep it controlled</span>
+    </div>
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>Keep it controlled &middot; 3 of 3</span>
+      <h2>Overage enforcement is the safety net</h2>
+      <p>When an environment runs past its allocation, Microsoft allows a grace band, then enforces. You choose how to respond &mdash; reallocate, buy more, or enable pay-as-you-go so nothing ever hard-stops.</p>
+    </div>
+
+    <table class="rt" aria-label="Overage handling options">
+      <thead><tr><th>When capacity is exceeded</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td>Reallocate capacity</td><td>Move unused credits from other environments in the tenant.</td></tr>
+        <tr><td>Purchase more credits</td><td>Top up and assign to the affected environment.</td></tr>
+        <tr><td>Enable pay-as-you-go</td><td>Link an Azure billing policy &mdash; overage bills through and enforcement no longer applies.</td></tr>
+        <tr><td>Do nothing (125%)</td><td>Past the grace band, custom agents are disabled until capacity is restored.</td></tr>
+      </tbody>
+    </table>
+    <p class="src">Enforcement targets custom-agent and flow execution; classic and generative answers continue. Pay-as-you-go is the recommended business-continuity safety net.</p>
+
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="control-budget"><div class="k">&larr; Back</div><div class="v">Budget &amp; monitor</div></a>
+      <a class="navchip next" href="#" data-gototab="ref"><div class="k">Next</div><div class="v">Sources &amp; details &rarr;</div></a>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCE ============ -->
+  <section class="tab" id="ref" role="tabpanel" aria-labelledby="tab-ref" tabindex="0">
+    <div class="head">
+      <span class="eyebrow"><span class="live"></span>Reference</span>
+      <h2>Sources &amp; the fine print</h2>
+      <p>Everything in this guide traces to public Microsoft documentation. Keep the depth here so the main story stays clean.</p>
+    </div>
     <div class="grid g2">
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/billing-licensing" target="_blank" rel="noopener" data-tip="ref-bl|Billed credits, capacity enforcement, and Microsoft 365 Copilot inclusion.|Used on: Overview, Licensing Options, Monitor and Control tabs">
-        <p class="rtitle"><span class="rn">2</span>Copilot Studio licensing (Microsoft Learn)</p>
-        <p>Billed Copilot Credits, capacity enforcement, and how Microsoft 365 Copilot inclusion zero-rates many employee-facing scenarios.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-copilot-studio/billing-licensing</span>
+      <a class="card ref" href="https://go.microsoft.com/fwlink/?linkid=2320995" target="_blank" rel="noopener" data-tip="ref-lg|The Copilot Studio Licensing Guide PDF: per-feature rates, the nine P3 tiers, ACU tiers, capacity packs, and the buying-options comparison.|Used on: rates, plans, savings, ACU pages">
+        <p class="rtitle"><span class="rn">1</span>Copilot Studio Licensing Guide (PDF)</p>
+        <p>Per-feature credit rates, the nine P3 CCCU tiers, the three ACU tiers, capacity packs, billing policies, and the three-way buying comparison.</p>
+        <span class="url"><span class="ext">&#128279;</span>go.microsoft.com/fwlink/?linkid=2320995</span>
       </a>
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noopener" data-tip="ref-rmm|Per-feature credit rates, voice tiers, reasoning-model billing, worked examples, and overage enforcement at 125%.|Used on: Credit Rates and Monitor and Control tabs">
-        <p class="rtitle"><span class="rn">3</span>Billing rates and management (Microsoft Learn)</p>
+      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noopener" data-tip="ref-rmm|Per-feature credit rates, voice tiers, reasoning-model billing, worked examples, and overage enforcement at 125%.|Used on: rates, govern pages">
+        <p class="rtitle"><span class="rn">2</span>Billing rates &amp; management (Microsoft Learn)</p>
         <p>Per-feature credit rates, voice tiers, reasoning-model billing, the worked billing examples, and overage enforcement at 125% of capacity.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-copilot-studio/requirements-messages-management</span>
+        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../requirements-messages-management</span>
+      </a>
+      <a class="card ref" href="https://learn.microsoft.com/en-us/azure/cost-management-billing/reservations/agent-pre-purchase" target="_blank" rel="noopener" data-tip="ref-app|The Microsoft Agent Prepurchase Plan: what ACUs are, eligible usage across Foundry/Fabric/GitHub/Copilot, term, and pay-down mechanics.|Used on: What ACU covers">
+        <p class="rtitle"><span class="rn">3</span>Microsoft Agent Prepurchase Plan (Microsoft Learn)</p>
+        <p>What ACUs are, the eligible usage they pay down across Copilot Studio, Foundry, Fabric and GitHub, the one-year term, and the auto pay-down from a shared pool.</p>
+        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../reservations/agent-pre-purchase</span>
+      </a>
+      <a class="card ref" href="https://learn.microsoft.com/en-us/power-platform/admin/pay-as-you-go-set-up" target="_blank" rel="noopener" data-tip="ref-payg|How to link an Azure subscription to your environments via a billing plan in the Power Platform admin center.|Used on: Set up &amp; allocate">
+        <p class="rtitle"><span class="rn">4</span>Set up a pay-as-you-go plan (Microsoft Learn)</p>
+        <p>The Power Platform admin center billing-plan flow: link the Azure subscription, choose a resource group, products, region, and environments.</p>
+        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../admin/pay-as-you-go-set-up</span>
+      </a>
+      <a class="card ref" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener" data-tip="ref-cap|Allocate prepurchased credits per environment, monitor consumption, and set per-agent monthly limits with notifications and hard-stop guardrails.|Used on: Set up &amp; allocate, Budget &amp; monitor">
+        <p class="rtitle"><span class="rn">5</span>Manage Copilot Studio credits &amp; capacity (Microsoft Learn)</p>
+        <p>Allocate prepurchased Copilot credits per environment, monitor consumption, and set per-agent limits with notification and hard-stop guardrails.</p>
+        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../admin/manage-copilot-studio-messages-capacity</span>
+      </a>
+      <a class="card ref" href="https://aka.ms/CustomerCoworkEstimator" target="_blank" rel="noopener" data-tip="ref-cwe|The official Microsoft Customer Cowork Estimator: model potential Copilot Credit consumption for Cowork before enabling usage-based billing.|Used on: Usage-based &amp; Cowork">
+        <p class="rtitle"><span class="rn">6</span>Customer Cowork Estimator (official tool)</p>
+        <p>Model potential Copilot Credit usage for Microsoft 365 Copilot Cowork across your organization to plan usage-based billing before you enable it.</p>
+        <span class="url"><span class="ext">&#128279;</span>aka.ms/CustomerCoworkEstimator</span>
       </a>
     </div>
 
-    <h3 class="sect"><span class="bar"></span>Administration and monitoring</h3>
-    <a class="card ref" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-copilot-studio-messages-capacity" target="_blank" rel="noopener" data-tip="ref-cap|Metering and monitoring in the Power Platform admin center: summary, capacity, environments, and per-agent limits.|Used on: Monitor and Control tab">
-      <p class="rtitle"><span class="rn">4</span>Manage Copilot Studio credits and capacity (Microsoft Learn)</p>
-      <p>Metering and monitoring in the Power Platform admin center: capacity summary, per-environment consumption, and per-agent monthly limits with notification and hard-stop guardrails. Updated 03/2026.</p>
-      <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../power-platform/admin/manage-copilot-studio-messages-capacity</span>
-    </a>
-
-    <h3 class="sect"><span class="bar"></span>Usage-based billing &amp; extensibility</h3>
-    <div class="grid g2">
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener" data-tip="ref-ubo|How usage-based billing and the Cost Management dashboard work for Copilot Credits, including spending policies, limits, alerts, and chargeback.|Used on: Usage-Based Billing and Monitor and Control tabs">
-        <p class="rtitle"><span class="rn">5</span>Usage-based billing &amp; cost management for Copilot Credits (Microsoft Learn)</p>
-        <p>The usage-based billing model and Microsoft 365 admin center Cost Management dashboard: spending policies, monthly and per-user limits, alerts, hard caps, and cost allocation.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-365/copilot/usage-based-billing-overview-copilot-credits</span>
-      </a>
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-manage-copilot-credits" target="_blank" rel="noopener" data-tip="ref-ubm|Admin steps to enable usage-based billing and create the first spending policy, choosing a billing method and limits.|Used on: Usage-Based Billing tab">
-        <p class="rtitle"><span class="rn">6</span>Managing AI experiences enabled by usage-based billing (Microsoft Learn)</p>
-        <p>Step-by-step admin setup: enable usage-based billing under Copilot &gt; Cost Management, activate the default spending policy, choose a billing method, and set limits and alerts.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-365/copilot/usage-based-billing-manage-copilot-credits</span>
-      </a>
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-admin-governance" target="_blank" rel="noopener" data-tip="ref-cw|Cowork usage-based billing: the activities that consume credits and the admin governance controls.|Used on: Usage-Based Billing tab">
-        <p class="rtitle"><span class="rn">7</span>Manage Copilot Cowork for your organization (Microsoft Learn)</p>
-        <p>Cowork's usage-based billing model and the activities &mdash; model responses, tool and skill calls, image generation, browser tasks &mdash; that count toward consumption.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-365/copilot/cowork/cowork-admin-governance</span>
-      </a>
-      <a class="card ref" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/cost-considerations" target="_blank" rel="noopener" data-tip="ref-cc|How extensibility and connector usage is costed across M365 Copilot license tiers, including Copilot Chat grounding of shared tenant data.|Used on: Usage-Based Billing tab">
-        <p class="rtitle"><span class="rn">8</span>Licensing &amp; cost considerations for Copilot extensibility (Microsoft Learn)</p>
-        <p>How connectors, agents, and plugins are costed across M365 Copilot license tiers: no extra charge under a full license, usage-based for Copilot Chat grounding of shared tenant data.</p>
-        <span class="url"><span class="ext">&#128279;</span>learn.microsoft.com/.../microsoft-365/copilot/extensibility/cost-considerations</span>
-      </a>
+    <div class="nextnav">
+      <a class="navchip prev" href="#" data-gototab="control-govern"><div class="k">&larr; Back</div><div class="v">Govern &amp; enforce</div></a>
+      <a class="navchip next" href="#" data-gototab="hero"><div class="k">Restart</div><div class="v">Back to the credit &rarr;</div></a>
     </div>
-
-    <p class="note" style="margin-top:18px"><b>Currency and disclaimer:</b> All pricing is USD and subject to change. The Copilot Credit Estimator and this guide provide informational estimates only, not a quote or contractual commitment. Confirm current pricing on the <a class="ilink" href="https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio#pricing" target="_blank" rel="noopener">Microsoft Copilot Studio pricing page</a> before any purchase.</p>
   </section>
 
   </main>
 </div>
 
 <script>
-// ---------- data (grounded) ----------
+// ---------- minimal tooltips ----------
+const tip=document.getElementById('tip');
+function showTip(x,y,html){if(!tip)return;tip.innerHTML=html;tip.style.display='block';const r=tip.getBoundingClientRect();let lx=x+14,ly=y+16;if(lx+r.width>innerWidth-10)lx=x-r.width-14;if(ly+r.height>innerHeight-10)ly=y-r.height-16;tip.style.left=lx+'px';tip.style.top=ly+'px';}
+function hideTip(){if(tip)tip.style.display='none';}
+function bindTips(){document.querySelectorAll('[data-tip]').forEach(el=>{const parts=(el.getAttribute('data-tip')||'').split('|');const body=parts[1]||parts[0]||'';const src=parts[2]?`<div class="ts">${parts[2]}</div>`:'';const html=`<div class="tb">${body}</div>${src}`;const icon=el.querySelector('.ic-i')||el;icon.addEventListener('mouseenter',e=>showTip(e.clientX,e.clientY,html));icon.addEventListener('mousemove',e=>showTip(e.clientX,e.clientY,html));icon.addEventListener('mouseleave',hideTip);icon.addEventListener('blur',hideTip);});}
+
+// ---------- tabs ----------
+const navBtns=[...document.querySelectorAll('.navbtn')];
+const navEl=document.getElementById('primaryNav');
+const navToggle=document.getElementById('navToggle');
+const navBack=document.getElementById('navBack');
+function closeNav(){if(navEl)navEl.classList.remove('open');if(navBack)navBack.classList.remove('show');if(navToggle)navToggle.setAttribute('aria-expanded','false');}
+function openNav(){if(navEl)navEl.classList.add('open');if(navBack)navBack.classList.add('show');if(navToggle)navToggle.setAttribute('aria-expanded','true');}
+function setTab(b,focus){navBtns.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');x.tabIndex=-1;});document.querySelectorAll('.tab').forEach(x=>x.classList.remove('show'));b.classList.add('active');b.setAttribute('aria-selected','true');b.tabIndex=0;const p=document.getElementById(b.dataset.tab);if(p)p.classList.add('show');if(focus)b.focus();window.scrollTo({top:0,behavior:'smooth'});closeNav();drawAll();}
+navBtns.forEach((b,i)=>{
+  b.addEventListener('click',()=>setTab(b,false));
+  b.addEventListener('keydown',e=>{let j=null;
+    if(e.key==='ArrowDown'||e.key==='ArrowRight')j=(i+1)%navBtns.length;
+    else if(e.key==='ArrowUp'||e.key==='ArrowLeft')j=(i-1+navBtns.length)%navBtns.length;
+    else if(e.key==='Home')j=0;else if(e.key==='End')j=navBtns.length-1;
+    else if(e.key==='Enter'||e.key===' '){e.preventDefault();setTab(b,false);return;}
+    if(j!==null){e.preventDefault();setTab(navBtns[j],true);}});
+});
+if(navToggle)navToggle.addEventListener('click',()=>navEl.classList.contains('open')?closeNav():openNav());
+if(navBack)navBack.addEventListener('click',closeNav);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+document.querySelectorAll('[data-gototab]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const btn=document.getElementById('tab-'+a.dataset.gototab);if(btn)setTab(btn,true);}));
+
+// ---------- theme ----------
+const themeToggle=document.getElementById('themeToggle');
+function applyTheme(dark){document.documentElement.classList.toggle('dark',dark);if(themeToggle){themeToggle.setAttribute('aria-pressed',dark?'true':'false');themeToggle.innerHTML=dark?'&#9728;':'&#9790;';}}
+if(themeToggle)themeToggle.addEventListener('click',()=>{const dark=!document.documentElement.classList.contains('dark');applyTheme(dark);try{localStorage.setItem('cps-theme',dark?'dark':'light');}catch(e){}});
+(function(){let dark=false;try{const s=localStorage.getItem('cps-theme');if(s==='dark')dark=true;else if(s==='light')dark=false;else dark=matchMedia('(prefers-color-scheme: dark)').matches;}catch(e){}applyTheme(dark);})();
+
+// ---------- data + engine (ported from index.html) ----------
 const P3=[
  {t:1,cccu:3000,cr:300000,price:2850,disc:5,pack:"1 pack x 12 mo"},
  {t:2,cccu:15000,cr:1500000,price:14100,disc:6,pack:"5 packs x 12 mo"},
@@ -1347,134 +1221,41 @@ const fmtN=n=>n.toLocaleString("en-US");
 const fmtC=n=>n>=1e6?(n/1e6).toFixed(n>=1e7?0:1)+"M":n>=1e3?(n/1e3).toFixed(0)+"K":n.toString();
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
-// ---------- tooltip ----------
-const tip=document.getElementById('tip');
-function showTip(e,html){tip.innerHTML=html;tip.classList.add('on');moveTip(e);}
-function moveTip(e){const p=14;let x=e.clientX+p,y=e.clientY+p;
-  const r=tip.getBoundingClientRect();
-  if(x+r.width>innerWidth-10)x=e.clientX-r.width-p;
-  if(y+r.height>innerHeight-10)y=e.clientY-r.height-p;
-  tip.style.left=x+'px';tip.style.top=y+'px';}
-function hideTip(){tip.classList.remove('on');}
-// Tooltips open only from the info (i) icon, never from hovering the whole tile.
-function attachTip(t,html){
-  if(t.__bt)return; t.__bt=1;
-  t.setAttribute('tabindex','0');
-  t.setAttribute('role','button');
-  t.setAttribute('aria-label','More information');
-  t.addEventListener('mouseenter',e=>showTip(e,html));
-  t.addEventListener('mousemove',moveTip);
-  t.addEventListener('mouseleave',hideTip);
-  t.addEventListener('focus',()=>{const r=t.getBoundingClientRect();showTip({clientX:r.left+r.width/2,clientY:r.bottom},html);});
-  t.addEventListener('blur',hideTip);
-}
-function newIcon(){const i=document.createElement('i');i.className='ic-i';i.textContent='i';return i;}
-function placeIcon(el,ic){
-  if(el.tagName==='TR'){const c=el.querySelector('td,th');if(c){ic.style.marginRight='6px';c.insertBefore(ic,c.firstChild);}return;}
-  const ct=el.querySelector(':scope > .ctitle');if(ct){ic.style.marginLeft='2px';ct.appendChild(ic);return;}
-  const h4=el.querySelector(':scope > h4');if(h4){ic.style.marginLeft='7px';h4.appendChild(ic);return;}
-  const rt=el.querySelector(':scope > .rtitle');if(rt){ic.style.marginLeft='2px';rt.appendChild(ic);return;}
-  const k=el.querySelector(':scope > .k');if(k){ic.style.marginLeft='6px';k.appendChild(ic);return;}
-  if(el.classList.contains('card')){ic.classList.add('tip-corner');el.appendChild(ic);return;}
-  ic.style.marginLeft='7px';el.appendChild(ic);
-}
-function bindTips(){
-  document.querySelectorAll('[data-tip]').forEach(el=>{
-    if(el.__b)return; el.__b=1;
-    const parts=el.getAttribute('data-tip').split('|');
-    const html='<span class="t">'+parts[0]+'</span>'+(parts[1]||'')+(parts[2]?'<span class="s">'+parts[2]+'</span>':'');
-    if(el.classList.contains('ic-i')){attachTip(el,html);return;}
-    let ic=el.querySelector('.ic-i:not([data-tip])');
-    if(ic&&ic.__bt)ic=null;
-    if(!ic){ic=newIcon();placeIcon(el,ic);}
-    attachTip(ic,html);
-  });
-}
+// fill tables
+(function(){const tb=document.getElementById('p3rows');if(!tb)return;
+  P3.forEach(d=>{const eff=(d.price/d.cr);
+    const tr=document.createElement('tr');
+    tr.setAttribute('data-tip',`Tier ${d.t}|${fmtN(d.cr)} credits for ${fmtM(d.price)}, ${d.disc}% off PayGo. Effective $${eff.toFixed(5)} per credit.`);
+    tr.innerHTML=`<td class="num">Tier ${d.t}</td><td class="num">${fmtN(d.cccu)}</td><td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(d.price)}</td>
+      <td class="num"><span class="pill" style="background:color-mix(in srgb,#10b981 18%,transparent);color:#34d399;font-weight:700">${d.disc}%</span></td>
+      <td class="num">$${eff.toFixed(5)}</td><td>${d.pack}</td>`;
+    tb.appendChild(tr);});})();
+(function(){const tb=document.getElementById('valrows');if(!tb)return;
+  P3.forEach(d=>{const pe=d.cr*PAYG;const sav=pe-d.price;
+    const tr=document.createElement('tr');
+    tr.setAttribute('data-tip',`Tier ${d.t}|Committing ${fmtM(d.price)} for ${fmtN(d.cr)} credits saves ${fmtM(sav)} vs ${fmtM(pe)} at PayGo.`);
+    tr.innerHTML=`<td class="num">Tier ${d.t}</td><td class="num">${fmtC(d.cr)}</td><td class="num">${fmtM(pe)}</td><td class="num">${fmtM(d.price)}</td>
+      <td class="num" style="color:var(--emerald);font-weight:700">${fmtM(sav)}</td>
+      <td class="num"><span class="pill" style="background:color-mix(in srgb,#10b981 18%,transparent);color:#34d399;font-weight:700">${d.disc}%</span></td>`;
+    tb.appendChild(tr);});})();
 
-// ---------- nav / tabs ----------
-const navBtns=[...document.querySelectorAll('.navbtn')];
-const navEl=document.getElementById('primaryNav');
-const navToggle=document.getElementById('navToggle');
-const navBack=document.getElementById('navBack');
-function closeNav(){if(!navEl)return;navEl.classList.remove('open');if(navBack)navBack.classList.remove('show');if(navToggle)navToggle.setAttribute('aria-expanded','false');}
-function openNav(){if(!navEl)return;navEl.classList.add('open');if(navBack)navBack.classList.add('show');if(navToggle)navToggle.setAttribute('aria-expanded','true');const act=navEl.querySelector('.navbtn.active');if(act)act.focus();}
-function setTab(b,focus){
-  navBtns.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');x.tabIndex=-1;});
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('show'));
-  b.classList.add('active');b.setAttribute('aria-selected','true');b.tabIndex=0;
-  const panel=document.getElementById(b.dataset.tab);
-  if(panel)panel.classList.add('show');
-  if(focus)b.focus();
-  window.scrollTo({top:0,behavior:'smooth'});
-  closeNav();
-  drawAll();
-}
-navBtns.forEach((b,i)=>{
-  b.addEventListener('click',()=>setTab(b,false));
-  b.addEventListener('keydown',e=>{
-    let j=null;
-    if(e.key==='ArrowDown'||e.key==='ArrowRight')j=(i+1)%navBtns.length;
-    else if(e.key==='ArrowUp'||e.key==='ArrowLeft')j=(i-1+navBtns.length)%navBtns.length;
-    else if(e.key==='Home')j=0;
-    else if(e.key==='End')j=navBtns.length-1;
-    else if(e.key==='Enter'||e.key===' '){e.preventDefault();setTab(b,false);return;}
-    if(j!==null){e.preventDefault();setTab(navBtns[j],true);}
-  });
-});
-if(navToggle)navToggle.addEventListener('click',()=>{navEl.classList.contains('open')?closeNav():openNav();});
-if(navBack)navBack.addEventListener('click',closeNav);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
-
-// in-page cross-links to other tabs
-document.querySelectorAll('[data-gototab]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const btn=document.getElementById('tab-'+a.dataset.gototab);
-    if(btn)setTab(btn,true);
-  });
-});
-
-// ---------- fill tables ----------
-const p3rows=document.getElementById('p3rows');
-P3.forEach(d=>{const eff=(d.price/d.cr);
-  const tr=document.createElement('tr');
-  tr.setAttribute('data-tip',`Tier ${d.t}|${fmtN(d.cr)} credits for ${fmtM(d.price)}, ${d.disc}% off PayGo. Effective $${eff.toFixed(5)} per credit.`);
-  tr.innerHTML=`<td class="num">Tier ${d.t}</td><td class="num">${fmtN(d.cccu)}</td><td class="num">${fmtN(d.cr)}</td><td class="num">${fmtM(d.price)}</td>
-    <td class="num"><span class="pill" style="background:color-mix(in srgb,#10b981 18%,transparent);color:#34d399;font-weight:700">${d.disc}%</span></td>
-    <td class="num">$${eff.toFixed(5)}</td><td>${d.pack}</td>`;
-  p3rows.appendChild(tr);});
-
-const valrows=document.getElementById('valrows');
-P3.forEach(d=>{const pe=d.cr*PAYG;const sav=pe-d.price;
-  const tr=document.createElement('tr');
-  tr.setAttribute('data-tip',`Tier ${d.t}|Committing ${fmtM(d.price)} for ${fmtN(d.cr)} credits saves ${fmtM(sav)} vs ${fmtM(pe)} at PayGo.`);
-  tr.innerHTML=`<td class="num">Tier ${d.t}</td><td class="num">${fmtC(d.cr)}</td><td class="num">${fmtM(pe)}</td><td class="num">${fmtM(d.price)}</td>
-    <td class="num" style="color:var(--emerald);font-weight:700">${fmtM(sav)}</td>
-    <td class="num"><span class="pill" style="background:color-mix(in srgb,#10b981 18%,transparent);color:#34d399;font-weight:700">${d.disc}%</span></td>`;
-  valrows.appendChild(tr);});
-
-// ---------- P3 configurator ----------
+// configurator
 (function(){
   const sl=document.getElementById('tierSlider');if(!sl)return;
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   function render(t){
     const d=P3.find(x=>x.t==t);const pe=d.cr*PAYG,sav=pe-d.price,eff=d.price/d.cr;
-    set('cfgTierBig','Tier '+d.t);
-    set('cfgCccu',fmtN(d.cccu));
-    set('cfgCr',fmtN(d.cr));
-    set('cfgPrice',fmtM(d.price));
-    set('cfgDisc',d.disc+'%');
-    set('cfgEff','$'+eff.toFixed(5));
-    set('cfgPack',d.pack);
-    set('cfgSav',fmtM(sav));
+    set('cfgTierBig','Tier '+d.t);set('cfgCccu',fmtN(d.cccu));set('cfgCr',fmtN(d.cr));
+    set('cfgPrice',fmtM(d.price));set('cfgDisc',d.disc+'%');set('cfgEff','$'+eff.toFixed(5));
+    set('cfgPack',d.pack);set('cfgSav',fmtM(sav));
   }
   sl.addEventListener('input',e=>render(+e.target.value));
   render(+sl.value);
 })();
-// ---------- charts ----------
-function clear(id){const s=d3.select('#'+id);s.selectAll('*').remove();return s;}
-function W(id){return document.getElementById(id).clientWidth||640;}
 
+// charts
+function clear(id){const s=d3.select('#'+id);s.selectAll('*').remove();return s;}
+function W(id){const el=document.getElementById(id);return (el&&el.clientWidth)||640;}
 function rateBars(){
   const id='ratebars';const data=[
    {k:'Classic answer',v:1,c:css('--blue')},{k:'Generative answer',v:2,c:css('--emerald')},
@@ -1491,7 +1272,6 @@ function rateBars(){
     s.append('text').attr('x',x(d.v)+7).attr('y',y(d.k)+y.bandwidth()/2+4).attr('class','barlabel').attr('fill',css('--text')).text(d.v);
   });
 }
-
 function discCurve(){
   const id='disccurve';const w=W(id),h=290,m={l:42,r:20,t:18,b:34};const s=clear(id).attr('viewBox',`0 0 ${w} ${h}`);
   const x=d3.scalePoint().domain(P3.map(d=>'T'+d.t)).range([m.l,w-m.r]);
@@ -1509,35 +1289,6 @@ function discCurve(){
   P3.forEach(d=>{const c=s.append('circle').attr('cx',x('T'+d.t)).attr('cy',y(d.disc)).attr('r',0).attr('fill','#34d399');
     c.transition().delay(d.t*90).duration(400).attr('r',5);});
 }
-
-function monthlyBars(){
-  const id='monthlybars';const data=[
-    {k:'Customer support',d:7200},{k:'Sales performance',d:4800},{k:'Order processing',d:20}];
-  const w=W(id),h=280,m={l:54,r:20,t:14,b:60};const s=clear(id).attr('viewBox',`0 0 ${w} ${h}`);
-  const x=d3.scaleBand().domain(data.map(d=>d.k)).range([m.l,w-m.r]).padding(.34);
-  const mx=d3.max(data,d=>d.d*30*1.2);
-  const y=d3.scaleLinear().domain([0,mx]).range([h-m.b,m.t]);
-  s.append('g').attr('transform',`translate(0,${h-m.b})`).call(d3.axisBottom(x)).attr('color',css('--muted')).selectAll('text').attr('transform','translate(0,8)');
-  s.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d>=1000?d/1000+'K':d)).attr('color',css('--muted'));
-  data.forEach(d=>{const base=d.d*30,buf=base*1.2;const bw=x.bandwidth()/2-4;
-    const b1=s.append('rect').attr('x',x(d.k)).attr('width',bw).attr('y',h-m.b).attr('height',0).attr('rx',5).attr('fill',css('--blue'));
-    b1.transition().duration(900).attr('y',y(base)).attr('height',h-m.b-y(base));
-    const b2=s.append('rect').attr('x',x(d.k)+bw+8).attr('width',bw).attr('y',h-m.b).attr('height',0).attr('rx',5).attr('fill',css('--violet'));
-    b2.transition().delay(200).duration(900).attr('y',y(buf)).attr('height',h-m.b-y(buf));
-  });
-}
-
-function enfBar(){
-  const id='enfbar';const w=W(id),h=150,m={l:14,r:14,t:30,b:34};const s=clear(id).attr('viewBox',`0 0 ${w} ${h}`);
-  const x=d3.scaleLinear().domain([0,150]).range([m.l,w-m.r]);
-  const segs=[{a:0,b:100,c:css('--emerald'),l:'Allocated capacity'},{a:100,b:125,c:css('--amber'),l:'Grace overage'},{a:125,b:150,c:css('--rose'),l:'Enforced: agents disabled'}];
-  segs.forEach((g,i)=>{const r=s.append('rect').attr('x',x(g.a)).attr('y',m.t).attr('height',26).attr('rx',6).attr('width',0).attr('fill',g.c).attr('opacity',.85);
-    r.transition().delay(i*250).duration(700).attr('width',x(g.b)-x(g.a)-3);
-    s.append('text').attr('x',x((g.a+g.b)/2)).attr('y',m.t+44).attr('text-anchor','middle').attr('class','barlabel').text(g.l);});
-  [100,125].forEach(v=>{s.append('line').attr('x1',x(v)).attr('x2',x(v)).attr('y1',m.t-6).attr('y2',m.t+30).attr('stroke',css('--text')).attr('stroke-dasharray','3,3').attr('opacity',.5);
-    s.append('text').attr('x',x(v)).attr('y',m.t-10).attr('text-anchor','middle').attr('class','barlabel').attr('fill',css('--text')).text(v+'%');});
-}
-
 function savingsBars(){
   const id='savingsbars';const w=W(id),h=320,m={l:64,r:24,t:14,b:40};const s=clear(id).attr('viewBox',`0 0 ${w} ${h}`);
   const data=P3.map(d=>({t:'T'+d.t,sav:d.cr*PAYG-d.price,disc:d.disc,cr:d.cr,price:d.price}));
@@ -1550,67 +1301,16 @@ function savingsBars(){
     b.transition().delay(i*70).duration(800).attr('y',y(d.sav)).attr('height',h-m.b-y(d.sav));
   });
 }
-
-function engine(){
-  const id='engine';const w=W(id),h=240;const s=clear(id).attr('viewBox',`0 0 ${w} ${h}`);
-  const srcs=[{k:'Classic 1',c:css('--blue'),y:40},{k:'Generative 2',c:css('--emerald'),y:90},{k:'Agent action 5',c:css('--amber'),y:150},{k:'Grounding 10',c:css('--violet'),y:200}];
-  const cx=w-150,cy=h/2;
-  srcs.forEach(p=>{
-    s.append('path').attr('d',`M120 ${p.y} C ${(120+cx)/2} ${p.y}, ${(120+cx)/2} ${cy}, ${cx} ${cy}`).attr('fill','none').attr('stroke',p.c).attr('stroke-width',2).attr('opacity',.35);
-    s.append('circle').attr('cx',120).attr('cy',p.y).attr('r',6).attr('fill',p.c);
-    s.append('text').attr('x',110).attr('y',p.y+4).attr('text-anchor','end').attr('class','barlabel').attr('fill',css('--text')).text(p.k);
-  });
-  s.append('circle').attr('cx',cx).attr('cy',cy).attr('r',46).attr('fill','none').attr('stroke',css('--blue')).attr('stroke-width',2).attr('opacity',.5)
-    .append('animate').attr('attributeName','r').attr('values','42;50;42').attr('dur','3s').attr('repeatCount','indefinite');
-  s.append('circle').attr('cx',cx).attr('cy',cy).attr('r',38).attr('fill','url(#eg)');
-  const g=s.append('defs').append('radialGradient').attr('id','eg');
-  g.append('stop').attr('offset','0%').attr('stop-color',css('--blue')).attr('stop-opacity',.9);
-  g.append('stop').attr('offset','100%').attr('stop-color',css('--violet')).attr('stop-opacity',.7);
-  s.append('text').attr('x',cx).attr('y',cy-2).attr('text-anchor','middle').attr('fill','#fff').style('font-size','13px').style('font-weight','700').text('Credits');
-  s.append('text').attr('x',cx).attr('y',cy+15).attr('text-anchor','middle').attr('fill','#fff').style('font-size','11px').text('pooled');
-  // animated dots
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reduce){srcs.forEach(p=>{const path=`M120 ${p.y} C ${(120+cx)/2} ${p.y}, ${(120+cx)/2} ${cy}, ${cx} ${cy}`;
-    for(let i=0;i<2;i++){const dot=s.append('circle').attr('r',3.5).attr('fill',p.c);
-      const mp=document.createElementNS('http://www.w3.org/2000/svg','animateMotion');
-      mp.setAttribute('dur',(2.6+i*0.7)+'s');mp.setAttribute('repeatCount','indefinite');mp.setAttribute('path',path);mp.setAttribute('begin',(i*1.0)+'s');
-      dot.node().appendChild(mp);}});}
-}
-
-function drawAll(){const vis=id=>{const el=document.getElementById(id);return el&&el.offsetParent!==null;};
-  if(vis('engine'))engine();
+function drawAll(){
+  if(typeof d3==='undefined')return;
+  const vis=id=>{const el=document.getElementById(id);return el&&el.offsetParent!==null;};
   if(vis('ratebars'))rateBars();
   if(vis('disccurve'))discCurve();
-  if(vis('monthlybars'))monthlyBars();
-  if(vis('enfbar'))enfBar();
   if(vis('savingsbars'))savingsBars();
-  bindTips();}
-// ---------- theme (dark mode) ----------
-const themeToggle=document.getElementById('themeToggle');
-function applyTheme(dark){
-  document.documentElement.classList.toggle('dark',dark);
-  if(themeToggle){
-    themeToggle.setAttribute('aria-pressed',dark?'true':'false');
-    themeToggle.innerHTML=dark?'&#9728;':'&#9790;';
-  }
-  drawAll();
 }
-if(themeToggle)themeToggle.addEventListener('click',()=>{
-  const dark=!document.documentElement.classList.contains('dark');
-  applyTheme(dark);
-  try{localStorage.setItem('cps-theme',dark?'dark':'light');}catch(e){}
-});
-(function(){let dark=false;
-  try{const s=localStorage.getItem('cps-theme');
-    if(s==='dark')dark=true;else if(s==='light')dark=false;
-    else dark=matchMedia('(prefers-color-scheme: dark)').matches;
-  }catch(e){dark=!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);}
-  applyTheme(dark);
-})();
 
-bindTips();drawAll();
-window.addEventListener('resize',()=>{clearTimeout(window.__rt);window.__rt=setTimeout(drawAll,180);});
-
-</script>
+bindTips();
+drawAll();
+window.addEventListener('resize',()=>{clearTimeout(window.__rt);window.__rt=setTimeout(drawAll,180);});</script>
 </body>
 </html>
